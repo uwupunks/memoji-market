@@ -668,7 +668,6 @@ function Cracked({ onClose, onMinimize }) {
     flex: 1,
   };
 
-  debugger
 
   // let { data: alienBalance } = useBalance({
   //   bech32Adddress: account?.bech32Address,
@@ -1148,8 +1147,11 @@ function Cracked({ onClose, onMinimize }) {
               onMouseOver={overSound}
               className="walletButton"
               id="wallet"
-              onClick={() =>
-                connect()
+              onClick={async () => {
+                debugger
+                await connect()
+                console.log('connected')
+              }
               }
               src={connectButton}
             />

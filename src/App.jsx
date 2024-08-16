@@ -1,14 +1,18 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import WinXP from "WinXP";
-import { ChainProvider } from '@cosmos-kit/react';
-import { wallets } from 'cosmos-kit';
-import { Chain, AssetList } from '@chain-registry/types';
+import { ChainProvider } from "@cosmos-kit/react";
+import { wallets as keplr } from "@cosmos-kit/keplr";
+import { wallets as leap } from "@cosmos-kit/leap";
+import { Chain, AssetList } from "@chain-registry/types";
+import { WalletPicker } from "components";
+import "@interchain-ui/react/styles"
 
- 
-const chain = {chain_name: 'unicorn'}; 
-const chainAssets = {chain_name: 'unicorn', assets: [
-/*export interface Asset {
+const chain = { chain_name: "unicorn", chain_id: "unicorn-420" };
+const chainAssets = {
+  chain_name: "unicorn",
+  assets: [
+    /*export interface Asset {
     deprecated?: boolean;
     description?: string;
     extended_description?: string;
@@ -35,8 +39,8 @@ const chainAssets = {chain_name: 'unicorn', assets: [
         twitter?: string;
     };
 }*/
-
-]}; 
+  ],
+};
 
 const signerOptions: SignerOptions = {
   signingStargate: (_chain: Chain) => {
@@ -44,17 +48,17 @@ const signerOptions: SignerOptions = {
   },
   signingCosmwasm: (chain: Chain) => {
     switch (chain.chain_name) {
-      case 'localosmosis':
+      case "localosmosis":
         return {
-          gasPrice: GasPrice.fromString('0.0025uosmo')
+          gasPrice: GasPrice.fromString("0.0025uosmo"),
         };
     }
-  }
+  },
 };
 
 const unicorn = {
-  chainId: "unicorn-420",
-  chainName: "Unicorn",
+  //chainId: "unicorn-420",
+  //chainName: "Unicorn",
   rpc: "https://rpc.unicorn.meme",
   rest: "https://rest.unicorn.meme",
   bip44: {
@@ -103,14 +107,14 @@ const unicorn = {
 const App = () => {
   return (
     <ChainProvider
-    chains={[chain]}
-    assetLists={[chainAssets]}
-      wallets={wallets} // supported wallets
-      walletConnectOptions={{}}
+      chains={[chain]}
+      assetLists={[chainAssets]}
+      wallets={[...keplr, ...leap]} // supported wallets
+      walletConnectOptions={{ signClient: { projectId: "todo" } }}
     >
       <BrowserRouter>
         <WinXP />
-      </BrowserRouter>{" "}
+      </BrowserRouter>
     </ChainProvider>
   );
 };

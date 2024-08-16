@@ -1,77 +1,74 @@
-import {useEffect} from 'react';
-import * as THREE from 'three';
+import React, { useEffect } from "react";
+import * as THREE from "three";
 
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { VOXLoader, VOXMesh } from 'three/addons/loaders/VOXLoader.js';
-			import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { VOXLoader, VOXMesh } from "three/examples/jsm/loaders/VOXLoader";
 
-			let camera, controls, scene, renderer;
+let camera, controls, scene, renderer;
 
-function VoxLoader({ object }){
+function VoxLoader({ object }) {
+  useEffect(() => {
+    init();
 
-		useEffect(() => {
-			init();
+    function init() {
+      camera = new THREE.PerspectiveCamera(
+        50,
+        window.innerWidth / window.innerHeight,
+        0.01,
+        10
+      );
+      camera.position.set(0.175, 0.075, 0.175);
 
-			function init() {
+      scene = new THREE.Scene();
+      scene.add(camera);
 
-				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.01, 10 );
-				camera.position.set( 0.175, 0.075, 0.175 );
+      // light
 
-				scene = new THREE.Scene();
-				scene.add( camera );
+      const hemiLight = new THREE.HemisphereLight(0xcccccc, 0x444444, 3);
+      scene.add(hemiLight);
 
-				// light
+      const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
+      dirLight.position.set(1.5, 3, 2.5);
+      scene.add(dirLight);
 
-				const hemiLight = new THREE.HemisphereLight( 0xcccccc, 0x444444, 3 );
-				scene.add( hemiLight );
+      const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
+      dirLight2.position.set(-1.5, -3, -2.5);
+      scene.add(dirLight2);
 
-				const dirLight = new THREE.DirectionalLight( 0xffffff, 2.5 );
-				dirLight.position.set( 1.5, 3, 2.5 );
-				scene.add( dirLight );
+      const loader = new VOXLoader();
+      loader.load(object, function (chunks) {
+        for (let i = 0; i < chunks.length; i++) {
+          const chunk = chunks[i];
 
-				const dirLight2 = new THREE.DirectionalLight( 0xffffff, 1.5 );
-				dirLight2.position.set( - 1.5, - 3, - 2.5 );
-				scene.add( dirLight2 );
+          // displayPalette( chunk.palette );
 
-				const loader = new VOXLoader();
-				loader.load( object, function ( chunks ) {
+          const mesh = new VOXMesh(chunk);
+          mesh.scale.setScalar(0.0015);
+          scene.add(mesh);
+        }
+      });
 
-					for ( let i = 0; i < chunks.length; i ++ ) {
+      // renderer
 
-						const chunk = chunks[ i ];
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(100, 100);
+      renderer.setAnimationLoop(animate);
+      document.getElementById("voxArea").appendChild(renderer.domElement);
 
-						// displayPalette( chunk.palette );
+      // controls
 
-						const mesh = new VOXMesh( chunk );
-						mesh.scale.setScalar( 0.0015 );
-						scene.add( mesh );
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.minDistance = 0.03;
+      controls.maxDistance = 0.035;
 
-					}
+      //
 
-				} );
+      window.addEventListener("resize", onWindowResize);
+    }
+  }, []);
 
-				// renderer
-
-				renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( 100, 100 );
-				renderer.setAnimationLoop( animate );
-				document.getElementById('voxArea').appendChild( renderer.domElement );
-
-				// controls
-
-				controls = new OrbitControls( camera, renderer.domElement );
-				controls.minDistance = .03;
-				controls.maxDistance = .035;
-
-				//
-
-				window.addEventListener( 'resize', onWindowResize );
-
-			}
-		}, []);
-
-			/*
+  /*
 			function displayPalette( palette ) {
 
 				const canvas = document.createElement( 'canvas' );
@@ -102,28 +99,24 @@ function VoxLoader({ object }){
 			}
 			*/
 
-			function onWindowResize() {
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+  function animate() {
+    controls.update();
 
-			}
+    renderer.render(scene, camera);
+  }
 
-			function animate() {
-
-				controls.update();
-
-				renderer.render( scene, camera );
-
-			}
-
-			return(
-				<>
-				<p id="voxArea"></p>
-				</>
-				)
+  return (
+    <>
+      <p id="voxArea"></p>
+    </>
+  );
 }
 
 export default VoxLoader;

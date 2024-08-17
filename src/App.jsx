@@ -5,8 +5,8 @@ import { ChainProvider } from "@cosmos-kit/react";
 import { wallets as keplr } from "@cosmos-kit/keplr";
 import { wallets as leap } from "@cosmos-kit/leap";
 
-import { GasPrice } from '@cosmjs/stargate';
-import "@interchain-ui/react/styles";
+import { GasPrice } from "@cosmjs/stargate";
+import '@interchain-ui/react/styles';
 
 import { getSigningCosmosClientOptions } from "interchain";
 

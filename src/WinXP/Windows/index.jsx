@@ -158,7 +158,7 @@ const StyledWindow = styled(Window)`
   position: absolute;
   padding: 3px;
   padding: ${({ header }) => (header.invisible ? 0 : 3)}px;
-  background-color: ${({ isFocus }) => (isFocus ? '#40d808' : '#6582f5')};
+  background-color: ${({ isFocus }) => (isFocus ? '#092052' : '#6582f5')};
   flex-direction: column;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;

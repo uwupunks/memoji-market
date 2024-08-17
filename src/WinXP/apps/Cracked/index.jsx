@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import styled from "styled-components";
 import assetsWindow from "../../../assets/img/assets.png";
 import connectButton from "../../../assets/img/connectwallet.png";
 import exitButton from "../../../assets/img/exit.png";
@@ -9,21 +8,9 @@ import pressedButton from "../../../assets/img/pressed.png";
 import switchedHover from "../../../assets/img/switchwallethover.png";
 import switchPressed from "../../../assets/img/switchwalletpressed.png";
 import switchButton from "../../../assets/img/switchwallet.png";
-import memeButtons from "../../../assets/img/memes.png";
-import memeMiddle from "../../../assets/img/memesmiddle.png";
-import memeEnd from "../../../assets/img/memesend.png";
-import bgMiddle from "../../../assets/img/bgmiddle.png";
-import bgEnd from "../../../assets/img/bgend.png";
-import bgStart from "../../../assets/img/bgstart.png";
 import allButton from "../../../assets/img/all.png";
 import hiddenButton from "../../../assets/img/hidden.png";
 import classicButton from "../../../assets/img/classic.png";
-import backButtons from "../../../assets/img/backButtons.png";
-import bgListend from "../../../assets/img/bglistend.png";
-import bgList from "../../../assets/img/bglist.png";
-import listLeft from "../../../assets/img/listleft.png";
-import listMiddle from "../../../assets/img/list.png";
-import listRight from "../../../assets/img/listright.png";
 import walletName from "../../../assets/img/walletname.png";
 import userWindow from "../../../assets/img/window.png";
 import invSlotsTop from "../../../assets/img/invslotstop.png";
@@ -36,27 +23,18 @@ import tradeSwapPressed from "../../../assets/img/tradepressed.png";
 import switchSwap from "../../../assets/img/switch.png";
 import switchSwapHover from "../../../assets/img/switchhover.png";
 import switchSwapPressed from "../../../assets/img/switchpress.png";
-import baseSwap from "../../../assets/img/baseswap.png";
 import cancelSwap from "../../../assets/img/cancel.png";
 import cancelSwapHover from "../../../assets/img/cancelhover.png";
 import cancelSwapPressed from "../../../assets/img/cancelpressed.png";
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { GasPrice, SigningStargateClient } from "@cosmjs/stargate";
-import { useChain,useWallet } from '@cosmos-kit/react';
+import { useChain, useWallet } from "@cosmos-kit/react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-import asset1 from "../../../assets/img/blackflag.png";
 import useSound from "use-sound";
 import buyMp3 from "../../../assets/sounds/btbuy.mp3";
 import overMp3 from "../../../assets/sounds/btmouseover.mp3";
 import clickMp3 from "../../../assets/sounds/btclick.mp3";
 import completeMp3 from "../../../assets/sounds/dlgnotice.mp3";
-import leftCorner from "../../../assets/img/leftCorner.png";
-import rightCorner from "../../../assets/img/rightCorner.png";
-import leftBar from "../../../assets/img/leftBar.png";
-import rightBar from "../../../assets/img/rightBar.png";
-import bottomBar from "../../../assets/img/bottomBar.png";
 import VoxLoader from "./voxLoader.jsx";
 import VoxLoaderTwo from "./voxLoaderTwo.jsx";
 import ualienVox from "../../../assets/vox/sample.vox";
@@ -121,8 +99,8 @@ import kCharacter from "../../../assets/img/kCharacter.png";
 import mCharacter from "../../../assets/img/mCharacter.png";
 import bCharacter from "../../../assets/img/bCharacter.png";
 import tCharacter from "../../../assets/img/tCharacter.png";
-import qCharacter from "../../../assets/img/qCharacter.png";
-import sCharacter from "../../../assets/img/sCharacter.png";
+import lessThanCharacter from "../../../assets/img/lessThanCharacter.png";
+import { getBalance } from "hooks/getBalance";
 
 let voxArray = [
   ualienVox,
@@ -175,8 +153,27 @@ let voxArray = [
   uwunicornVox,
 ];
 
+const numberFormatter = new Intl.NumberFormat(navigator.language, {
+  maximumFractionDigits: 1,
+  notation: "compact",
+  compactDisplay: "short",
+});
+
+const percentFormatter = new Intl.NumberFormat(navigator.language, {
+  style: "percent",
+  minimumFractionDigits: 2,
+});
+
 function Cracked({ onClose, onMinimize }) {
-  const { username, connect, disconnect, wallet, address, isWalletConnected } = useChain('unicorn');
+  const {
+    username,
+    connect,
+    disconnect,
+    wallet,
+    address,
+    isWalletConnected,
+    getSigningCosmWasmClient,
+  } = useChain("unicorn");
   const { status: globalStatus, mainWallet } = useWallet(); // status here is the global wallet status for all activated chains (chain is activated when call useChain)
   //const isClient = useIsClient();
   const [min, setMin] = useState(0);
@@ -192,13 +189,15 @@ function Cracked({ onClose, onMinimize }) {
   const [headerRow, setHeaderRow] = useState([]);
   const [leftDenom, setLeftDenom] = useState("");
   const [rightDenom, setRightDenom] = useState("");
-  const [swapActive, setSwapActive] = useState(false);
+  const [swapActive, setSwapActive] = useState(true);
   const [otherRows, setOtherRows] = useState([]);
   const [leftName, setLeftName] = useState("");
   const [leftSymbol, setLeftSymbol] = useState("");
   const [rightSymbol, setRightSymbol] = useState("🦄");
   const [rightName, setRightName] = useState("UWU");
   const [swapPrice, setSwapPrice] = useState(0);
+  const [balances, setBalances] = useState([]);
+  const [message, setMessage] = useState();
   let supplyArray = [];
   const [stateSupplyArray, setStateSupplyArray] = useState([]);
   // Row Data: The data to be displayed.
@@ -209,7 +208,7 @@ function Cracked({ onClose, onMinimize }) {
   const [clickSound] = useSound(clickMp3);
   const [completeSound] = useSound(completeMp3);
 
-// Connect Wallet
+  // Connect Wallet
   useEffect(() => {
     const fn = async () => {
       await mainWallet?.connect();
@@ -318,14 +317,36 @@ function Cracked({ onClose, onMinimize }) {
       function swapLeave() {
         swap.src = switchSwap;
       }
-    }
 
-    let agRow = document.getElementsByClassName("swapGridButton");
 
-    for (let i = 0; i < agRow.length; i++) {
-      agRow[i].onmouseover = function () {
-        overSound();
-      };
+
+      const draggableDiv = document.getElementById('swapWindow');
+
+// Set initial position
+let startX, startY;
+let isDragging = false;
+
+// Event listeners
+draggableDiv.addEventListener('mousedown', (e) => {
+  startX = e.clientX;
+  startY = e.clientY;
+  isDragging = true;
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    const newX = startX + e.clientX;
+    const newY = startY + e.clientY;
+    draggableDiv.style.left = `${newX}px`;
+    draggableDiv.style.top = `${newY}px`;
+  }
+});
+
+
     }
   });
 
@@ -340,12 +361,11 @@ function Cracked({ onClose, onMinimize }) {
     7: sevenCharacter,
     8: eightCharacter,
     9: nineCharacter,
-    k: kCharacter,
-    m: mCharacter,
-    b: bCharacter,
-    t: tCharacter,
-    q: qCharacter,
-    s: sCharacter,
+    K: kCharacter,
+    M: mCharacter,
+    B: bCharacter,
+    T: tCharacter,
+    "<": lessThanCharacter,
   });
 
   function parsedText(text) {
@@ -363,24 +383,11 @@ function Cracked({ onClose, onMinimize }) {
     return textArray;
   }
 
-  function nFormatter(num, digits) {
-    const lookup = [
-      { value: 1, symbol: "" },
-      { value: 1e3, symbol: "k" },
-      { value: 1e6, symbol: "m" },
-      { value: 1e9, symbol: "b" },
-      { value: 1e12, symbol: "t" },
-      { value: 1e15, symbol: "q" },
-      { value: 1e18, symbol: "s" },
-    ];
-    const regexp = /\.0+$|(?<=\.[0-9]*[1-9])0+$/;
-    const item = lookup.findLast((item) => num >= item.value);
-    return item
-      ? (num / item.value)
-          .toFixed(digits)
-          .replace(regexp, "")
-          .concat(item.symbol)
-      : "0";
+  function displayNumber(num) {
+    if (!num) return "";
+    if (Number(num) < 1) return "<1";
+
+    return numberFormatter.format(num);
   }
 
   useEffect(() => {
@@ -469,16 +476,8 @@ function Cracked({ onClose, onMinimize }) {
         const wasm = "/cosmwasm/wasm/v1/contract/";
         const factory =
           "unicorn1yvgh8xeju5dyr0zxlkvq09htvhjj20fncp5g58np4u25g8rkpgjslkfelc";
-        const devliq = "unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty";
 
-        const getBalance = async (address, denom) => {
-          const res = await fetch(
-            `${rest}/cosmos/bank/v1beta1/balances/${address}`
-          );
-          const data = await res.json();
-          const balance = data.balances.find((b) => b.denom === denom);
-          return balance ? parseFloat(balance.amount) / 1000000 : 0;
-        };
+        const devliq = "unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty";
 
         const getPair = async (denom) => {
           const res = await fetch(
@@ -592,38 +591,46 @@ function Cracked({ onClose, onMinimize }) {
             emoji: String(supplyArray[i][0]),
             denom: String(supplyArray[i][1]),
             price: Number(supplyArray[i][8]),
-            mcap: Number(supplyArray[i][4]),
-            liq: Number(supplyArray[i][7]),
-            tvl: Number(supplyArray[i][6]),
+            priceDisplay: numberFormatter.format(supplyArray[i][8]) + " 🦄",
+            mcap: numberFormatter.format(supplyArray[i][4]),
+            liq: percentFormatter.format(supplyArray[i][7]),
+            tvl: numberFormatter.format(supplyArray[i][6]),
             swap: "Swap",
           });
         }
 
         setRowData(jsonArray);
         setOtherRows(otherRows);
+
+        let alienBalance = await getBalance(
+          address,
+          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ualien"
+        );
+        setBalances([{ name: "alien", amount: alienBalance }]);
       } catch (error) {
         console.error("Error fetching market data: ", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [isWalletConnected, swapActive]);
 
   const onSelectionChanged = useCallback(() => {
-    const selectedRows = gridRef.current.api.getSelectedRows();
-    setSwapPrice(selectedRows[0].price);
+    const selectedAsset = gridRef.current.api.getSelectedRows()?.[0];
+    if (!selectedAsset) return;
+
+    setSwapActive(true);
+
+    setSwapPrice(selectedAsset.price);
+
     setLeftValue(1);
-    setRightValue(selectedRows[0].price);
-    setLeftSymbol(voxArray[selectedRows[0].id]);
+    setLeftSymbol(voxArray[selectedAsset?.id]);
+    setLeftName(selectedAsset.denom?.split("/")?.[2]);
+    setLeftDenom(selectedAsset.denom);
+
+    setRightValue(selectedAsset.price);
     setRightSymbol(uwunicornVox);
     setRightName("uwunicorn");
-    setLeftName(
-      String(selectedRows[0].denom).slice(
-        55,
-        String(selectedRows[0].denom).length
-      )
-    );
-    setLeftDenom(String(selectedRows[0].denom));
     setRightDenom("uwunicorn");
   }, []);
 
@@ -646,33 +653,18 @@ function Cracked({ onClose, onMinimize }) {
     setRightValue(leftVal);
   };
 
-  const CustomButtonComponent = (props) => {
-    return (
-      <button className="swapGridButton" onClick={() => setSwapActive(true)}>
-        Swap
-      </button>
-    );
-  };
-
   const [colDefs, setColDefs] = useState([
-    { field: "Id", valueGetter: (p) => p.data.id, flex: 1 },
-    { field: "Emoji", valueGetter: (p) => p.data.emoji, flex: 1 },
-    { field: "Price", valueGetter: (p) => p.data.price, flex: 1 },
+    { field: "Memoji", valueGetter: (p) => p.data.emoji, flex: 1 },
+    { field: "Price", valueGetter: (p) => p.data.priceDisplay, flex: 1 },
     { field: "Mcap", valueGetter: (p) => p.data.mcap, flex: 1 },
     { field: "Liq", valueGetter: (p) => p.data.liq, flex: 1 },
     { field: "TVL", valueGetter: (p) => p.data.tvl, flex: 1 },
-    { field: "Swap", cellRenderer: CustomButtonComponent, flex: 1 },
   ]);
 
   const defaultColDef = {
     flex: 1,
   };
 
-
-  // let { data: alienBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ualien",
-  // });
   // let { data: bearBalance } = useBalance({
   //   bech32Adddress: account?.bech32Address,
   //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ubear",
@@ -864,73 +856,60 @@ function Cracked({ onClose, onMinimize }) {
   //   denom: "uwunicorn",
   // });
 
-  let coinArray = [
-    // alienBalance,
-    // bearBalance,
-    // bearhearthBalance,
-    // blackflagBalance,
-    // blissfulBalance,
-    // blowfishBalance,
-    // cashBalance,
-    // catBalance,
-    // chainsBalance,
-    // chickBalance,
-    // chinaBalance,
-    // clownBalance,
-    // cornBalance,
-    // crystalballBalance,
-    // diamondBalance,
-    // diceBalance,
-    // dogBalance,
-    // eggplantBalance,
-    // eightballBalance,
-    // envelopBalance,
-    // fahrenheitBalance,
-    // frogBalance,
-    // gunBalance,
-    // meatBalance,
-    // mogBalance,
-    // moonBalance,
-    // orwellBalance,
-    // paperBalance,
-    // peaceBalance,
-    // peachBalance,
-    // piBalance,
-    // placeholderBalance,
-    // pooBalance,
-    // pretzelBalance,
-    // retardBalance,
-    // rockBalance,
-    // rocketBalance,
-    // usaBalance,
-    // scisorsBalance,
-    // shotBalance,
-    // shrimpBalance,
-    // skullBalance,
-    // sushiBalance,
-    // tacoBalance,
-    // taiwanBalance,
-    // testBalance,
-    // watermelonBalance,
-    // uwuBalance,
-  ];
-  let coinWallet = [];
-
-  for (let i = 0; i < coinArray.length; i++) {
-    if (coinArray[i] ? Number(coinArray[i].amount) : 0 > 0) {
-      coinWallet.push([i, coinArray[i] ? Number(coinArray[i].amount) : 0]);
-    }
-  }
+  //let coinArray = [
+  // bearBalance,
+  // bearhearthBalance,
+  // blackflagBalance,
+  // blissfulBalance,
+  // blowfishBalance,
+  // cashBalance,
+  // catBalance,
+  // chainsBalance,
+  // chickBalance,
+  // chinaBalance,
+  // clownBalance,
+  // cornBalance,
+  // crystalballBalance,
+  // diamondBalance,
+  // diceBalance,
+  // dogBalance,
+  // eggplantBalance,
+  // eightballBalance,
+  // envelopBalance,
+  // fahrenheitBalance,
+  // frogBalance,
+  // gunBalance,
+  // meatBalance,
+  // mogBalance,
+  // moonBalance,
+  // orwellBalance,
+  // paperBalance,
+  // peaceBalance,
+  // peachBalance,
+  // piBalance,
+  // placeholderBalance,
+  // pooBalance,
+  // pretzelBalance,
+  // retardBalance,
+  // rockBalance,
+  // rocketBalance,
+  // usaBalance,
+  // scisorsBalance,
+  // shotBalance,
+  // shrimpBalance,
+  // skullBalance,
+  // sushiBalance,
+  // tacoBalance,
+  // taiwanBalance,
+  // testBalance,
+  // watermelonBalance,
+  // uwuBalance,
+  //  ];
 
   const swapAssets = async () => {
     if (isWalletConnected) {
-      debugger
-      const offlineSigner = wallet?.getOfflineSigner()
-      const client = await SigningCosmWasmClient.connectWithSigner(
-        "https://rpc.unicorn.meme",
-        offlineSigner,
-        { gasPrice: GasPrice.fromString("0.001uwunicorn") }
-      );
+      const client = await getSigningCosmWasmClient();
+
       let msg = {
         execute_swap_operations: {
           max_spread: "0.5",
@@ -961,6 +940,8 @@ function Cracked({ onClose, onMinimize }) {
         ]
       );
       completeSound();
+      alert(`Success, transaction hash: ${res.transactionHash}`);
+      setSwapActive(false);
     } else {
       alert("Please connect a wallet");
     }
@@ -973,7 +954,7 @@ function Cracked({ onClose, onMinimize }) {
         onMouseDown={clickSound}
         style={{ zIndex: "97" }}
       >
-        <span className="userSection">
+        <div className="userSection">
           <img className="userWindow" src={userWindow} />
           <img className="walletName" src={walletName} />
           {isWalletConnected ? (
@@ -986,8 +967,8 @@ function Cracked({ onClose, onMinimize }) {
           ) : (
             <></>
           )}
-        </span>
-        <span className="inventorySection">
+        </div>
+        <div className="inventorySection">
           <img className="invText" src={invText} />
           <img className="invTop" src={invSlotsTop} />
           <img className="invSlots" src={invSlots} />
@@ -996,122 +977,103 @@ function Cracked({ onClose, onMinimize }) {
           <img className="invSlots" src={invSlots} />
           <img className="invSlots" src={invSlots} />
           <img className="invBottom" src={invSlotsBottom} />
-        </span>
-        <span className="memeSection">
-          <img className="memeStart" src={memeButtons} />
-          <img className="memeMiddle" src={memeMiddle} />
-          <img className="memeEnd" src={memeEnd} />
-        </span>
-        <span onMouseOver={overSound} className="buttonSection">
-          {activeButton === 0 && (
-            <>
-              <img className="allButton" id="allButton" src={allButton} />
-              <img
-                onClick={() => setActiveButton(1)}
-                className="hiddenButton"
-                id="hiddenButton"
-                style={{ opacity: "0" }}
-                src={hiddenButton}
+        </div>
+        <div id="memeMarketSection">
+          <div className="memeSection"></div>
+          <div className="buttonSection">
+            {activeButton === 0 && (
+              <>
+                <img className="allButton" id="allButton" src={allButton} />
+                <img
+                  onClick={() => setActiveButton(1)}
+                  className="hiddenButton"
+                  id="hiddenButton"
+                  style={{ opacity: "0" }}
+                  src={hiddenButton}
+                />
+                <img
+                  onClick={() => setActiveButton(2)}
+                  className="classicButton"
+                  id="classicButton"
+                  style={{ opacity: "0" }}
+                  src={classicButton}
+                />
+              </>
+            )}
+            {activeButton === 1 && (
+              <>
+                <img
+                  onClick={() => setActiveButton(0)}
+                  className="allButton"
+                  id="allButton"
+                  style={{ opacity: "0" }}
+                  src={allButton}
+                />
+                <img
+                  className="hiddenButton"
+                  id="hiddenButton"
+                  src={hiddenButton}
+                />
+                <img
+                  onClick={() => setActiveButton(2)}
+                  className="classicButton"
+                  id="classicButton"
+                  style={{ opacity: "0" }}
+                  src={classicButton}
+                />
+              </>
+            )}
+            {activeButton === 2 && (
+              <>
+                <img
+                  onClick={() => setActiveButton(0)}
+                  className="allButton"
+                  id="allButton"
+                  style={{ opacity: "0" }}
+                  src={allButton}
+                />
+                <img
+                  onClick={() => setActiveButton(1)}
+                  className="hiddenButton"
+                  id="hiddenButton"
+                  style={{ opacity: "0" }}
+                  src={hiddenButton}
+                />
+                <img
+                  className="classicButton"
+                  id="classicButton"
+                  src={classicButton}
+                />
+              </>
+            )}
+          </div>
+          <div className="listItems">
+            <div id="assetGrid" className="ag-theme-quartz-dark">
+              <AgGridReact
+                rowData={rowData}
+                columnDefs={colDefs}
+                defaultColDef={defaultColDef}
+                rowSelection="single"
+                ref={gridRef}
+                onSelectionChanged={onSelectionChanged}
               />
-              <img
-                onClick={() => setActiveButton(2)}
-                className="classicButton"
-                id="classicButton"
-                style={{ opacity: "0" }}
-                src={classicButton}
-              />
-            </>
-          )}
-          {activeButton === 1 && (
-            <>
-              <img
-                onClick={() => setActiveButton(0)}
-                className="allButton"
-                id="allButton"
-                style={{ opacity: "0" }}
-                src={allButton}
-              />
-              <img
-                className="hiddenButton"
-                id="hiddenButton"
-                src={hiddenButton}
-              />
-              <img
-                onClick={() => setActiveButton(2)}
-                className="classicButton"
-                id="classicButton"
-                style={{ opacity: "0" }}
-                src={classicButton}
-              />
-            </>
-          )}
-          {activeButton === 2 && (
-            <>
-              <img
-                onClick={() => setActiveButton(0)}
-                className="allButton"
-                id="allButton"
-                style={{ opacity: "0" }}
-                src={allButton}
-              />
-              <img
-                onClick={() => setActiveButton(1)}
-                className="hiddenButton"
-                id="hiddenButton"
-                style={{ opacity: "0" }}
-                src={hiddenButton}
-              />
-              <img
-                className="classicButton"
-                id="classicButton"
-                src={classicButton}
-              />
-            </>
-          )}
-        </span>
-        <span className="midSection">
-          <img className="bgEnd" src={bgStart} />
-          <img className="bgMiddle" src={bgMiddle} />
-          <img className="bgEnd" src={bgEnd} />
-        </span>
-        <span className="listItems">
-          <div
-            className={"ag-theme-quartz-dark"}
-            style={{ width: "100%", height: "100%" }}
-          >
-            <AgGridReact
-              rowData={rowData}
-              columnDefs={colDefs}
-              defaultColDef={defaultColDef}
-              rowSelection="single"
-              ref={gridRef}
-              onSelectionChanged={onSelectionChanged}
-            />
-          </div>{" "}
-        </span>
-        <span className="listSection">
-          <img className="listBg" src={bgList} />
-          <img className="listEnd" src={bgListend} />
-        </span>
+            </div>{" "}
+          </div>
+        </div>
+
         {isWalletConnected ? (
           <>
             <div className="walletItems">
-              {coinWallet?.map((item, index) => {
+              {balances?.map((asset) => {
                 return (
-                  <>
-                    <span className="assetSpan" onMouseOver={overSound}>
-                      <img className="assetImg" src={asset1} />
+                  <div key={asset.id}>
+                    <span className="assetSpan">
+                      <img className="assetImg" src={asset.name} />
                       <p className="assetAmount">
-                        {parsedText(
-                          nFormatter(
-                            Number(
-                              coinWallet[index][1] / Math.pow(10, 6)
-                            ).toFixed(0)
-                          )
-                        )}
+                        {parsedText(displayNumber(asset.amount))}
                       </p>
                     </span>
-                  </>
+                  </div>
                 );
               })}
             </div>
@@ -1119,95 +1081,78 @@ function Cracked({ onClose, onMinimize }) {
         ) : (
           <></>
         )}
-        <img
-          onMouseOver={overSound}
-          className="mascot"
-          onClick={() => onClose(onClose)}
-          src={mascotButton}
-        />
-        <img
-          onMouseOver={overSound}
-          className="exit"
-          onClick={() => onClose(onClose)}
-          src={exitButton}
-        />
-        {isWalletConnected ? (
-          <>
-            <img
-              onMouseOver={overSound}
-              className="walletButton"
-              id="wallet"
-              onClick={() => disconnect()}
-              src={switchButton}
-            />
-          </>
-        ) : (
-          <>
-            <img
-              onMouseOver={overSound}
-              className="walletButton"
-              id="wallet"
-              onClick={async () => {
-                debugger
-                await connect()
-                console.log('connected')
-              }
-              }
-              src={connectButton}
-            />
-          </>
-        )}
-        <span className="assetsWindow">
-          todo
-          {/* <img src={assetsWindow} />
+        <div id="bottomBar">
+          <div>
+          <img
+            onMouseOver={overSound}
+            className="mascot"
+            onClick={() => onClose(onClose)}
+            src={mascotButton}
+          /></div>
+          <div><img
+            className="exit"
+            onClick={() => onClose(onClose)}
+            src={exitButton}
+          /></div>
+          <div>{isWalletConnected ? (
+            <>
+              <img
+                className="walletButton"
+                id="wallet"
+                onClick={() => disconnect()}
+                src={switchButton}
+              />
+            </>
+          ) : (
+            <>
+              <img
+                className="walletButton"
+                id="wallet"
+                onClick={async () => {
+                  await connect();
+                  console.log("connected");
+                }}
+                src={connectButton}
+              />
+            </>
+          )}
+          </div>
+          <div className="assetsWindow">
+           <img src={assetsWindow} />
           <p className="unicornBal">
-            {uwuBalance
-              ? Number(Number(uwuBalance.amount) / Math.pow(10, 6)).toFixed(2)
+            {true
+              ? Number(Number(0) / Math.pow(10, 6)).toFixed(2)
               : 0}
           </p>
           <p className="blackflagBal">
-            {blackflagBalance
-              ? Number(
-                  Number(blackflagBalance.amount) / Math.pow(10, 6)
-                ).toFixed(2)
-              : 0}
+            0 🏴
           </p>
           <p className="diamondBal">
-            {diamondBalance
-              ? Number(Number(diamondBalance.amount) / Math.pow(10, 6)).toFixed(
-                  2
-                )
-              : 0}
-          </p> */}
-        </span>
+            0 💎
+          </p> 
+          </div>
+        </div>
       </div>
-      <img className="leftCornerCrack" src={leftCorner} />
-      <img className="rightCornerCrack" src={rightCorner} />
-      <img className="leftBarCrack" src={leftBar} />
-      <img className="rightBarCrack" src={rightBar} />
-      <img className="bottomBarCrack" src={bottomBar} />
+
       {swapActive ? (
         <>
-          <div className="swapWindow" onMouseDown={clickSound}>
+          <div className="swapWindow" id="swapWindow" onMouseDown={clickSound}>
             <img
               className="tradeSwap"
               id="trade"
               onClick={() => swapAssets()}
               onMouseDown={buySound}
-              onMouseOver={overSound}
               src={tradeSwap}
             />
             <img
               onClick={() => switchSwapPlace()}
               className="switchSwap"
-              onMouseOver={overSound}
               id="swap"
               src={switchSwap}
             />
             <img
               className="cancelSwap"
               id="cancel"
-              onMouseOver={overSound}
               onClick={() => setSwapActive(false)}
               src={cancelSwap}
             />

@@ -43,6 +43,7 @@
     "browserify-zlib": "^0.2.0",
     "chain-registry": "^1.47.8",
     "cosmos-kit": "^2.11.0",
+    "interchain": "^1.10.4",
     "lodash.samplesize": "^4.2.0",
     "long": "^5.2.3",
     "react": "^18.3.1",

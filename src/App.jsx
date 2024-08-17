@@ -4,9 +4,11 @@ import WinXP from "WinXP";
 import { ChainProvider } from "@cosmos-kit/react";
 import { wallets as keplr } from "@cosmos-kit/keplr";
 import { wallets as leap } from "@cosmos-kit/leap";
-import { Chain, AssetList } from "@chain-registry/types";
-import { WalletPicker } from "components";
-import "@interchain-ui/react/styles"
+
+import { GasPrice } from '@cosmjs/stargate';
+import "@interchain-ui/react/styles";
+
+import { getSigningCosmosClientOptions } from "interchain";
 
 const chain = { chain_name: "unicorn", chain_id: "unicorn-420" };
 const chainAssets = {
@@ -42,25 +44,28 @@ const chainAssets = {
   ],
 };
 
-const signerOptions: SignerOptions = {
-  signingStargate: (_chain: Chain) => {
+const signerOptions = {
+  signingStargate: (_chain) => {
     return getSigningCosmosClientOptions();
   },
-  signingCosmwasm: (chain: Chain) => {
+  signingCosmwasm: (chain) => {
     switch (chain.chain_name) {
-      case "localosmosis":
+      case "unicorn":
         return {
-          gasPrice: GasPrice.fromString("0.0025uosmo"),
+          gasPrice: GasPrice.fromString("0.001uwunicorn"),
         };
     }
+  },
+  preferredSignType: (_chain) => {
+    return "amino";
   },
 };
 
 const unicorn = {
   //chainId: "unicorn-420",
   //chainName: "Unicorn",
-  rpc: "https://rpc.unicorn.meme",
-  rest: "https://rest.unicorn.meme",
+  // rpc: "https://rpc.unicorn.meme",
+  // rest: "https://rest.unicorn.meme",
   bip44: {
     coinType: 118,
   },
@@ -110,7 +115,18 @@ const App = () => {
       chains={[chain]}
       assetLists={[chainAssets]}
       wallets={[...keplr, ...leap]} // supported wallets
-      walletConnectOptions={{ signClient: { projectId: "todo" } }}
+      walletConnectOptions={{
+        signClient: { projectId: "42be0f17bcc9f94c391f66c133aaa401" },
+      }}
+      signerOptions={signerOptions}
+      endpointOptions={{
+        endpoints: {
+          unicorn: {
+            rpc: ["https://rpc.unicorn.meme"],
+            rest: ["https://rest.unicorn.meme"],
+          },
+        },
+      }}
     >
       <BrowserRouter>
         <WinXP />

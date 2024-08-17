@@ -2,5 +2,5 @@
 
 Running locally:
 
-npm i --force && npm run start
+npm i && npm run start
 

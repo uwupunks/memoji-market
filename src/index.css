@@ -21,6 +21,11 @@
   height: 100%;
   z-index: 99;
   cursor: url("./assets/img/idle.png"), auto !important;
+  -webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: none;
+	font-smoothing: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 
 #memeMarketSection {
@@ -284,16 +289,6 @@ input[type=number] {
   z-index: 99;
 }
 
-.walletId {
-  position: absolute;
-  width: 315px;
-  top: 120px;
-  left: 65px;
-  font-size: 1rem;
-
-  z-index: 99;
-}
-
 .walletItems {
   display: flex;
   flex-flow: row wrap;
@@ -380,8 +375,13 @@ input[type=number] {
 }
 
 .walletName {
+  background: url('./assets/img/walletname.png');
   width: 228px;
   height: 41px;
+}
+.walletName p {
+  padding-top: 2%;
+  margin-left: 35%;
 }
 
 .walletSpan {

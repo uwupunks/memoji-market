@@ -11,7 +11,6 @@ import switchButton from "../../../assets/img/switchwallet.png";
 import allButton from "../../../assets/img/all.png";
 import hiddenButton from "../../../assets/img/hidden.png";
 import classicButton from "../../../assets/img/classic.png";
-import walletName from "../../../assets/img/walletname.png";
 import userWindow from "../../../assets/img/window.png";
 import invSlotsTop from "../../../assets/img/invslotstop.png";
 import invSlotsBottom from "../../../assets/img/invslotsbottom.png";
@@ -927,17 +926,15 @@ function Cracked({ onClose, onMinimize }) {
       >
         <div className="userSection">
           <img className="userWindow" src={userWindow} />
-          <img className="walletName" src={walletName} />
           {isWalletConnected ? (
-            <>
-              <p className="walletId">
-                {address.slice(0, 4)}....
-                {address.slice(42, 46)}
+            <div className="walletName">
+              <p>
+                {address.slice(0, 9)}....
+                {address.slice(40, 46)}
               </p>
-            </>
-          ) : (
-            <></>
-          )}
+              <p>{username}</p>
+            </div>
+          ) : null}
         </div>
         <div className="inventorySection">
           <img className="invText" src={invText} />

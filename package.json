@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "author": "uWu Black Market <uwublackmarket@risasoft.com>",
   "homepage": "uwublack.market",
+  "type": "module",
   "dependencies": {
     "@cosmjs/amino": "^0.32.4",
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
@@ -60,11 +61,9 @@
     "webamp": "1.4.2"
   },
   "scripts": {
-    "start": "craco --openssl-legacy-provider start",
-    "build": "craco --openssl-legacy-provider build",
-    "test": "craco test",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "eject": "react-scripts eject",
-    "now-build": "craco build",
     "lint": "eslint src"
   },
   "browserslist": [
@@ -73,10 +72,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
     "assert": "^2.1.0",
     "buffer": "^6.0.3",
-    "craco-babel-loader": "^0.1.4",
     "crypto-browserify": "^3.12.0",
     "https-browserify": "^1.0.0",
     "os-browserify": "^0.3.0",

@@ -189,7 +189,7 @@ function Cracked({ onClose, onMinimize }) {
   const [headerRow, setHeaderRow] = useState([]);
   const [leftDenom, setLeftDenom] = useState("");
   const [rightDenom, setRightDenom] = useState("");
-  const [swapActive, setSwapActive] = useState(true);
+  const [swapActive, setSwapActive] = useState(false);
   const [otherRows, setOtherRows] = useState([]);
   const [leftName, setLeftName] = useState("");
   const [leftSymbol, setLeftSymbol] = useState("");

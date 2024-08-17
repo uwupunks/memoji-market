@@ -22,7 +22,7 @@ import Modal from './Modal';
 import Footer from './Footer';
 import Windows from './Windows';
 import Icons from './Icons';
-import { DashedBox } from 'components';
+import { DashedBox } from '../components';
 import Keygen from './apps/Keygen';
 
 const initState = {

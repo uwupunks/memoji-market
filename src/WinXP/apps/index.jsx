@@ -1,29 +1,29 @@
-import React,{useState} from 'react';
-import InternetExplorer from './InternetExplorer';
-import Minesweeper from './Minesweeper';
-import ErrorBox from './ErrorBox';
-import MyComputer from './MyComputer';
-import Notepad from './Notepad';
-import Winamp from './Winamp';
-import Paint from './Paint';
-import Unicorn from './Unicorn';
-import Keygen from './Keygen';
-import Cracked from './Cracked';
-import iePaper from 'assets/windowsIcons/ie-paper.png';
-import ie from 'assets/windowsIcons/ie.png';
-import mine from 'assets/minesweeper/mine-icon.png';
-import error from 'assets/windowsIcons/897(16x16).png';
-import computer from 'assets/windowsIcons/676(16x16).png';
-import computerLarge from 'assets/windowsIcons/676(32x32).png';
-import notepad from 'assets/windowsIcons/327(16x16).png';
-import unicornIcon from 'assets/windowsIcons/unicorn.png';
-import keygenIcon from 'assets/windowsIcons/keygen.png';
-import crackedIcon from 'assets/windowsIcons/cracked.png';
-import notepadLarge from 'assets/windowsIcons/327(32x32).png';
-import winamp from 'assets/windowsIcons/winamp.png';
-import paintLarge from 'assets/windowsIcons/680(32x32).png';
-import paint from 'assets/windowsIcons/680(16x16).png';
-import empty from 'assets/windowsIcons/empty.png';
+import React, { useState } from "react";
+import InternetExplorer from "./InternetExplorer";
+import Minesweeper from "./Minesweeper";
+import ErrorBox from "./ErrorBox";
+import MyComputer from "./MyComputer";
+import Notepad from "./Notepad";
+import Winamp from "./Winamp";
+import Paint from "./Paint";
+import Unicorn from "./Unicorn";
+import Keygen from "./Keygen";
+import Cracked from "./Cracked";
+import iePaper from "../../assets/windowsIcons/ie-paper.png";
+import ie from "../../assets/windowsIcons/ie.png";
+import mine from "../../assets/minesweeper/mine-icon.png";
+import error from "../../assets/windowsIcons/897(16x16).png";
+import computer from "../../assets/windowsIcons/676(16x16).png";
+import computerLarge from "../../assets/windowsIcons/676(32x32).png";
+import notepad from "../../assets/windowsIcons/327(16x16).png";
+import unicornIcon from "../../assets/windowsIcons/unicorn.png";
+import keygenIcon from "../../assets/windowsIcons/keygen.png";
+import crackedIcon from "../../assets/windowsIcons/cracked.png";
+import notepadLarge from "../../assets/windowsIcons/327(32x32).png";
+import winamp from "../../assets/windowsIcons/winamp.png";
+import paintLarge from "../../assets/windowsIcons/680(32x32).png";
+import paint from "../../assets/windowsIcons/680(16x16).png";
+import empty from "../../assets/windowsIcons/empty.png";
 
 const gen = () => {
   let id = -1;
@@ -39,7 +39,7 @@ export const defaultAppState = [
   {
     component: Unicorn,
     header: {
-      title: 'Unicorn',
+      title: "Unicorn",
       icon: unicornIcon,
     },
     defaultSize: {
@@ -59,7 +59,7 @@ export const defaultAppState = [
   {
     component: Keygen,
     header: {
-      title: 'Keygen',
+      title: "Keygen",
       icon: keygenIcon,
     },
     defaultSize: {
@@ -76,10 +76,10 @@ export const defaultAppState = [
     id: genId(),
     zIndex: genIndex(),
   },
-   {
+  {
     component: Cracked,
     header: {
-      title: 'Cracked',
+      title: "Cracked",
       icon: crackedIcon,
     },
     defaultSize: {
@@ -96,10 +96,10 @@ export const defaultAppState = [
     id: genId(),
     zIndex: genIndex(),
   },
-   {
+  {
     component: Winamp,
     header: {
-      title: 'Winamp',
+      title: "Winamp",
       icon: winamp,
       invisible: true,
     },
@@ -116,46 +116,46 @@ export const defaultAppState = [
     maximized: false,
     id: genId(),
     zIndex: genIndex(),
-  }
+  },
 ];
 
 export const defaultIconState = [
   {
     id: 0,
     icon: unicornIcon,
-    title: 'Unicorn',
+    title: "Unicorn",
     component: Unicorn,
     isFocus: false,
   },
   {
     id: 1,
     icon: keygenIcon,
-    title: 'Keygen',
+    title: "Keygen",
     component: Keygen,
     isFocus: false,
   },
   {
     id: 2,
     icon: crackedIcon,
-    title: 'Cracked',
+    title: "Cracked",
     component: Cracked,
     isFocus: false,
   },
   {
     id: 3,
     icon: winamp,
-    title: 'Winamp',
+    title: "Winamp",
     component: Winamp,
     isFocus: false,
-  }
+  },
 ];
 
 export const appSettings = {
   Error: {
     header: {
       icon: error,
-      title: 'C:\\',
-      buttons: ['close'],
+      title: "C:\\",
+      buttons: ["close"],
       noFooterWindow: true,
     },
     component: ErrorBox,
@@ -172,10 +172,10 @@ export const appSettings = {
     maximized: false,
     multiInstance: true,
   },
-   'Unicorn': {
+  Unicorn: {
     header: {
       icon: unicornIcon,
-      title: 'Unicorn',
+      title: "Unicorn",
     },
     component: Unicorn,
     defaultSize: {
@@ -191,10 +191,10 @@ export const appSettings = {
     maximized: window.innerWidth < 800,
     multiInstance: true,
   },
-  'Keygen': {
+  Keygen: {
     header: {
       icon: keygenIcon,
-      title: 'Keygen',
+      title: "Keygen",
     },
     component: Keygen,
     defaultSize: {
@@ -210,10 +210,10 @@ export const appSettings = {
     maximized: false,
     multiInstance: false,
   },
-   'Cracked': {
+  Cracked: {
     header: {
       icon: crackedIcon,
-      title: 'Cracked',
+      title: "Cracked",
     },
     component: Cracked,
     defaultSize: {
@@ -232,7 +232,7 @@ export const appSettings = {
   Winamp: {
     header: {
       icon: winamp,
-      title: 'Winamp',
+      title: "Winamp",
       invisible: true,
     },
     component: Winamp,
@@ -248,9 +248,7 @@ export const appSettings = {
     minimized: false,
     maximized: false,
     multiInstance: false,
-  }
+  },
 };
-
-
 
 export { ErrorBox, Winamp, Unicorn, Keygen, Cracked };

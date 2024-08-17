@@ -100,7 +100,7 @@ import bCharacter from "../../../assets/img/bCharacter.png";
 import tCharacter from "../../../assets/img/tCharacter.png";
 import lessThanCharacter from "../../../assets/img/lessThanCharacter.png";
 import Draggable from "react-draggable";
-import { getBalance } from "hooks/getBalance";
+import { getBalance } from "../../../hooks";
 
 let voxArray = [
   ualienVox,

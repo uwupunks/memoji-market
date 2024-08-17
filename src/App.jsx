@@ -1,6 +1,5 @@
-import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import WinXP from "WinXP";
+import WinXP from "./WinXP";
 import { ChainProvider } from "@cosmos-kit/react";
 import { wallets as keplr } from "@cosmos-kit/keplr";
 import { wallets as leap } from "@cosmos-kit/leap";
@@ -10,7 +9,9 @@ import '@interchain-ui/react/styles';
 
 import { getSigningCosmosClientOptions } from "interchain";
 
-const chain = { chain_name: "unicorn", chain_id: "unicorn-420" };
+const chain = {
+  chain_name: "unicorn", chain_id: "unicorn-420",
+};
 const chainAssets = {
   chain_name: "unicorn",
   assets: [
@@ -45,6 +46,7 @@ const chainAssets = {
 };
 
 const signerOptions = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   signingStargate: (_chain) => {
     return getSigningCosmosClientOptions();
   },
@@ -56,58 +58,12 @@ const signerOptions = {
         };
     }
   },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   preferredSignType: (_chain) => {
     return "amino";
   },
 };
 
-const unicorn = {
-  //chainId: "unicorn-420",
-  //chainName: "Unicorn",
-  // rpc: "https://rpc.unicorn.meme",
-  // rest: "https://rest.unicorn.meme",
-  bip44: {
-    coinType: 118,
-  },
-  bech32Config: {
-    bech32PrefixAccAddr: "unicorn",
-    bech32PrefixAccPub: "unicornpub",
-    bech32PrefixValAddr: "unicornvaloper",
-    bech32PrefixValPub: "unicornvaloperpub",
-    bech32PrefixConsAddr: "unicornvalcons",
-    bech32PrefixConsPub: "unicornvalconspub",
-  },
-  currencies: [
-    {
-      coinDenom: "🦄",
-      coinMinimalDenom: "uwunicorn",
-      coinDecimals: 6,
-      gasPriceStep: {
-        low: 0.01,
-        average: 0.025,
-        high: 0.04,
-      },
-    },
-  ],
-  feeCurrencies: [
-    {
-      coinDenom: "🦄",
-      coinMinimalDenom: "uwunicorn",
-      coinDecimals: 6,
-      gasPriceStep: {
-        low: 0.01,
-        average: 0.025,
-        high: 0.04,
-      },
-    },
-  ],
-  stakeCurrency: {
-    coinDenom: "🦄",
-    coinMinimalDenom: "uwunicorn",
-    coinDecimals: 6,
-  },
-  features: ["cosmwasm"],
-};
 
 const App = () => {
   return (

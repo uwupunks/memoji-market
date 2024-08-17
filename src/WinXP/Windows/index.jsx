@@ -1,15 +1,15 @@
-import React, { useRef, memo, useState } from 'react';
-import useWindowSize from 'react-use/lib/useWindowSize';
-import styled from 'styled-components';
-import rt from 'assets/extra/window/barrt.png';
-import lt from 'assets/extra/window/barlt.png';
-import ufrt from 'assets/extra/window/barufrt.png';
-import uflt from 'assets/extra/window/baruflt.png';
-import m from 'assets/extra/window/barm.png';
-import unm from 'assets/extra/window/barufm.png';
+import React, { useRef, memo, useState } from "react";
+import useWindowSize from "react-use/lib/useWindowSize";
+import styled from "styled-components";
+import rt from "../../assets/extra/window/barrt.png";
+import lt from "../../assets/extra/window/barlt.png";
+import ufrt from "../../assets/extra/window/barufrt.png";
+import uflt from "../../assets/extra/window/baruflt.png";
+import m from "../../assets/extra/window/barm.png";
+import unm from "../../assets/extra/window/barufm.png";
 
-import { useElementResize } from 'hooks';
-import HeaderButtons from './HeaderButtons';
+import { useElementResize } from "../../hooks";
+import HeaderButtons from "./HeaderButtons";
 
 function Windows({
   apps,
@@ -20,8 +20,8 @@ function Windows({
   focusedAppId,
 }) {
   return (
-    <div style={{ position: 'relative', zIndex: 0 }}>
-      {apps.map(app => (
+    <div style={{ position: "relative", zIndex: 0 }}>
+      {apps.map((app) => (
         <StyledWindow
           show={!app.minimized}
           key={app.id}
@@ -38,7 +38,7 @@ function Windows({
   );
 }
 
-const Window = memo(function({
+const Window = memo(function ({
   injectProps,
   id,
   onMouseDown,
@@ -103,62 +103,62 @@ const Window = memo(function({
 
   return (
     <>
-    <div
-      patched={patched}
-      className={className}
-      ref={ref}
-      id={header.title}
-      onMouseDown={_onMouseDown}
-      style={{
-        transform: `translate(${x}px,${y}px)`,
-        width: width ? `${width}px` : 'auto',
-        height: height ? `${height}px` : 'auto',
-        zIndex,
-      }}
-    >
-      <div className="header__bg" />
-      <header
-        className="app__header"
-        ref={dragRef}
-        onDoubleClick={onDoubleClickHeader}
+      <div
+        patched={patched}
+        className={className}
+        ref={ref}
+        id={header.title}
+        onMouseDown={_onMouseDown}
+        style={{
+          transform: `translate(${x}px,${y}px)`,
+          width: width ? `${width}px` : "auto",
+          height: height ? `${height}px` : "auto",
+          zIndex,
+        }}
       >
-        <img
-          onDoubleClick={_onMouseUpClose}
-          src={header.icon}
-          alt={header.title}
-          className="app__header__icon"
-          draggable={false}
-        />
-        <div className="app__header__title">{header.title}</div>
-        <HeaderButtons
-          buttons={header.buttons}
-          onMaximize={_onMouseUpMaximize}
-          onMinimize={_onMouseUpMinimize}
-          onClose={_onMouseUpClose}
-          maximized={maximized}
-          resizable={resizable}
-          isFocus={isFocus}
-        />
-      </header>
-      <div className="app__content">
-        {component({
-          onClose: _onMouseUpClose,
-          onMinimize: _onMouseUpMinimize,
-          isFocus,
-          ...injectProps,
-        })}
+        <div className="header__bg" />
+        <header
+          className="app__header"
+          ref={dragRef}
+          onDoubleClick={onDoubleClickHeader}
+        >
+          <img
+            onDoubleClick={_onMouseUpClose}
+            src={header.icon}
+            alt={header.title}
+            className="app__header__icon"
+            draggable={false}
+          />
+          <div className="app__header__title">{header.title}</div>
+          <HeaderButtons
+            buttons={header.buttons}
+            onMaximize={_onMouseUpMaximize}
+            onMinimize={_onMouseUpMinimize}
+            onClose={_onMouseUpClose}
+            maximized={maximized}
+            resizable={resizable}
+            isFocus={isFocus}
+          />
+        </header>
+        <div className="app__content">
+          {component({
+            onClose: _onMouseUpClose,
+            onMinimize: _onMouseUpMinimize,
+            isFocus,
+            ...injectProps,
+          })}
+        </div>
       </div>
-    </div>
     </>
   );
 });
 
 const StyledWindow = styled(Window)`
-  display: ${({ show }) => (show ? 'flex' : 'none')};
+  display: ${({ show }) => (show ? "flex" : "none")};
   position: absolute;
   padding: 3px;
   padding: ${({ header }) => (header.invisible ? 0 : 3)}px;
-  background-color: ${({ isFocus }) => (isFocus ? '#092052' : '#6582f5')};
+  background-color: ${({ isFocus }) => (isFocus ? "#092052" : "#6582f5")};
   flex-direction: column;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -175,7 +175,7 @@ const StyledWindow = styled(Window)`
     overflow: hidden;
   }
   .header__bg:before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     left: 0;
@@ -185,7 +185,7 @@ const StyledWindow = styled(Window)`
     width: 7px;
   }
   .header__bg:after {
-    content: '';
+    content: "";
     opacity: ${({ isFocus }) => (isFocus ? 1 : 0.4)};
     display: block;
     position: absolute;
@@ -196,12 +196,12 @@ const StyledWindow = styled(Window)`
     width: 7px;
   }
   .app__header {
-    display: ${({ header }) => (header.invisible ? 'none' : 'flex')};
+    display: ${({ header }) => (header.invisible ? "none" : "flex")};
     height: 25px;
     line-height: 25px;
     font-weight: 700;
     font-size: 12px;
-    font-family: 'Noto Sans';
+    font-family: "Noto Sans";
     text-shadow: 1px 1px #000;
     color: white;
     position: absolute;

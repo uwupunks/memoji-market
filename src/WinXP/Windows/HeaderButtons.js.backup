@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import c from 'assets/extra/window/close1.png';
-import ch from 'assets/extra/window/close2.png';
-import cu from 'assets/extra/window/close3.png';
-import mm from 'assets/extra/window/min1.png';
-import mmh from 'assets/extra/window/min2.png';
-import mmu from 'assets/extra/window/min3.png';
+import c from './assets/extra/window/close1.png';
+import ch from './assets/extra/window/close2.png';
+import cu from './assets/extra/window/close3.png';
+import mm from './assets/extra/window/min1.png';
+import mmh from './assets/extra/window/min2.png';
+import mmu from './assets/extra/window/min3.png';
 
 function HeaderButtons({
   buttons,

@@ -1,30 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import Balloon from 'components/Balloon';
-import sb1 from 'assets/extra/footer/sbut1.png';
-import sb2 from 'assets/extra/footer/sbut2.png';
-import sb3 from 'assets/extra/footer/sbut3.png';
-import footerMenuImage from 'assets/extra/footer/startmenu.png';
-import sound from 'assets/windowsIcons/690(16x16).png';
-import usb from 'assets/windowsIcons/394(16x16).png';
-import risk from 'assets/windowsIcons/229(16x16).png';
-import lbar from 'assets/extra/footer/lbar.png';
-import rbar from 'assets/extra/footer/rbar.png';
+import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import Balloon from "../../components/Balloon";
+import sb1 from "../../assets/extra/footer/sbut1.png";
+import sb2 from "../../assets/extra/footer/sbut2.png";
+import sb3 from "../../assets/extra/footer/sbut3.png";
+import footerMenuImage from "../../assets/extra/footer/startmenu.png";
+import sound from "../../assets/windowsIcons/690(16x16).png";
+import usb from "../../assets/windowsIcons/394(16x16).png";
+import risk from "../../assets/windowsIcons/229(16x16).png";
+import lbar from "../../assets/extra/footer/lbar.png";
+import rbar from "../../assets/extra/footer/rbar.png";
 
 const getTime = () => {
   const date = new Date();
   let hour = date.getHours();
-  let hourPostFix = 'AM';
+  let hourPostFix = "AM";
   let min = date.getMinutes();
   if (hour >= 12) {
     hour -= 12;
-    hourPostFix = 'PM';
+    hourPostFix = "PM";
   }
   if (hour === 0) {
     hour = 12;
   }
   if (min < 10) {
-    min = '0' + min;
+    min = "0" + min;
   }
   return `${hour}:${min} ${hourPostFix}`;
 };
@@ -68,14 +68,14 @@ function Footer({
       if (newState) {
         setTimeout(() => attachOutsideClickListener(), 0);
       }
-      console.log('Menu toggled:', newState);
+      console.log("Menu toggled:", newState);
       return newState;
     });
   }
 
   function attachOutsideClickListener() {
     function onMouseDown(e) {
-      console.log('mousedown event detected', e);
+      console.log("mousedown event detected", e);
       if (initialClick.current) {
         setTimeout(() => {
           initialClick.current = false; // Reset the initial click flag
@@ -83,22 +83,22 @@ function Footer({
         return;
       }
       if (!menu.current.contains(e.target) && menuOn) {
-        console.log('Closing menu because click outside detected');
+        console.log("Closing menu because click outside detected");
         setMenuOn(false);
       }
     }
-    window.addEventListener('mousedown', onMouseDown);
-    return () => window.removeEventListener('mousedown', onMouseDown);
+    window.addEventListener("mousedown", onMouseDown);
+    return () => window.removeEventListener("mousedown", onMouseDown);
   }
 
   function _onMouseDown(e) {
-    console.log('Footer _onMouseDown event detected', e);
-    if (e.target.closest('.footer__window')) return;
+    console.log("Footer _onMouseDown event detected", e);
+    if (e.target.closest(".footer__window")) return;
     onMouseDown();
   }
 
   function _onClickMenuItem(name) {
-    console.log('Footer _onClickMenuItem:', name);
+    console.log("Footer _onClickMenuItem:", name);
     onClickMenuItem(name);
     setMenuOn(false);
   }
@@ -142,7 +142,7 @@ function Footer({
                 onMouseDown={onMouseDownApp}
                 isFocus={focusedAppId === app.id}
               />
-            ),
+            )
         )}
       </div>
 
@@ -150,7 +150,7 @@ function Footer({
         <img className="footer__icon" src={sound} alt="" />
         <img className="footer__icon" src={usb} alt="" />
         <img className="footer__icon" src={risk} alt="" />
-        <div style={{ position: 'relative', width: 0, height: 0 }}>
+        <div style={{ position: "relative", width: 0, height: 0 }}>
           <Balloon />
         </div>
         <div className="footer__time">{time}</div>
@@ -166,8 +166,8 @@ function FooterWindow({ id, icon, title, onMouseDown, isFocus }) {
   return (
     <div
       onMouseDown={_onMouseDown}
-      id={title+"menu"}
-      className={`footer__window ${isFocus ? 'focus' : 'cover'}`}
+      id={title + "menu"}
+      className={`footer__window ${isFocus ? "focus" : "cover"}`}
     >
       <img className="footer__icon" src={icon} alt={title} />
       <div className="footer__text">{title}</div>
@@ -251,7 +251,7 @@ const Container = styled.footer`
   }
   .footer__window.cover:before {
     display: block;
-    content: '';
+    content: "";
     position: absolute;
     left: -2px;
     top: -2px;

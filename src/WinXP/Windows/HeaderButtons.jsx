@@ -1,25 +1,25 @@
-import React from 'react';
-import styled from 'styled-components';
-import c from 'assets/extra/window/close1.png';
-import ch from 'assets/extra/window/close2.png';
-import cu from 'assets/extra/window/close3.png';
-import cuf from 'assets/extra/window/close4.png';
-import cuuh from 'assets/extra/window/close5.png';
-import mm from 'assets/extra/window/min1.png';
-import mmh from 'assets/extra/window/min2.png';
-import mmu from 'assets/extra/window/min3.png';
-import mmuf from 'assets/extra/window/min4.png';
-import mmuuh from 'assets/extra/window/min5.png';
-import m from 'assets/extra/window/max1.png';
-import mh from 'assets/extra/window/max2.png';
-import mu from 'assets/extra/window/max3.png';
-import muf from 'assets/extra/window/max4.png';
-import muuh from 'assets/extra/window/max5.png';
-import mi from 'assets/extra/window/micro1.png';
-import mih from 'assets/extra/window/micro2.png';
-import miu from 'assets/extra/window/micro3.png';
-import miuf from 'assets/extra/window/micro4.png';
-import miuuh from 'assets/extra/window/micro5.png';
+import React from "react";
+import styled from "styled-components";
+import c from "../../assets/extra/window/close1.png";
+import ch from "../../assets/extra/window/close2.png";
+import cu from "../../assets/extra/window/close3.png";
+import cuf from "../../assets/extra/window/close4.png";
+import cuuh from "../../assets/extra/window/close5.png";
+import mm from "../../assets/extra/window/min1.png";
+import mmh from "../../assets/extra/window/min2.png";
+import mmu from "../../assets/extra/window/min3.png";
+import mmuf from "../../assets/extra/window/min4.png";
+import mmuuh from "../../assets/extra/window/min5.png";
+import m from "../../assets/extra/window/max1.png";
+import mh from "../../assets/extra/window/max2.png";
+import mu from "../../assets/extra/window/max3.png";
+import muf from "../../assets/extra/window/max4.png";
+import muuh from "../../assets/extra/window/max5.png";
+import mi from "../../assets/extra/window/micro1.png";
+import mih from "../../assets/extra/window/micro2.png";
+import miu from "../../assets/extra/window/micro3.png";
+import miuf from "../../assets/extra/window/micro4.png";
+import miuuh from "../../assets/extra/window/micro5.png";
 function HeaderButtons({
   buttons,
   onMaximize,
@@ -41,8 +41,8 @@ function HeaderButtons({
       <button
         key="maximize"
         className={`header__button ${
-          maximized ? 'header__button--maximized' : 'header__button--maximize'
-        } ${resizable ? '' : 'header__button--disable'}`}
+          maximized ? "header__button--maximized" : "header__button--maximize"
+        } ${resizable ? "" : "header__button--disable"}`}
         onMouseUp={onMaximize}
       />
     ),
@@ -58,7 +58,7 @@ function HeaderButtons({
   return (
     <div className={className}>
       {buttons ? (
-        buttons.map(b => buttonElements[b])
+        buttons.map((b) => buttonElements[b])
       ) : (
         <>
           {buttonElements.minimize}

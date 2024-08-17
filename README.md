@@ -2,5 +2,5 @@
 
 Running locally:
 
-yarn install && yarn start
+npm i --force && npm run start
 

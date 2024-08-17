@@ -100,6 +100,7 @@ import mCharacter from "../../../assets/img/mCharacter.png";
 import bCharacter from "../../../assets/img/bCharacter.png";
 import tCharacter from "../../../assets/img/tCharacter.png";
 import lessThanCharacter from "../../../assets/img/lessThanCharacter.png";
+import Draggable from "react-draggable";
 import { getBalance } from "hooks/getBalance";
 
 let voxArray = [
@@ -317,36 +318,6 @@ function Cracked({ onClose, onMinimize }) {
       function swapLeave() {
         swap.src = switchSwap;
       }
-
-
-
-      const draggableDiv = document.getElementById('swapWindow');
-
-// Set initial position
-let startX, startY;
-let isDragging = false;
-
-// Event listeners
-draggableDiv.addEventListener('mousedown', (e) => {
-  startX = e.clientX;
-  startY = e.clientY;
-  isDragging = true;
-});
-
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (isDragging) {
-    const newX = startX + e.clientX;
-    const newY = startY + e.clientY;
-    draggableDiv.style.left = `${newX}px`;
-    draggableDiv.style.top = `${newY}px`;
-  }
-});
-
-
     }
   });
 
@@ -978,89 +949,90 @@ document.addEventListener('mousemove', (e) => {
           <img className="invSlots" src={invSlots} />
           <img className="invBottom" src={invSlotsBottom} />
         </div>
-        <div id="memeMarketSection">
-          <div className="memeSection"></div>
-          <div className="buttonSection">
-            {activeButton === 0 && (
-              <>
-                <img className="allButton" id="allButton" src={allButton} />
-                <img
-                  onClick={() => setActiveButton(1)}
-                  className="hiddenButton"
-                  id="hiddenButton"
-                  style={{ opacity: "0" }}
-                  src={hiddenButton}
+        <Draggable>
+          <div id="memeMarketSection">
+            <div className="memeSection"></div>
+            <div className="buttonSection">
+              {activeButton === 0 && (
+                <>
+                  <img className="allButton" id="allButton" src={allButton} />
+                  <img
+                    onClick={() => setActiveButton(1)}
+                    className="hiddenButton"
+                    id="hiddenButton"
+                    style={{ opacity: "0" }}
+                    src={hiddenButton}
+                  />
+                  <img
+                    onClick={() => setActiveButton(2)}
+                    className="classicButton"
+                    id="classicButton"
+                    style={{ opacity: "0" }}
+                    src={classicButton}
+                  />
+                </>
+              )}
+              {activeButton === 1 && (
+                <>
+                  <img
+                    onClick={() => setActiveButton(0)}
+                    className="allButton"
+                    id="allButton"
+                    style={{ opacity: "0" }}
+                    src={allButton}
+                  />
+                  <img
+                    className="hiddenButton"
+                    id="hiddenButton"
+                    src={hiddenButton}
+                  />
+                  <img
+                    onClick={() => setActiveButton(2)}
+                    className="classicButton"
+                    id="classicButton"
+                    style={{ opacity: "0" }}
+                    src={classicButton}
+                  />
+                </>
+              )}
+              {activeButton === 2 && (
+                <>
+                  <img
+                    onClick={() => setActiveButton(0)}
+                    className="allButton"
+                    id="allButton"
+                    style={{ opacity: "0" }}
+                    src={allButton}
+                  />
+                  <img
+                    onClick={() => setActiveButton(1)}
+                    className="hiddenButton"
+                    id="hiddenButton"
+                    style={{ opacity: "0" }}
+                    src={hiddenButton}
+                  />
+                  <img
+                    className="classicButton"
+                    id="classicButton"
+                    src={classicButton}
+                  />
+                </>
+              )}
+            </div>
+            <div className="listItems">
+              <div id="assetGrid" className="ag-theme-quartz-dark">
+                <AgGridReact
+                  rowData={rowData}
+                  columnDefs={colDefs}
+                  defaultColDef={defaultColDef}
+                  rowSelection="single"
+                  ref={gridRef}
+                  onSelectionChanged={onSelectionChanged}
                 />
-                <img
-                  onClick={() => setActiveButton(2)}
-                  className="classicButton"
-                  id="classicButton"
-                  style={{ opacity: "0" }}
-                  src={classicButton}
-                />
-              </>
-            )}
-            {activeButton === 1 && (
-              <>
-                <img
-                  onClick={() => setActiveButton(0)}
-                  className="allButton"
-                  id="allButton"
-                  style={{ opacity: "0" }}
-                  src={allButton}
-                />
-                <img
-                  className="hiddenButton"
-                  id="hiddenButton"
-                  src={hiddenButton}
-                />
-                <img
-                  onClick={() => setActiveButton(2)}
-                  className="classicButton"
-                  id="classicButton"
-                  style={{ opacity: "0" }}
-                  src={classicButton}
-                />
-              </>
-            )}
-            {activeButton === 2 && (
-              <>
-                <img
-                  onClick={() => setActiveButton(0)}
-                  className="allButton"
-                  id="allButton"
-                  style={{ opacity: "0" }}
-                  src={allButton}
-                />
-                <img
-                  onClick={() => setActiveButton(1)}
-                  className="hiddenButton"
-                  id="hiddenButton"
-                  style={{ opacity: "0" }}
-                  src={hiddenButton}
-                />
-                <img
-                  className="classicButton"
-                  id="classicButton"
-                  src={classicButton}
-                />
-              </>
-            )}
+              </div>{" "}
+            </div>
           </div>
-          <div className="listItems">
-            <div id="assetGrid" className="ag-theme-quartz-dark">
-              <AgGridReact
-                rowData={rowData}
-                columnDefs={colDefs}
-                defaultColDef={defaultColDef}
-                rowSelection="single"
-                ref={gridRef}
-                onSelectionChanged={onSelectionChanged}
-              />
-            </div>{" "}
-          </div>
-        </div>
-
+        </Draggable>
         {isWalletConnected ? (
           <>
             <div className="walletItems">
@@ -1083,60 +1055,56 @@ document.addEventListener('mousemove', (e) => {
         )}
         <div id="bottomBar">
           <div>
-          <img
-            onMouseOver={overSound}
-            className="mascot"
-            onClick={() => onClose(onClose)}
-            src={mascotButton}
-          /></div>
-          <div><img
-            className="exit"
-            onClick={() => onClose(onClose)}
-            src={exitButton}
-          /></div>
-          <div>{isWalletConnected ? (
-            <>
-              <img
-                className="walletButton"
-                id="wallet"
-                onClick={() => disconnect()}
-                src={switchButton}
-              />
-            </>
-          ) : (
-            <>
-              <img
-                className="walletButton"
-                id="wallet"
-                onClick={async () => {
-                  await connect();
-                  console.log("connected");
-                }}
-                src={connectButton}
-              />
-            </>
-          )}
+            <img
+              onMouseOver={overSound}
+              className="mascot"
+              onClick={() => onClose(onClose)}
+              src={mascotButton}
+            />
+          </div>
+          <div>
+            <img
+              className="exit"
+              onClick={() => onClose(onClose)}
+              src={exitButton}
+            />
+          </div>
+          <div>
+            {isWalletConnected ? (
+              <>
+                <img
+                  className="walletButton"
+                  id="wallet"
+                  onClick={() => disconnect()}
+                  src={switchButton}
+                />
+              </>
+            ) : (
+              <>
+                <img
+                  className="walletButton"
+                  id="wallet"
+                  onClick={async () => {
+                    await connect();
+                    console.log("connected");
+                  }}
+                  src={connectButton}
+                />
+              </>
+            )}
           </div>
           <div className="assetsWindow">
-           <img src={assetsWindow} />
-          <p className="unicornBal">
-            {true
-              ? Number(Number(0) / Math.pow(10, 6)).toFixed(2)
-              : 0}
-          </p>
-          <p className="blackflagBal">
-            0 🏴
-          </p>
-          <p className="diamondBal">
-            0 💎
-          </p> 
+            <img src={assetsWindow} />
+            <p className="unicornBal"></p>
+            <p className="blackflagBal"></p>
+            <p className="diamondBal"></p>
           </div>
         </div>
       </div>
 
       {swapActive ? (
-        <>
-          <div className="swapWindow" id="swapWindow" onMouseDown={clickSound}>
+        <Draggable>
+          <div className="swapWindow" onMouseDown={clickSound}>
             <img
               className="tradeSwap"
               id="trade"
@@ -1185,7 +1153,7 @@ document.addEventListener('mousemove', (e) => {
             </span>
             <p className="rightSwapName">{rightName}</p>
           </div>
-        </>
+        </Draggable>
       ) : (
         <></>
       )}

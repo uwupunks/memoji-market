@@ -34,7 +34,7 @@
     "@cosmos-kit/xdefi-extension": "^2.11.2",
     "@interchain-ui/react": "^1.23.30",
     "@react-three/fiber": "^8.16.8",
-    "@stablelib/random": "^1.0.2",
+    "@stablelib/random": "^2.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "ag-grid-react": "^32.1.0",

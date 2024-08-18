@@ -1,122 +1,84 @@
 import React, { useEffect } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { VOXLoader, VOXMesh } from "three/examples/jsm/loaders/VOXLoader";
 
-let camera, controls, scene, renderer;
-
 function VoxLoader({ object }) {
+  const voxAreaRef = useRef(null);
+
   useEffect(() => {
-    init();
+    let camera, controls, scene, renderer;
 
-    function init() {
-      camera = new THREE.PerspectiveCamera(
-        50,
-        window.innerWidth / window.innerHeight,
-        0.01,
-        10
+    camera = new THREE.PerspectiveCamera(
+      50,
+      window.innerWidth / window.innerHeight,
+      0.01,
+      10
+    );
+    camera.position.set(0.175, 0.075, 0.175);
+
+    scene = new THREE.Scene();
+    scene.add(camera);
+
+    // light
+    const hemiLight = new THREE.HemisphereLight(0xcccccc, 0x444444, 3);
+    scene.add(hemiLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    dirLight.position.set(1.5, 3, 2.5);
+    scene.add(dirLight);
+
+    const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
+    dirLight2.position.set(-1.5, -3, -2.5);
+    scene.add(dirLight2);
+
+    const loader = new VOXLoader();
+    loader.load(object, function (chunks) {
+      for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
+        const mesh = new VOXMesh(chunk);
+        mesh.scale.setScalar(0.0015);
+        scene.add(mesh);
+      }
+    });
+
+    // renderer
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(100, 100);
+    renderer.setAnimationLoop(() => {
+      const r = Date.now() * 0.0005;
+      camera.position.set(
+        700 * Math.cos(r),
+        700 * Math.sin(r),
+        700 * Math.sin(r)
       );
-      camera.position.set(0.175, 0.075, 0.175);
 
-      scene = new THREE.Scene();
-      scene.add(camera);
+      controls.update();
+      renderer.render(scene, camera);
+    });
 
-      // light
+    // controls
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.minDistance = 0.03;
+    controls.maxDistance = 0.035;
 
-      const hemiLight = new THREE.HemisphereLight(0xcccccc, 0x444444, 3);
-      scene.add(hemiLight);
-
-      const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
-      dirLight.position.set(1.5, 3, 2.5);
-      scene.add(dirLight);
-
-      const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
-      dirLight2.position.set(-1.5, -3, -2.5);
-      scene.add(dirLight2);
-
-      const loader = new VOXLoader();
-      loader.load(object, function (chunks) {
-        for (let i = 0; i < chunks.length; i++) {
-          const chunk = chunks[i];
-
-          // displayPalette( chunk.palette );
-
-          const mesh = new VOXMesh(chunk);
-          mesh.scale.setScalar(0.0015);
-          scene.add(mesh);
-        }
-      });
-
-      // renderer
-
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(100, 100);
-      renderer.setAnimationLoop(animate);
-      document.getElementById("voxArea").appendChild(renderer.domElement);
-
-      // controls
-
-      controls = new OrbitControls(camera, renderer.domElement);
-      controls.minDistance = 0.03;
-      controls.maxDistance = 0.035;
-
-      //
-
-      window.addEventListener("resize", onWindowResize);
-    }
-  }, []);
-
-  /*
-			function displayPalette( palette ) {
-
-				const canvas = document.createElement( 'canvas' );
-				canvas.width = 8;
-				canvas.height = 32;
-				canvas.style.position = 'absolute';
-				canvas.style.top = '0';
-				canvas.style.width = '100px';
-				canvas.style.imageRendering = 'pixelated';
-				document.body.appendChild( canvas );
-
-				const context = canvas.getContext( '2d' );
-
-				for ( let c = 0; c < 256; c ++ ) {
-
-					const x = c % 8;
-					const y = Math.floor( c / 8 );
-
-					const hex = palette[ c + 1 ];
-					const r = hex >> 0 & 0xff;
-					const g = hex >> 8 & 0xff;
-					const b = hex >> 16 & 0xff;
-					context.fillStyle = `rgba(${r},${g},${b},1)`;
-					context.fillRect( x, 31 - y, 1, 1 );
-
-				}
-
-			}
-			*/
-
-  function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }
+    if (voxAreaRef.current.childNodes.length === 0) {
+      voxAreaRef.current.appendChild(renderer.domElement);
+    } else {
+      voxAreaRef.current.replaceChild(
+        renderer.domElement,
+        voxAreaRef.current.childNodes[0]
+      );
+    }
+  }, [window.innerWidth]);
 
-  function animate() {
-    controls.update();
-
-    renderer.render(scene, camera);
-  }
-
-  return (
-    <>
-      <p id="voxArea"></p>
-    </>
-  );
+  return <div ref={voxAreaRef}></div>;
 }
 
 export default VoxLoader;

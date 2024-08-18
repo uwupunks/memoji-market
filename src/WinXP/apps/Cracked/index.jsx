@@ -35,7 +35,6 @@ import overMp3 from "../../../assets/sounds/btmouseover.mp3";
 import clickMp3 from "../../../assets/sounds/btclick.mp3";
 import completeMp3 from "../../../assets/sounds/dlgnotice.mp3";
 import VoxLoader from "./voxLoader.jsx";
-import VoxLoaderTwo from "./voxLoaderTwo.jsx";
 import ualienVox from "../../../assets/vox/sample.vox";
 import ubearVox from "../../../assets/vox/sample.vox";
 import ubearHearthVox from "../../../assets/vox/sample.vox";
@@ -565,7 +564,6 @@ function Cracked({ onClose, onMinimize }) {
             mcap: numberFormatter.format(supplyArray[i][4]),
             liq: percentFormatter.format(supplyArray[i][7]),
             tvl: numberFormatter.format(supplyArray[i][6]),
-            swap: "Swap",
           });
         }
 
@@ -1141,13 +1139,13 @@ function Cracked({ onClose, onMinimize }) {
               }}
               type="number"
             />
-            <span className="leftSwapSymbol">
+            <div className="leftSwapSymbol">
               <VoxLoader object={leftSymbol} />
-            </span>
+            </div>
             <p className="leftSwapName">{leftName}</p>
-            <span className="rightSwapSymbol">
-              <VoxLoaderTwo object={rightSymbol} />
-            </span>
+            <div className="rightSwapSymbol">
+              <VoxLoader object={rightSymbol} />
+            </div>
             <p className="rightSwapName">{rightName}</p>
           </div>
         </Draggable>

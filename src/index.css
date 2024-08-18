@@ -30,6 +30,7 @@
 
 #memeMarketSection {
   background: url("./assets/img/bgAssets.png");
+  border-radius: 5px;
   height: 79%;
   width: 62%;
   max-width: 698px;
@@ -275,61 +276,48 @@ input[type="number"] {
 }
 
 .userSection {
-  position: absolute;
   width: 315px;
-  top: 31px;
-  left: 15px;
-  z-index: 99;
+  padding-top: 3%;
+  margin-left: 2%;
 }
 
 .walletItems {
   display: flex;
   flex-flow: row wrap;
-  position: absolute;
-  width: 210px;
-  height: 30px;
-  top: 240px;
-  left: 22px;
-  z-index: 99;
+
+  height: 52%;
+  width: 23%;
+  margin-top: 5%;
+  margin-left: 3%;
+
+  background-color: #eae9e9;
+  border: 1px solid #d4cbcb;
+  border-radius: 10px;
 }
 
-.assetSpan {
-  margin-right: 5px !important;
-  margin-bottom: 4.5px !important;
+.assetWrapper {
   width: 30px;
   height: 30px;
+  flex: auto;
 }
 
-.assetImg {
-  position: relative;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 100%;
-  padding: 0 !important;
-  margin: 0 !important;
+.assetEmoji {
+  flex: auto;
+  font-size: 30px;
 }
 
 .assetAmount {
-  position: relative;
+  flex: auto;
   font-family: "VCR OSD Mono", sans-serif;
   width: 40px;
-  text-shadow: -1px -1px 0 #000, 0 -1px 0 #000, 1px -1px 0 #000, 1px 0 0 #000,
-    1px 1px 0 #000, 0 1px 0 #000, -1px 1px 0 #000, -1px 0 0 #000;
-  left: -2px;
-  bottom: 13.5px;
   padding: 0;
   margin: 0;
-  font-weight: 700;
-  color: white;
-}
-
-.inventorySection {
-  position: absolute;
-  width: 315px;
-  top: 180px;
-  left: 15px;
-  z-index: 99;
+  font-weight: 900;
+  font-size: 12pt;
+  text-shadow: 1px 1px 2px rgb(194, 11, 184);
+  background-image: linear-gradient(to right, rgb(255, 0, 225), yellow);
+  color: transparent;
+  background-clip: text;
 }
 
 .invText {

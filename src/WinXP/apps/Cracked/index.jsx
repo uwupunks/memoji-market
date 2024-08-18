@@ -99,7 +99,11 @@ import bCharacter from "../../../assets/img/bCharacter.png";
 import tCharacter from "../../../assets/img/tCharacter.png";
 import lessThanCharacter from "../../../assets/img/lessThanCharacter.png";
 import Draggable from "react-draggable";
-import { getBalance } from "../../../hooks";
+import { CONTRACTS, ENDPOINTS, MEMOJI } from "../../../constants";
+import {
+  fetchBalancesAsync,
+  findBalance,
+} from "../../../hooks/balanceUtils.jsx";
 
 let voxArray = [
   ualienVox,
@@ -189,7 +193,6 @@ function Cracked({ onClose, onMinimize }) {
   const [leftDenom, setLeftDenom] = useState("");
   const [rightDenom, setRightDenom] = useState("");
   const [swapActive, setSwapActive] = useState(false);
-  const [otherRows, setOtherRows] = useState([]);
   const [leftName, setLeftName] = useState("");
   const [leftSymbol, setLeftSymbol] = useState("");
   const [rightSymbol, setRightSymbol] = useState("🦄");
@@ -199,7 +202,6 @@ function Cracked({ onClose, onMinimize }) {
   const [message, setMessage] = useState();
   let supplyArray = [];
   const [stateSupplyArray, setStateSupplyArray] = useState([]);
-  // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([]);
   let gridRef = useRef();
   const [buySound] = useSound(buyMp3);
@@ -362,95 +364,16 @@ function Cracked({ onClose, onMinimize }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const supplyResponse = await fetch(
-          "https://rest.unicorn.meme/cosmos/bank/v1beta1/supply?pagination.limit=100"
-        );
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        const supplyResponse = await fetch(ENDPOINTS.supply, { signal });
         const supplyData = await supplyResponse.json();
-
-        const emoji = {
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ualien": "👽",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ubear":
-            "ʕ·͡ᴥ·ʔ",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ubearhearth":
-            "ʕっ•ᴥ•ʔっ❤️",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ublackflag":
-            "🏴",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ublissful":
-            "(｡◕‿‿◕｡)",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ublowfish":
-            "🐡",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ucash": "💸",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ucat": "🐱",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uchains":
-            "🙍⛓️",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uchick": "🐤",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uchina": "🇨🇳",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uclown": "🤡",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ucorn": "🌽",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ucrystalball":
-            "🔮",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/udiamond":
-            "💎",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/udice": "🎲",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/udog": "🐶",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ueggplant":
-            "🍆",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ueightball":
-            "🎱",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uenvelop":
-            "✉️",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ufahrenheit":
-            "🔥",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ufrog": "🐸",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ugun":
-            "▄︻デ══‐一♡",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/umeat": "🥩",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/umoon": "🌕",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/umog": "😹",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uorwell":
-            "🐷",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upaper": "📄",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upeace": "☮️",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upeach": "🍑",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upi": "🥧",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uplaceholder":
-            "placeholder",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upoo": "💩",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upretzel":
-            "🥨",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uretard":
-            "🤡",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/urock": "🪨",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/urocket":
-            "🚀",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/usa": "🇺🇸",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uscisors":
-            "✂️",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ushot": "🔫",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ushrimp":
-            "🦐",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uskull": "💀",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/usushi": "🍣",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/utaco": "🌮",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/utaiwan":
-            "🇹🇼",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/utest":
-            "test",
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uwatermelon":
-            "🍉",
-          uwunicorn: "🦄",
-        };
-
-        const rest = "https://rest.unicorn.meme";
-        const wasm = "/cosmwasm/wasm/v1/contract/";
-        const factory =
-          "unicorn1yvgh8xeju5dyr0zxlkvq09htvhjj20fncp5g58np4u25g8rkpgjslkfelc";
-
-        const devliq = "unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty";
+        const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
 
         const getPair = async (denom) => {
           const res = await fetch(
-            `${rest}${wasm}${factory}/smart/${btoa(
+            `${ENDPOINTS.factory}/${btoa(
               JSON.stringify({
                 pair: {
                   asset_infos: [
@@ -459,129 +382,128 @@ function Cracked({ onClose, onMinimize }) {
                   ],
                 },
               })
-            )}`
+            )}`,
+            { signal }
           );
           const data = await res.json();
           return data.data.contract_addr;
         };
 
-        const getPrice = async (denom) => {
+        const getPriceAndTvl = async (denom) => {
           const pair = await getPair(denom);
-          const ubal = await getBalance(pair, "uwunicorn");
-          const dbal = await getBalance(pair, denom);
-          return ubal / dbal;
-        };
-
-        const getTVL = async (denom) => {
-          const pair = await getPair(denom);
-          const balance = await getBalance(pair, "uwunicorn");
-          return balance;
+          const balances = await fetchBalancesAsync(pair, signal);
+          const ubal = findBalance(balances, "uwunicorn");
+          const dbal = findBalance(balances, denom);
+          return { price: ubal / dbal, tvl: ubal };
         };
 
         const getInfo = async (sup) => {
-          const d = sup.denom;
-          const s = parseFloat(sup.amount) / 1000000;
-          const b = await getBalance(devliq, d);
-          const circ = s - b;
+          const denom = sup.denom;
+          const denomShorthand = sup.denom.split("/")[2];
+          const supply = parseFloat(sup.amount) / 1000000;
+          const lpBalance = findBalance(lpBalances, denom);
+          const circ = supply - lpBalance;
 
-          if (d === "uwunicorn") {
+          if (denom === "uwunicorn") {
             return {
               denom: "uwunicorn",
-              emoji: emoji["uwunicorn"],
-              supply: s,
+              emoji: MEMOJI.find((x) => x["uwunicorn"])["uwunicorn"],
+              supply: supply,
               circ,
-              mcap: s,
-              fdv: s,
+              mcap: supply,
+              fdv: supply,
               tvl: 0,
               liq: 0,
               price: 1,
-              balance: b,
-              share: b / circ,
-              value: b,
+              balance: lpBalance,
+              share: lpBalance / circ,
+              value: lpBalance,
+              listed: true,
             };
           } else {
-            const price = await getPrice(d);
-            const tvl = await getTVL(d);
+            const priceAndTvl = await getPriceAndTvl(denom);
+            const price = priceAndTvl.price;
+            const tvl = priceAndTvl.tvl;
             const info = {
-              denom: d,
-              emoji: emoji[d],
-              supply: s,
+              denom: denom,
+              denomShorthand,
+              emoji: MEMOJI.find((x) => x[denomShorthand])[denomShorthand],
+              supply: supply,
               circ,
               mcap: price * circ,
-              fdv: price * s,
+              fdv: price * supply,
               tvl,
               liq: tvl / (price * circ),
               price,
-              balance: b,
-              share: b / circ,
-              value: b * price,
+              balance: lpBalance,
+              share: lpBalance / circ,
+              value: lpBalance * price,
+              listed: MEMOJI.find((x) => x[denom])?.listed,
             };
             return info;
           }
         };
 
         const infos = await Promise.all(supplyData.supply.map(getInfo));
-        const headerRow = [
-          "Emoji",
-          "Denom",
-          "Supply",
-          "Circ",
-          "MCap",
-          "FDV",
-          "TVL",
-          "Liq",
-          "Price",
-          "Balance",
-          "Share",
-          "Value",
-        ];
-        setHeaderRow(headerRow);
 
-        const otherRows = infos.map((info) => [
-          supplyArray.push([
-            info.emoji,
-            info.denom,
-            info.supply,
-            info.circ,
-            info.mcap,
-            info.fdv,
-            info.tvl,
-            info.liq,
-            info.price,
-            info.balance,
-            info.share,
-            info.value,
-          ]),
-        ]);
-        let jsonArray = [];
-        for (let i = 0; i < supplyArray.length; i++) {
-          jsonArray.push({
-            id: i,
-            emoji: String(supplyArray[i][0]),
-            denom: String(supplyArray[i][1]),
-            price: Number(supplyArray[i][8]),
-            priceDisplay: numberFormatter.format(supplyArray[i][8]) + " 🦄",
-            mcap: numberFormatter.format(supplyArray[i][4]),
-            liq: percentFormatter.format(supplyArray[i][7]),
-            tvl: numberFormatter.format(supplyArray[i][6]),
-          });
-        }
+        const rowData = infos.map((info) => ({
+          emoji: String(info.emoji),
+          denom: String(info.denom),
+          denomDisplay: info.denomShorthand,
+          price: Number(info.price),
+          priceDisplay: numberFormatter.format(info.price) + " 🦄",
+          mcap: numberFormatter.format(info.mcap),
+          liq: percentFormatter.format(info.liq),
+          tvl: numberFormatter.format(info.tvl),
+          fdv: numberFormatter.format(info.fdv),
+          supply: info.supply,
+          balance: info.balance,
+          share: info.share,
+          value: info.value,
+          circ: info.circ,
+        }));
 
-        setRowData(jsonArray);
-        setOtherRows(otherRows);
-
-        let alienBalance = await getBalance(
-          address,
-          "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ualien"
-        );
-        setBalances([{ name: "alien", amount: alienBalance }]);
+        setRowData(rowData);
+        return () => {
+          // cancel rest requests before component unmounts
+          controller.abort();
+        };
       } catch (error) {
         console.error("Error fetching market data: ", error);
       }
     };
 
     fetchData();
-  }, [isWalletConnected, swapActive]);
+  }, []);
+
+  useEffect(() => {
+    const fetchUserBalances = async () => {
+      try {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        if (isWalletConnected) {
+          const userBalances = await fetchBalancesAsync(address, signal);
+
+          const balances = userBalances.map((ub) => ({
+            name: rowData.find((r) => r.denom === ub.denom).denomDisplay,
+            emoji: rowData.find((r) => r.denom === ub.denom).emoji,
+            amount: displayNumber(Number(ub.amount) / 1000000),
+          }));
+          console.log(balances);
+          setBalances(balances);
+        }
+        return () => {
+          // cancel rest requests before component unmounts
+          controller.abort();
+        };
+      } catch (error) {
+        console.error("Error fetching user balance data: ", error);
+      }
+    };
+
+    fetchUserBalances();
+  }, [address]);
 
   const onSelectionChanged = useCallback(() => {
     const selectedAsset = gridRef.current.api.getSelectedRows()?.[0];
@@ -632,247 +554,6 @@ function Cracked({ onClose, onMinimize }) {
   const defaultColDef = {
     flex: 1,
   };
-
-  // let { data: bearBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ubear",
-  // });
-  // let { data: bearhearthBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ubearhearth",
-  // });
-  // let { data: blackflagBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ublackflag",
-  // });
-  // let { data: blissfulBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ublissful",
-  // });
-  // let { data: blowfishBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ublowfish",
-  // });
-  // let { data: cashBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ucash",
-  // });
-  // let { data: catBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ucat",
-  // });
-  // let { data: chainsBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uchains",
-  // });
-  // let { data: chickBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uchick",
-  // });
-  // let { data: chinaBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uchina",
-  // });
-  // let { data: clownBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uclown",
-  // });
-  // let { data: cornBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ucorn",
-  // });
-  // let { data: crystalballBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom:
-  //     "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ucrystalball",
-  // });
-  // let { data: diamondBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/udiamond",
-  // });
-  // let { data: diceBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/udice",
-  // });
-  // let { data: dogBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/udog",
-  // });
-  // let { data: eggplantBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ueggplant",
-  // });
-  // let { data: eightballBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ueightball",
-  // });
-  // let { data: envelopBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uenvelop",
-  // });
-  // let { data: fahrenheitBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ufahrenheit",
-  // });
-  // let { data: frogBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ufrog",
-  // });
-  // let { data: gunBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ugun",
-  // });
-  // let { data: meatBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/umeat",
-  // });
-  // let { data: mogBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/umog",
-  // });
-  // let { data: moonBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/umoon",
-  // });
-  // let { data: orwellBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uorwell",
-  // });
-  // let { data: paperBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upaper",
-  // });
-  // let { data: peaceBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upeace",
-  // });
-  // let { data: peachBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upeach",
-  // });
-  // let { data: piBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upi",
-  // });
-  // let { data: placeholderBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom:
-  //     "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uplaceholder",
-  // });
-  // let { data: pooBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upoo",
-  // });
-  // let { data: pretzelBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/upretzel",
-  // });
-  // let { data: retardBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uretard",
-  // });
-  // let { data: rockBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/urock",
-  // });
-  // let { data: rocketBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/urocket",
-  // });
-  // let { data: usaBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/usa",
-  // });
-  // let { data: scisorsBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uscisors",
-  // });
-  // let { data: shotBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ushot",
-  // });
-  // let { data: shrimpBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/ushrimp",
-  // });
-  // let { data: skullBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uskull",
-  // });
-  // let { data: sushiBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/usushi",
-  // });
-  // let { data: tacoBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/utaco",
-  // });
-  // let { data: taiwanBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/utaiwan",
-  // });
-  // let { data: testBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/utest",
-  // });
-  // let { data: watermelonBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "factory/unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty/uwatermelon",
-  // });
-  // let { data: uwuBalance } = useBalance({
-  //   bech32Adddress: account?.bech32Address,
-  //   denom: "uwunicorn",
-  // });
-
-  //let coinArray = [
-  // bearBalance,
-  // bearhearthBalance,
-  // blackflagBalance,
-  // blissfulBalance,
-  // blowfishBalance,
-  // cashBalance,
-  // catBalance,
-  // chainsBalance,
-  // chickBalance,
-  // chinaBalance,
-  // clownBalance,
-  // cornBalance,
-  // crystalballBalance,
-  // diamondBalance,
-  // diceBalance,
-  // dogBalance,
-  // eggplantBalance,
-  // eightballBalance,
-  // envelopBalance,
-  // fahrenheitBalance,
-  // frogBalance,
-  // gunBalance,
-  // meatBalance,
-  // mogBalance,
-  // moonBalance,
-  // orwellBalance,
-  // paperBalance,
-  // peaceBalance,
-  // peachBalance,
-  // piBalance,
-  // placeholderBalance,
-  // pooBalance,
-  // pretzelBalance,
-  // retardBalance,
-  // rockBalance,
-  // rocketBalance,
-  // usaBalance,
-  // scisorsBalance,
-  // shotBalance,
-  // shrimpBalance,
-  // skullBalance,
-  // sushiBalance,
-  // tacoBalance,
-  // taiwanBalance,
-  // testBalance,
-  // watermelonBalance,
-  // uwuBalance,
-  //  ];
 
   const swapAssets = async () => {
     if (isWalletConnected) {
@@ -934,16 +615,7 @@ function Cracked({ onClose, onMinimize }) {
             </div>
           ) : null}
         </div>
-        <div className="inventorySection">
-          <img className="invText" src={invText} />
-          <img className="invTop" src={invSlotsTop} />
-          <img className="invSlots" src={invSlots} />
-          <img className="invSlots" src={invSlots} />
-          <img className="invSlots" src={invSlots} />
-          <img className="invSlots" src={invSlots} />
-          <img className="invSlots" src={invSlots} />
-          <img className="invBottom" src={invSlotsBottom} />
-        </div>
+
         <Draggable>
           <div id="memeMarketSection">
             <div className="memeSection"></div>
@@ -1029,22 +701,19 @@ function Cracked({ onClose, onMinimize }) {
           </div>
         </Draggable>
         {isWalletConnected ? (
-          <>
             <div className="walletItems">
               {balances?.map((asset) => {
                 return (
-                  <div key={asset.id}>
-                    <span className="assetSpan">
-                      <img className="assetImg" src={asset.name} />
-                      <p className="assetAmount">
-                        {parsedText(displayNumber(asset.amount))}
-                      </p>
-                    </span>
+                  <div key={asset.name} className="assetWrapper">
+                    <div className="assetEmoji">{asset.emoji}</div>
+                    <div className="assetAmount">
+                      {displayNumber(asset.amount)}
+                    </div>
                   </div>
                 );
               })}
             </div>
-          </>
+
         ) : (
           <></>
         )}

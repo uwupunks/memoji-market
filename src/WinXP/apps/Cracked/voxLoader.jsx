@@ -36,6 +36,10 @@ function VoxLoader({ object }) {
 
     const loader = new VOXLoader();
     loader.load(object, function (chunks) {
+      if(!chunks) {
+        console.error('vox: no chunks')
+        return null
+      }
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
         const mesh = new VOXMesh(chunk);

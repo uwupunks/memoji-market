@@ -35,54 +35,54 @@ import overMp3 from "../../../assets/sounds/btmouseover.mp3";
 import clickMp3 from "../../../assets/sounds/btclick.mp3";
 import completeMp3 from "../../../assets/sounds/dlgnotice.mp3";
 import VoxLoader from "./voxLoader.jsx";
-import ualienVox from "../../../assets/vox/sample.vox";
-import ubearVox from "../../../assets/vox/sample.vox";
-import ubearHearthVox from "../../../assets/vox/sample.vox";
-import ublackflagVox from "../../../assets/vox/sample.vox";
-import ublissfulVox from "../../../assets/vox/sample.vox";
-import ublowfishVox from "../../../assets/vox/sample.vox";
-import ucashVox from "../../../assets/vox/sample.vox";
-import ucatVox from "../../../assets/vox/sample.vox";
-import uchainsVox from "../../../assets/vox/sample.vox";
-import uchickVox from "../../../assets/vox/sample.vox";
-import uchinaVox from "../../../assets/vox/sample.vox";
-import uclownVox from "../../../assets/vox/sample.vox";
-import ucornVox from "../../../assets/vox/sample.vox";
-import ucrystalballVox from "../../../assets/vox/sample.vox";
-import udiamondVox from "../../../assets/vox/sample.vox";
-import udiceVox from "../../../assets/vox/sample.vox";
-import udogVox from "../../../assets/vox/sample.vox";
-import ueggplantVox from "../../../assets/vox/sample.vox";
-import ueightballVox from "../../../assets/vox/sample.vox";
-import uenvelopVox from "../../../assets/vox/sample.vox";
-import ufahrenheitVox from "../../../assets/vox/sample.vox";
-import ufrogVox from "../../../assets/vox/sample.vox";
-import ugunVox from "../../../assets/vox/sample.vox";
-import umeatVox from "../../../assets/vox/sample.vox";
-import umoonVox from "../../../assets/vox/sample.vox";
-import umogVox from "../../../assets/vox/sample.vox";
-import uorwellVox from "../../../assets/vox/sample.vox";
-import upaperVox from "../../../assets/vox/sample.vox";
-import upeaceVox from "../../../assets/vox/sample.vox";
-import upeachVox from "../../../assets/vox/sample.vox";
-import upiVox from "../../../assets/vox/sample.vox";
-import uplaceholderVox from "../../../assets/vox/sample.vox";
-import upooVox from "../../../assets/vox/sample.vox";
-import upretzelVox from "../../../assets/vox/sample.vox";
-import uretardVox from "../../../assets/vox/sample.vox";
-import urockVox from "../../../assets/vox/sample.vox";
-import urocketVox from "../../../assets/vox/sample.vox";
-import usaVox from "../../../assets/vox/sample.vox";
-import uscisorsVox from "../../../assets/vox/sample.vox";
-import ushotVox from "../../../assets/vox/sample.vox";
-import ushrimpVox from "../../../assets/vox/sample.vox";
-import uskullVox from "../../../assets/vox/sample.vox";
-import usushiVox from "../../../assets/vox/sample.vox";
-import utacoVox from "../../../assets/vox/sample.vox";
-import utaiwanVox from "../../../assets/vox/sample.vox";
-import utestVox from "../../../assets/vox/sample.vox";
-import uwatermelonVox from "../../../assets/vox/sample.vox";
-import uwunicornVox from "../../../assets/vox/sample.vox";
+import ualien from "../../../assets/vox/sample.vox";
+import ubear from "../../../assets/vox/sample.vox";
+import ubearHearth from "../../../assets/vox/sample.vox";
+import ublackflag from "../../../assets/vox/sample.vox";
+import ublissful from "../../../assets/vox/sample.vox";
+import ublowfish from "../../../assets/vox/sample.vox";
+import ucash from "../../../assets/vox/sample.vox";
+import ucat from "../../../assets/vox/sample.vox";
+import uchains from "../../../assets/vox/sample.vox";
+import uchick from "../../../assets/vox/sample.vox";
+import uchina from "../../../assets/vox/sample.vox";
+import uclown from "../../../assets/vox/sample.vox";
+import ucorn from "../../../assets/vox/sample.vox";
+import ucrystalball from "../../../assets/vox/sample.vox";
+import udiamond from "../../../assets/vox/sample.vox";
+import udice from "../../../assets/vox/sample.vox";
+import udog from "../../../assets/vox/sample.vox";
+import ueggplant from "../../../assets/vox/sample.vox";
+import ueightball from "../../../assets/vox/sample.vox";
+import uenvelop from "../../../assets/vox/sample.vox";
+import ufahrenheit from "../../../assets/vox/sample.vox";
+import ufrog from "../../../assets/vox/sample.vox";
+import ugun from "../../../assets/vox/sample.vox";
+import umeat from "../../../assets/vox/sample.vox";
+import umoon from "../../../assets/vox/sample.vox";
+import umog from "../../../assets/vox/sample.vox";
+import uorwell from "../../../assets/vox/sample.vox";
+import upaper from "../../../assets/vox/sample.vox";
+import upeace from "../../../assets/vox/sample.vox";
+import upeach from "../../../assets/vox/sample.vox";
+import upi from "../../../assets/vox/sample.vox";
+import uplaceholder from "../../../assets/vox/sample.vox";
+import upoo from "../../../assets/vox/sample.vox";
+import upretzel from "../../../assets/vox/sample.vox";
+import uretard from "../../../assets/vox/sample.vox";
+import urock from "../../../assets/vox/sample.vox";
+import urocket from "../../../assets/vox/sample.vox";
+import usa from "../../../assets/vox/sample.vox";
+import uscisors from "../../../assets/vox/sample.vox";
+import ushot from "../../../assets/vox/sample.vox";
+import ushrimp from "../../../assets/vox/sample.vox";
+import uskull from "../../../assets/vox/sample.vox";
+import usushi from "../../../assets/vox/sample.vox";
+import utaco from "../../../assets/vox/sample.vox";
+import utaiwan from "../../../assets/vox/sample.vox";
+import utest from "../../../assets/vox/sample.vox";
+import uwatermelon from "../../../assets/vox/sample.vox";
+import uwunicorn from "../../../assets/vox/sample.vox";
 import zeroCharacter from "../../../assets/img/zeroCharacter.png";
 import oneCharacter from "../../../assets/img/oneCharacter.png";
 import twoCharacter from "../../../assets/img/twoCharacter.png";
@@ -105,56 +105,56 @@ import {
   findBalance,
 } from "../../../hooks/balanceUtils.jsx";
 
-let voxArray = [
-  ualienVox,
-  ubearVox,
-  ubearHearthVox,
-  ublackflagVox,
-  ublissfulVox,
-  ublowfishVox,
-  ucashVox,
-  ucatVox,
-  uchainsVox,
-  uchickVox,
-  uchinaVox,
-  uclownVox,
-  ucornVox,
-  ucrystalballVox,
-  udiamondVox,
-  udiceVox,
-  udogVox,
-  ueggplantVox,
-  ueightballVox,
-  uenvelopVox,
-  ufahrenheitVox,
-  ufrogVox,
-  ugunVox,
-  umeatVox,
-  umoonVox,
-  umogVox,
-  uorwellVox,
-  upaperVox,
-  upeaceVox,
-  upeachVox,
-  upiVox,
-  uplaceholderVox,
-  upooVox,
-  upretzelVox,
-  uretardVox,
-  urockVox,
-  urocketVox,
-  usaVox,
-  uscisorsVox,
-  ushotVox,
-  ushrimpVox,
-  uskullVox,
-  usushiVox,
-  utacoVox,
-  utaiwanVox,
-  utestVox,
-  uwatermelonVox,
-  uwunicornVox,
-];
+const voxSprites = {
+  ualien,
+  ubear,
+  ubearHearth,
+  ublackflag,
+  ublissful,
+  ublowfish,
+  ucash,
+  ucat,
+  uchains,
+  uchick,
+  uchina,
+  uclown,
+  ucorn,
+  ucrystalball,
+  udiamond,
+  udice,
+  udog,
+  ueggplant,
+  ueightball,
+  uenvelop,
+  ufahrenheit,
+  ufrog,
+  ugun,
+  umeat,
+  umoon,
+  umog,
+  uorwell,
+  upaper,
+  upeace,
+  upeach,
+  upi,
+  uplaceholder,
+  upoo,
+  upretzel,
+  uretard,
+  urock,
+  urocket,
+  usa,
+  uscisors,
+  ushot,
+  ushrimp,
+  uskull,
+  usushi,
+  utaco,
+  utaiwan,
+  utest,
+  uwatermelon,
+  uwunicorn,
+};
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   maximumFractionDigits: 1,
@@ -509,19 +509,19 @@ function Cracked({ onClose, onMinimize }) {
     const selectedAsset = gridRef.current.api.getSelectedRows()?.[0];
     if (!selectedAsset) return;
 
-    setSwapActive(true);
-
     setSwapPrice(selectedAsset.price);
 
     setLeftValue(1);
-    setLeftSymbol(voxArray[selectedAsset?.id]);
-    setLeftName(selectedAsset.denom?.split("/")?.[2]);
+    setLeftSymbol(voxSprites[selectedAsset?.denomDisplay]);
+    setLeftName(selectedAsset.denomDisplay);
     setLeftDenom(selectedAsset.denom);
 
     setRightValue(selectedAsset.price);
-    setRightSymbol(uwunicornVox);
+    setRightSymbol(uwunicorn);
     setRightName("uwunicorn");
     setRightDenom("uwunicorn");
+
+    setSwapActive(true);
   }, []);
 
   const switchSwapPlace = () => {
@@ -615,7 +615,20 @@ function Cracked({ onClose, onMinimize }) {
             </div>
           ) : null}
         </div>
-
+        {isWalletConnected ? (
+          <div className="walletItems">
+            {balances?.map((asset) => {
+              return (
+                <div key={asset.name} className="assetWrapper">
+                  <div className="assetEmoji">{asset.emoji}</div>
+                  <div className="assetAmount">{asset.amount}</div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <></>
+        )}
         <Draggable>
           <div id="memeMarketSection">
             <div className="memeSection"></div>
@@ -700,23 +713,7 @@ function Cracked({ onClose, onMinimize }) {
             </div>
           </div>
         </Draggable>
-        {isWalletConnected ? (
-            <div className="walletItems">
-              {balances?.map((asset) => {
-                return (
-                  <div key={asset.name} className="assetWrapper">
-                    <div className="assetEmoji">{asset.emoji}</div>
-                    <div className="assetAmount">
-                      {displayNumber(asset.amount)}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
 
-        ) : (
-          <></>
-        )}
         <div id="bottomBar">
           <div>
             <img

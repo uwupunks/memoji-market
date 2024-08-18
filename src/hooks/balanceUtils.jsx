@@ -16,7 +16,7 @@ const findBalance = (balances, denom) => {
   }
 
   const balance = balances.find((b) => b.denom === denom);
-  return balance ? parseFloat(balance.amount) / 1000000 : 0;
+  return balance ? Number(balance.amount) / 1000000 : 0;
 };
 
 export { fetchBalancesAsync, findBalance };

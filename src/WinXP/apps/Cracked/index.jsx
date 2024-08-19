@@ -14,9 +14,13 @@ import classicButton from "../../../assets/img/classic.png";
 import userWindow from "../../../assets/img/window.png";
 
 import { useChain, useWallet } from "@cosmos-kit/react";
-import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
+import { AgGridReact } from "@ag-grid-community/react"; // React Data Grid Component
+import "@ag-grid-community/styles/ag-grid.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import { ModuleRegistry } from "@ag-grid-community/core";
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
+
 import useSound from "use-sound";
 import buyMp3 from "../../../assets/sounds/btbuy.mp3";
 import overMp3 from "../../../assets/sounds/btmouseover.mp3";
@@ -76,6 +80,28 @@ function Cracked({ onClose }) {
   let gridRef = useRef();
   const [overSound] = useSound(overMp3);
   const [clickSound] = useSound(clickMp3);
+
+  const onGridTabClick = async (e) => {
+    const activeTab =
+      e.target.className === "hiddenButton"
+        ? 1
+        : e.target.className === "classicButton"
+        ? 2
+        : 0;
+    setActiveButton(activeTab);
+
+    if (activeTab > 0) {
+      await gridRef.current.api.setColumnFilterModel("Listed", {
+        filterType: "number",
+        type: "equals",
+        filter: e.target.className === "classicButton" ? 1 : 0,
+      });
+      gridRef.current.api.onFilterChanged();
+    } else {
+      await gridRef.current.api.setColumnFilterModel("Listed", null);
+      gridRef.current.api.onFilterChanged();
+    }
+  };
 
   const padInventory = (balances) => {
     const emptyBoxes = [];
@@ -184,7 +210,6 @@ function Cracked({ onClose }) {
         const supplyResponse = await fetch(ENDPOINTS.supply, { signal });
         const supplyData = await supplyResponse.json();
         const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
-
         const getPair = async (denom) => {
           const res = await fetch(
             `${ENDPOINTS.factory}/${btoa(
@@ -221,7 +246,7 @@ function Cracked({ onClose }) {
           if (denom === "uwunicorn") {
             return {
               denom: "uwunicorn",
-              emoji: MEMOJI.find((x) => x["uwunicorn"])["uwunicorn"],
+              emoji: MEMOJI.find((x) => x.name === "uwunicorn")?.emoji,
               supply: supply,
               circ,
               mcap: supply,
@@ -241,7 +266,7 @@ function Cracked({ onClose }) {
             const info = {
               denom: denom,
               denomShorthand,
-              emoji: MEMOJI.find((x) => x[denomShorthand])[denomShorthand],
+              emoji: MEMOJI.find((x) => x.name === denomShorthand)?.emoji,
               supply: supply,
               circ,
               mcap: price * circ,
@@ -252,7 +277,9 @@ function Cracked({ onClose }) {
               balance: lpBalance,
               share: lpBalance / circ,
               value: lpBalance * price,
-              listed: MEMOJI.find((x) => x[denom])?.listed,
+              listed: MEMOJI.find((x) => x.name === denomShorthand)?.listed
+                ? 1
+                : 0,
             };
             return info;
           }
@@ -275,6 +302,7 @@ function Cracked({ onClose }) {
           share: info.share,
           value: info.value,
           circ: info.circ,
+          listed: info.listed,
         }));
 
         setRowData(rowData);
@@ -297,9 +325,8 @@ function Cracked({ onClose }) {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        if (isWalletConnected) {
+        if (isWalletConnected && rowData.length > 0) {
           const userBalances = await fetchBalancesAsync(address, signal);
-
           const balances = userBalances.map((ub) => ({
             name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
             emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
@@ -319,7 +346,7 @@ function Cracked({ onClose }) {
     if (address) {
       fetchUserBalances();
     }
-  }, [address, refreshBalances]);
+  }, [address, rowData.length > 0, refreshBalances]);
 
   const onSelectionChanged = useCallback(() => {
     const selectedAsset = gridRef.current.api.getSelectedRows()?.[0];
@@ -347,6 +374,13 @@ function Cracked({ onClose }) {
     { field: "Mcap", valueGetter: (p) => p.data.mcap, flex: 1 },
     { field: "Liq", valueGetter: (p) => p.data.liq, flex: 1 },
     { field: "TVL", valueGetter: (p) => p.data.tvl, flex: 1 },
+    {
+      field: "Listed",
+      valueGetter: (p) => p.data.listed,
+      flex: 1,
+      filter: "agNumberColumnFilter",
+      hide: true,
+    },
   ]);
 
   const defaultColDef = {
@@ -380,16 +414,21 @@ function Cracked({ onClose }) {
             <div className="buttonSection">
               {activeButton === 0 && (
                 <>
-                  <img className="allButton" id="allButton" src={allButton} />
                   <img
-                    onClick={() => setActiveButton(1)}
+                    className="allButton"
+                    id="allButton"
+                    src={allButton}
+                    onClick={onGridTabClick}
+                  />
+                  <img
+                    onClick={onGridTabClick}
                     className="hiddenButton"
                     id="hiddenButton"
                     style={{ opacity: "0" }}
                     src={hiddenButton}
                   />
                   <img
-                    onClick={() => setActiveButton(2)}
+                    onClick={onGridTabClick}
                     className="classicButton"
                     id="classicButton"
                     style={{ opacity: "0" }}
@@ -400,7 +439,7 @@ function Cracked({ onClose }) {
               {activeButton === 1 && (
                 <>
                   <img
-                    onClick={() => setActiveButton(0)}
+                    onClick={onGridTabClick}
                     className="allButton"
                     id="allButton"
                     style={{ opacity: "0" }}
@@ -412,7 +451,7 @@ function Cracked({ onClose }) {
                     src={hiddenButton}
                   />
                   <img
-                    onClick={() => setActiveButton(2)}
+                    onClick={onGridTabClick}
                     className="classicButton"
                     id="classicButton"
                     style={{ opacity: "0" }}
@@ -423,14 +462,14 @@ function Cracked({ onClose }) {
               {activeButton === 2 && (
                 <>
                   <img
-                    onClick={() => setActiveButton(0)}
+                    onClick={onGridTabClick}
                     className="allButton"
                     id="allButton"
                     style={{ opacity: "0" }}
                     src={allButton}
                   />
                   <img
-                    onClick={() => setActiveButton(1)}
+                    onClick={onGridTabClick}
                     className="hiddenButton"
                     id="hiddenButton"
                     style={{ opacity: "0" }}
@@ -464,8 +503,11 @@ function Cracked({ onClose }) {
             {balances?.map((asset) => {
               return (
                 <div key={asset.name} className="assetWrapper">
-                  <div className="assetEmoji">{asset.emoji}</div>
-                  <div className="assetAmount">{asset.amount}</div>
+                  <div className="assetEmoji">
+                    <img
+                      src={MEMOJI.find((m) => m.name === asset.name)?.image}
+                    ></img>
+                  </div>
                 </div>
               );
             })}

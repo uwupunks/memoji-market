@@ -33,6 +33,7 @@
   border-radius: 5px;
   height: 79%;
   width: 62%;
+  float: right;
   max-width: 698px;
 
   margin-top: 3%;
@@ -42,7 +43,7 @@
 #bottomBar {
   flex: auto;
   display: flex;
-  width: 100%;
+  width: 74%;
   height: 85px;
   flex-direction: row-reverse;
   align-items: baseline;
@@ -300,6 +301,8 @@ input[type="number"] {
   flex: auto;
   padding-top: 3%;
   margin-left: 2%;
+  width: 25%;
+  float: left;
 }
 
 .walletItems {
@@ -309,6 +312,7 @@ input[type="number"] {
 
   height: 52%;
   width: 23%;
+  float: left;
   margin-top: 5%;
   margin-left: 3%;
   overflow: scroll;

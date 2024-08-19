@@ -374,20 +374,7 @@ function Cracked({ onClose, onMinimize }) {
             </div>
           ) : null}
         </div>
-        {isWalletConnected ? (
-          <div className="walletItems">
-            {balances?.map((asset) => {
-              return (
-                <div key={asset.name} className="assetWrapper">
-                  <div className="assetEmoji">{asset.emoji}</div>
-                  <div className="assetAmount">{asset.amount}</div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <></>
-        )}
+
         <Draggable>
           <div id="memeMarketSection">
             <div className="memeSection"></div>
@@ -472,6 +459,21 @@ function Cracked({ onClose, onMinimize }) {
             </div>
           </div>
         </Draggable>
+
+        {isWalletConnected ? (
+          <div className="walletItems">
+            {balances?.map((asset) => {
+              return (
+                <div key={asset.name} className="assetWrapper">
+                  <div className="assetEmoji">{asset.emoji}</div>
+                  <div className="assetAmount">{asset.amount}</div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <></>
+        )}
 
         <div id="bottomBar">
           <div>

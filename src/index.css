@@ -69,6 +69,14 @@
   z-index: 99;
 }
 
+.swapMessage {
+  position: relative;
+  top: 5%;
+  right: 10%;
+  color: red;
+  font-weight: bold;
+}
+
 .leftSwapSymbol {
   float: left;
   text-align: center;

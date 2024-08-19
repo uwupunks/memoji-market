@@ -15,16 +15,15 @@ import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 //force module load
 console.log(SigningCosmWasmClient);
 
-function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
+const isLowLiq = (liq) => liq.replace("%", "") < 0.4;
+
+function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   //hooks
   const [buySound] = useSound(buyMp3);
   const [clickSound] = useSound(clickMp3);
   const [completeSound] = useSound(completeMp3);
-  const {
-    address,
-    isWalletConnected,
-    getSigningCosmWasmClient,
-  } = useChain("unicorn");
+  const { address, isWalletConnected, getSigningCosmWasmClient } =
+    useChain("unicorn");
 
   // state
   const [leftAsset, setLeftAsset] = useState(left);
@@ -89,7 +88,7 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
       ]);
       completeSound();
       alert(`Success, transaction hash: ${res.transactionHash}`);
-      onSwap()
+      onSwap();
       onClose();
     } else {
       alert("Please connect a wallet");
@@ -106,9 +105,10 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
     tempRight.amount = leftAsset.amount;
 
     // calc expected amount
-    tempLeft.amount = tempLeft.denom === "uwunicorn"
-    ? (leftAsset.amount * price).toFixed(4)
-    : (leftAsset.amount / price).toFixed(4)
+    tempLeft.amount =
+      tempLeft.denom === "uwunicorn"
+        ? (leftAsset.amount * price).toFixed(4)
+        : (leftAsset.amount / price).toFixed(4);
 
     setLeftAsset(tempRight);
     setRightAsset(tempLeft);
@@ -119,6 +119,9 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
   return isActive && price ? (
     <Draggable onMouseDown={clickSound}>
       <div className="swapWindow">
+        {isLowLiq(liq) && (
+          <span className="swapMessage">Low Liquidity: {liq}</span>
+        )}
         <img
           className="tradeSwap"
           id="trade"

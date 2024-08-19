@@ -72,6 +72,7 @@ function Cracked({ onClose }) {
   const [leftAsset, setLeftAsset] = useState();
   const [rightAsset, setRightAsset] = useState();
   const [swapPrice, setSwapPrice] = useState();
+  const [swapLiq, setSwapLiq] = useState();
 
   const [balances, setBalances] = useState([]);
   const [refreshBalances, setRefreshBalances] = useState(false);
@@ -353,6 +354,7 @@ function Cracked({ onClose }) {
     if (!selectedAsset) return;
 
     setSwapPrice(selectedAsset.price);
+    setSwapLiq(selectedAsset.liq);
 
     setLeftAsset({
       name: "uwunicorn",
@@ -572,6 +574,7 @@ function Cracked({ onClose }) {
         left={leftAsset}
         right={rightAsset}
         price={swapPrice}
+        liq={swapLiq}
         isActive={swapActive}
         onClose={() => setSwapActive(false)}
         onSwap={() => setRefreshBalances(!refreshBalances)}

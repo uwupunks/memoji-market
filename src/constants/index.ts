@@ -79,7 +79,7 @@ const loadMemojiModules = async () => {
     return merged;
   });
   const results = await Promise.allSettled(promises);
-  return results.map(r=>r.value)
+  return results.map(r=>r.status === 'fulfilled' ? r.value : null)
 };
 
 export const MEMOJI = await loadMemojiModules();

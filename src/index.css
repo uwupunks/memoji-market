@@ -41,10 +41,10 @@
   padding: 1%;
 }
 #bottomBar {
-  flex: auto;
   display: flex;
-  width: 74%;
+  width: 38%;
   height: 85px;
+  float: right;
   flex-direction: row-reverse;
   align-items: baseline;
 }
@@ -315,7 +315,8 @@ input[type="number"] {
   float: left;
   margin-top: 5%;
   margin-left: 3%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   background-color: #eeeeee;
   border-top: 1px solid #999999;
@@ -427,12 +428,26 @@ input[type="number"] {
   z-index: 99;
 }
 
-.assetsWindow {
+.assetList {
+  width: 300px;
+  padding-top: 1%;
+  padding-left: 80px;
+  height: 95px;
+  float: left;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.assetList .asset {
+  background: url("assets/img/bgtextbox.png");
   width: 208px;
-  height: 60px;
-  bottom: 12px;
-  right: 450px;
-  z-index: 99;
+  height: 20px;
+  padding-left: 10px;
+  color: blue;
+  text-transform: uppercase;
+  -webkit-font-smoothing: none;
+  line-height: 20px;
+  text-align: left;
 }
 
 .memeSection {
@@ -554,14 +569,14 @@ input[type="number"] {
 }
 
 /* width */
-.listItems::-webkit-scrollbar,
+::-webkit-scrollbar,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar {
   background: url("./assets/img/scrollbar.png");
   width: 12px;
 }
 
 /* Track */
-.listItems::-webkit-scrollbar-track,
+::-webkit-scrollbar-track,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar-track {
   background: url("./assets/img/scrollbar.png");
   width: 12px;
@@ -569,7 +584,7 @@ input[type="number"] {
 }
 
 /* Handle */
-.listItems::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb {
   background: url("./assets/img/scrollbutton.png");
   width: 11px;
@@ -577,14 +592,14 @@ input[type="number"] {
 }
 
 /* Handle on hover */
-.listItems::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:hover,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb:hover {
   background: url("./assets/img/scrollbutton.png");
   width: 11px;
   background-repeat: no-repeat;
 }
 
-.listItems::-webkit-scrollbar,
+::-webkit-scrollbar,
 .ag-root,
 .swapWindow,
 .crackedWindow,
@@ -726,53 +741,6 @@ input[type="number"] {
   height: 4px;
   width: 100%;
   z-index: 98;
-}
-
-.leftCornerCrack {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 4px;
-  height: 4px;
-  z-index: 99;
-  transform: translate(-3px, 32px);
-}
-
-.rightCornerCrack {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 4px;
-  height: 4px;
-  z-index: 99;
-  transform: translate(3px, 32px);
-}
-
-.leftBarCrack {
-  position: absolute;
-  left: 0;
-  width: 4px;
-  height: 105%;
-  z-index: 98;
-  transform: translateX(-3px);
-}
-
-.rightBarCrack {
-  position: absolute;
-  right: 0;
-  width: 4px;
-  height: 105%;
-  z-index: 98;
-  transform: translateX(3px);
-}
-
-.bottomBarCrack {
-  position: absolute;
-  bottom: 0;
-  height: 4px;
-  width: 100%;
-  z-index: 98;
-  transform: translateY(33px);
 }
 
 #Unicorn .header__bg {

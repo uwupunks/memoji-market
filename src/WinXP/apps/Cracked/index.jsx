@@ -57,22 +57,12 @@ const percentFormatter = new Intl.NumberFormat(navigator.language, {
   minimumFractionDigits: 2,
 });
 
-function Cracked({ onClose, onMinimize }) {
-  const {
-    username,
-    connect,
-    disconnect,
-    address,
-    isWalletConnected,
-  } = useChain("unicorn");
+function Cracked({ onClose }) {
+  const { username, connect, disconnect, address, isWalletConnected } =
+    useChain("unicorn");
   const { status: globalStatus, mainWallet } = useWallet(); // status here is the global wallet status for all activated chains (chain is activated when call useChain)
-  //const isClient = useIsClient();
-  const [min, setMin] = useState(0);
-  const [patched, setPatched] = useState(0);
-  const [hover, setHover] = useState(0);
+
   const [activeButton, setActiveButton] = useState(0);
-  const [activeClient, setActiveClient] = useState(0);
-  const [headerRow, setHeaderRow] = useState([]);
 
   const [swapActive, setSwapActive] = useState(false);
   const [leftAsset, setLeftAsset] = useState();
@@ -80,15 +70,12 @@ function Cracked({ onClose, onMinimize }) {
   const [swapPrice, setSwapPrice] = useState();
 
   const [balances, setBalances] = useState([]);
-  const [refreshBalances, setRefreshBalances] = useState(false)
+  const [refreshBalances, setRefreshBalances] = useState(false);
 
-  let supplyArray = [];
   const [rowData, setRowData] = useState([]);
   let gridRef = useRef();
-  const [buySound] = useSound(buyMp3);
   const [overSound] = useSound(overMp3);
   const [clickSound] = useSound(clickMp3);
-  const [completeSound] = useSound(completeMp3);
 
   // Connect Wallet
   useEffect(() => {
@@ -471,9 +458,21 @@ function Cracked({ onClose, onMinimize }) {
               );
             })}
           </div>
-        ) : (
-          <></>
-        )}
+        ) : null}
+
+
+        {isWalletConnected ? (
+          <div className="assetList">
+            {balances?.map((asset) => {
+              return (
+                <div key={asset.name} className="asset">
+                  {asset.name || asset.emoji} - {asset.amount}
+                </div>
+              );
+            })}
+          </div>
+        ) : 
+        null}
 
         <div id="bottomBar">
           <div>
@@ -493,16 +492,13 @@ function Cracked({ onClose, onMinimize }) {
           </div>
           <div>
             {isWalletConnected ? (
-              <>
                 <img
                   className="walletButton"
                   id="wallet"
                   onClick={() => disconnect()}
                   src={switchButton}
                 />
-              </>
             ) : (
-              <>
                 <img
                   className="walletButton"
                   id="wallet"
@@ -512,14 +508,7 @@ function Cracked({ onClose, onMinimize }) {
                   }}
                   src={connectButton}
                 />
-              </>
             )}
-          </div>
-          <div className="assetsWindow">
-            <img src={assetsWindow} />
-            <p className="unicornBal"></p>
-            <p className="blackflagBal"></p>
-            <p className="diamondBal"></p>
           </div>
         </div>
       </div>

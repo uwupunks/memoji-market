@@ -5,10 +5,16 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { VOXLoader, VOXMesh } from "three/examples/jsm/loaders/VOXLoader";
 
-function VoxLoader({ object }) {
+function VoxLoader({ filePath }) {
   const voxAreaRef = useRef(null);
 
   useEffect(() => {
+    if (!filePath) {
+      if (voxAreaRef.current.childNodes.length > 0) {
+        voxAreaRef.current.removeChild(voxAreaRef.current.childNodes[0]);
+      }
+      return;
+    }
     let camera, controls, scene, renderer;
 
     camera = new THREE.PerspectiveCamera(
@@ -17,7 +23,7 @@ function VoxLoader({ object }) {
       0.01,
       10
     );
-    camera.position.set(0.175, 0.075, 0.175);
+    camera.position.set(0.175, 0.175, 0.175);
 
     scene = new THREE.Scene();
     scene.add(camera);
@@ -35,10 +41,10 @@ function VoxLoader({ object }) {
     scene.add(dirLight2);
 
     const loader = new VOXLoader();
-    loader.load(object, function (chunks) {
-      if(!chunks) {
-        console.error('vox: no chunks')
-        return null
+    loader.load(filePath, function (chunks) {
+      if (!chunks) {
+        console.error("vox: no chunks");
+        return null;
       }
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
@@ -80,7 +86,7 @@ function VoxLoader({ object }) {
         voxAreaRef.current.childNodes[0]
       );
     }
-  }, [window.innerWidth]);
+  }, [filePath, window.innerWidth]);
 
   return <div ref={voxAreaRef}></div>;
 }

@@ -107,6 +107,7 @@
 }
 
 .tradeSwap {
+  background: url("assets/img/trade.png");
   position: absolute;
   width: 60px;
   height: 19px;
@@ -114,14 +115,27 @@
   top: 36px;
   z-index: 99 !important;
 }
+.tradeSwap:hover {
+  background: url("assets/img/tradehover.png");
+}
+.tradeSwap:active {
+  background: url("assets/img/tradepressed.png");
+}
 
 .cancelSwap {
+  background: url("assets/img/cancel.png");
   position: absolute;
   width: 60px;
   height: 19px;
   left: 114px;
   top: 58px;
   z-index: 99 !important;
+}
+.cancelSwap:hover {
+  background: url("assets/img/cancelhover.png");
+}
+.cancelSwap:active {
+  background: url("assets/img/cancelpressed.png");
 }
 
 #leftInput {
@@ -166,12 +180,19 @@ input[type="number"] {
 }
 
 .switchSwap {
+  background: url("assets/img/switch.png");
   position: absolute;
   width: 60px;
   height: 19px;
   left: 114px;
   top: 80px;
   z-index: 99 !important;
+}
+.switchSwap:hover {
+  background: url("assets/img/switchhover.png");
+}
+.switchSwap:active {
+  background: url("assets/img/switchpress.png");
 }
 
 .genButtons {
@@ -283,45 +304,59 @@ input[type="number"] {
 
 .walletItems {
   display: flex;
+  align-content: flex-start;
   flex-flow: row wrap;
 
   height: 52%;
   width: 23%;
   margin-top: 5%;
   margin-left: 3%;
+  overflow: scroll;
 
-  background-color: #eae9e9;
-  border: 1px solid #d4cbcb;
+  background-color: #eeeeee;
+  border-top: 1px solid #999999;
+  border-left: 1px solid #999999;
+  border-right: 1px solid #d4cbcb;
+  border-bottom: 1px solid #d4cbcb;
   border-radius: 10px;
 }
 
 .assetWrapper {
+  background-color: #bbccdd;
+  border-top: 1px solid #88aabb;
+  border-left: 1px solid #88aabb;
+  border-radius: 5px;
   width: 50px;
   height: 50px;
   flex: auto;
   padding: 10px;
+  margin: 5px;
+}
+
+.assetWrapper:last-child {
+  flex: initial;
 }
 
 .assetEmoji {
   flex: auto;
   font-size: 25px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: -10px;
+  position: relative;
+  right: 5px;
 }
 
 .assetAmount {
   flex: auto;
-  font-family: "VCR OSD Mono", sans-serif;
   width: 40px;
-  padding: 0;
-  margin: 0;
+  margin-top: 10px;
+  text-align: center;
   overflow-wrap: break-word;
-  font-weight: 900;
-  font-size: 10pt;
-  text-shadow: 1px 1px 2px rgb(194, 11, 184);
-  background-image: linear-gradient(
-    to right,
-    rgb(255, 0, 225),
-    rgb(249, 2, 216)
-  );
+  font-family: "VCR OSD Mono", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  background-image: linear-gradient(to right, rgb(215 50 196), rgb(201 19 177));
   color: transparent;
   background-clip: text;
 }

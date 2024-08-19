@@ -34,7 +34,7 @@ function Keygen({ onClose, onMinimize, patched }) {
     crackedMenu.style.display = 'initial';
     crackedIcon.style.display = 'initial';
     browserIcon.style.display = 'none';
-    browserWindow.style.display = 'none';
+    browserWindow ? browserWindow.style.display = 'none': null;
     keygenMenu.style.display = 'none';
     keygenWindow.style.display = 'none';
     keygenIcon.style.display = 'none';

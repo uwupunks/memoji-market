@@ -12,19 +12,7 @@ import allButton from "../../../assets/img/all.png";
 import hiddenButton from "../../../assets/img/hidden.png";
 import classicButton from "../../../assets/img/classic.png";
 import userWindow from "../../../assets/img/window.png";
-import invSlotsTop from "../../../assets/img/invslotstop.png";
-import invSlotsBottom from "../../../assets/img/invslotsbottom.png";
-import invText from "../../../assets/img/invtext.png";
-import invSlots from "../../../assets/img/invslots.png";
-import tradeSwap from "../../../assets/img/trade.png";
-import tradeSwapHover from "../../../assets/img/tradehover.png";
-import tradeSwapPressed from "../../../assets/img/tradepressed.png";
-import switchSwap from "../../../assets/img/switch.png";
-import switchSwapHover from "../../../assets/img/switchhover.png";
-import switchSwapPressed from "../../../assets/img/switchpress.png";
-import cancelSwap from "../../../assets/img/cancel.png";
-import cancelSwapHover from "../../../assets/img/cancelhover.png";
-import cancelSwapPressed from "../../../assets/img/cancelpressed.png";
+
 import { useChain, useWallet } from "@cosmos-kit/react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
@@ -34,55 +22,7 @@ import buyMp3 from "../../../assets/sounds/btbuy.mp3";
 import overMp3 from "../../../assets/sounds/btmouseover.mp3";
 import clickMp3 from "../../../assets/sounds/btclick.mp3";
 import completeMp3 from "../../../assets/sounds/dlgnotice.mp3";
-import VoxLoader from "./voxLoader.jsx";
-import ualien from "../../../assets/vox/sample.vox";
-import ubear from "../../../assets/vox/sample.vox";
-import ubearHearth from "../../../assets/vox/sample.vox";
-import ublackflag from "../../../assets/vox/sample.vox";
-import ublissful from "../../../assets/vox/sample.vox";
-import ublowfish from "../../../assets/vox/sample.vox";
-import ucash from "../../../assets/vox/sample.vox";
-import ucat from "../../../assets/vox/sample.vox";
-import uchains from "../../../assets/vox/sample.vox";
-import uchick from "../../../assets/vox/sample.vox";
-import uchina from "../../../assets/vox/sample.vox";
-import uclown from "../../../assets/vox/sample.vox";
-import ucorn from "../../../assets/vox/sample.vox";
-import ucrystalball from "../../../assets/vox/sample.vox";
-import udiamond from "../../../assets/vox/sample.vox";
-import udice from "../../../assets/vox/sample.vox";
-import udog from "../../../assets/vox/sample.vox";
-import ueggplant from "../../../assets/vox/sample.vox";
-import ueightball from "../../../assets/vox/sample.vox";
-import uenvelop from "../../../assets/vox/sample.vox";
-import ufahrenheit from "../../../assets/vox/sample.vox";
-import ufrog from "../../../assets/vox/sample.vox";
-import ugun from "../../../assets/vox/sample.vox";
-import umeat from "../../../assets/vox/sample.vox";
-import umoon from "../../../assets/vox/sample.vox";
-import umog from "../../../assets/vox/sample.vox";
-import uorwell from "../../../assets/vox/sample.vox";
-import upaper from "../../../assets/vox/sample.vox";
-import upeace from "../../../assets/vox/sample.vox";
-import upeach from "../../../assets/vox/sample.vox";
-import upi from "../../../assets/vox/sample.vox";
-import uplaceholder from "../../../assets/vox/sample.vox";
-import upoo from "../../../assets/vox/sample.vox";
-import upretzel from "../../../assets/vox/sample.vox";
-import uretard from "../../../assets/vox/sample.vox";
-import urock from "../../../assets/vox/sample.vox";
-import urocket from "../../../assets/vox/sample.vox";
-import usa from "../../../assets/vox/sample.vox";
-import uscisors from "../../../assets/vox/sample.vox";
-import ushot from "../../../assets/vox/sample.vox";
-import ushrimp from "../../../assets/vox/sample.vox";
-import uskull from "../../../assets/vox/sample.vox";
-import usushi from "../../../assets/vox/sample.vox";
-import utaco from "../../../assets/vox/sample.vox";
-import utaiwan from "../../../assets/vox/sample.vox";
-import utest from "../../../assets/vox/sample.vox";
-import uwatermelon from "../../../assets/vox/sample.vox";
-import uwunicorn from "../../../assets/vox/sample.vox";
+
 import zeroCharacter from "../../../assets/img/zeroCharacter.png";
 import oneCharacter from "../../../assets/img/oneCharacter.png";
 import twoCharacter from "../../../assets/img/twoCharacter.png";
@@ -104,57 +44,7 @@ import {
   fetchBalancesAsync,
   findBalance,
 } from "../../../hooks/balanceUtils.jsx";
-
-const voxSprites = {
-  ualien,
-  ubear,
-  ubearHearth,
-  ublackflag,
-  ublissful,
-  ublowfish,
-  ucash,
-  ucat,
-  uchains,
-  uchick,
-  uchina,
-  uclown,
-  ucorn,
-  ucrystalball,
-  udiamond,
-  udice,
-  udog,
-  ueggplant,
-  ueightball,
-  uenvelop,
-  ufahrenheit,
-  ufrog,
-  ugun,
-  umeat,
-  umoon,
-  umog,
-  uorwell,
-  upaper,
-  upeace,
-  upeach,
-  upi,
-  uplaceholder,
-  upoo,
-  upretzel,
-  uretard,
-  urock,
-  urocket,
-  usa,
-  uscisors,
-  ushot,
-  ushrimp,
-  uskull,
-  usushi,
-  utaco,
-  utaiwan,
-  utest,
-  uwatermelon,
-  uwunicorn,
-};
+import SwapModal from "../../../components/SwapModal/index.jsx";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   maximumFractionDigits: 1,
@@ -172,36 +62,27 @@ function Cracked({ onClose, onMinimize }) {
     username,
     connect,
     disconnect,
-    wallet,
     address,
     isWalletConnected,
-    getSigningCosmWasmClient,
   } = useChain("unicorn");
   const { status: globalStatus, mainWallet } = useWallet(); // status here is the global wallet status for all activated chains (chain is activated when call useChain)
   //const isClient = useIsClient();
   const [min, setMin] = useState(0);
   const [patched, setPatched] = useState(0);
   const [hover, setHover] = useState(0);
-  const [tradeHover, setTradeHover] = useState(0);
-  const [switchHover, setSwitchHover] = useState(0);
-  const [cancelHover, setCancelHover] = useState(0);
   const [activeButton, setActiveButton] = useState(0);
   const [activeClient, setActiveClient] = useState(0);
-  const [leftValue, setLeftValue] = useState(0);
-  const [rightValue, setRightValue] = useState(0);
   const [headerRow, setHeaderRow] = useState([]);
-  const [leftDenom, setLeftDenom] = useState("");
-  const [rightDenom, setRightDenom] = useState("");
+
   const [swapActive, setSwapActive] = useState(false);
-  const [leftName, setLeftName] = useState("");
-  const [leftSymbol, setLeftSymbol] = useState("");
-  const [rightSymbol, setRightSymbol] = useState("🦄");
-  const [rightName, setRightName] = useState("UWU");
-  const [swapPrice, setSwapPrice] = useState(0);
+  const [leftAsset, setLeftAsset] = useState();
+  const [rightAsset, setRightAsset] = useState();
+  const [swapPrice, setSwapPrice] = useState();
+
   const [balances, setBalances] = useState([]);
-  const [message, setMessage] = useState();
+  const [refreshBalances, setRefreshBalances] = useState(false)
+
   let supplyArray = [];
-  const [stateSupplyArray, setStateSupplyArray] = useState([]);
   const [rowData, setRowData] = useState([]);
   let gridRef = useRef();
   const [buySound] = useSound(buyMp3);
@@ -217,6 +98,7 @@ function Cracked({ onClose, onMinimize }) {
     fn();
   }, [mainWallet]);
 
+  //wallet connected button
   useEffect(() => {
     let wallet = document.getElementById("wallet");
     wallet.onmousedown = function () {
@@ -249,74 +131,6 @@ function Cracked({ onClose, onMinimize }) {
         wallet.src = switchButton;
       } else {
         wallet.src = connectButton;
-      }
-    }
-    if (swapActive) {
-      let cancel = document.getElementById("cancel");
-      let swap = document.getElementById("swap");
-      let trade = document.getElementById("trade");
-      cancel.onmousedown = function () {
-        cancelDown();
-      };
-      cancel.onmouseleave = function () {
-        cancelLeave();
-      };
-      cancel.onmouseenter = function () {
-        cancelEnter();
-      };
-      trade.onmousedown = function () {
-        tradeDown();
-      };
-      trade.onmouseleave = function () {
-        tradeLeave();
-      };
-      trade.onmouseenter = function () {
-        tradeEnter();
-      };
-      swap.onmousedown = function () {
-        swapDown();
-      };
-      swap.onmouseenter = function () {
-        swapEnter();
-      };
-      swap.onmouseleave = function () {
-        swapLeave();
-      };
-
-      function cancelDown() {
-        cancel.src = cancelSwapPressed;
-      }
-
-      function cancelLeave() {
-        cancel.src = cancelSwap;
-      }
-
-      function cancelEnter() {
-        cancel.src = cancelSwapHover;
-      }
-
-      function tradeDown() {
-        trade.src = tradeSwapPressed;
-      }
-
-      function tradeEnter() {
-        trade.src = tradeSwapHover;
-      }
-
-      function tradeLeave() {
-        trade.src = tradeSwap;
-      }
-
-      function swapDown() {
-        swap.src = switchSwapPressed;
-      }
-
-      function swapEnter() {
-        swap.src = switchSwapHover;
-      }
-
-      function swapLeave() {
-        swap.src = switchSwap;
       }
     }
   });
@@ -361,6 +175,7 @@ function Cracked({ onClose, onMinimize }) {
     return numberFormatter.format(num);
   }
 
+  // fetch supply data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -476,6 +291,7 @@ function Cracked({ onClose, onMinimize }) {
     fetchData();
   }, []);
 
+  // fetch user balances
   useEffect(() => {
     const fetchUserBalances = async () => {
       try {
@@ -486,8 +302,8 @@ function Cracked({ onClose, onMinimize }) {
           const userBalances = await fetchBalancesAsync(address, signal);
 
           const balances = userBalances.map((ub) => ({
-            name: rowData.find((r) => r.denom === ub.denom).denomDisplay,
-            emoji: rowData.find((r) => r.denom === ub.denom).emoji,
+            name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
+            emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
             amount: displayNumber(Number(ub.amount) / 1000000),
           }));
           console.log(balances);
@@ -501,9 +317,10 @@ function Cracked({ onClose, onMinimize }) {
         console.error("Error fetching user balance data: ", error);
       }
     };
-
-    fetchUserBalances();
-  }, [address]);
+    if (address) {
+      fetchUserBalances();
+    }
+  }, [address, refreshBalances]);
 
   const onSelectionChanged = useCallback(() => {
     const selectedAsset = gridRef.current.api.getSelectedRows()?.[0];
@@ -511,37 +328,19 @@ function Cracked({ onClose, onMinimize }) {
 
     setSwapPrice(selectedAsset.price);
 
-    setLeftValue(1);
-    setLeftSymbol(voxSprites[selectedAsset?.denomDisplay]);
-    setLeftName(selectedAsset.denomDisplay);
-    setLeftDenom(selectedAsset.denom);
-
-    setRightValue(selectedAsset.price);
-    setRightSymbol(uwunicorn);
-    setRightName("uwunicorn");
-    setRightDenom("uwunicorn");
+    setLeftAsset({
+      name: "uwunicorn",
+      denom: "uwunicorn",
+      amount: "1",
+    });
+    setRightAsset({
+      name: selectedAsset.denomDisplay,
+      denom: selectedAsset.denom,
+      amount: (1 / selectedAsset.price).toFixed(4),
+    });
 
     setSwapActive(true);
   }, []);
-
-  const switchSwapPlace = () => {
-    let symRight = rightSymbol;
-    let symLeft = leftSymbol;
-    let namRight = rightName;
-    let namLeft = leftName;
-    let denLeft = leftDenom;
-    let rightVal = rightValue;
-    let leftVal = leftValue;
-    let denRight = rightDenom;
-    setRightName(namLeft);
-    setLeftName(namRight);
-    setRightSymbol(symLeft);
-    setLeftSymbol(symRight);
-    setLeftDenom(denRight);
-    setRightDenom(denLeft);
-    setLeftValue(rightVal);
-    setRightValue(leftVal);
-  };
 
   const [colDefs, setColDefs] = useState([
     { field: "Memoji", valueGetter: (p) => p.data.emoji, flex: 1 },
@@ -552,48 +351,8 @@ function Cracked({ onClose, onMinimize }) {
   ]);
 
   const defaultColDef = {
+    sortable: true,
     flex: 1,
-  };
-
-  const swapAssets = async () => {
-    if (isWalletConnected) {
-      const client = await getSigningCosmWasmClient();
-
-      let msg = {
-        execute_swap_operations: {
-          max_spread: "0.5",
-          minimum_receive: "1",
-          operations: [
-            {
-              astro_swap: {
-                offer_asset_info: {
-                  native_token: { denom: String(leftDenom) },
-                },
-                ask_asset_info: { native_token: { denom: String(rightDenom) } },
-              },
-            },
-          ],
-        },
-      };
-      let res = await client.execute(
-        address,
-        "unicorn16jzpxp0e8550c9aht6q9svcux30vtyyyyxv5w2l2djjra46580wsl825uf",
-        msg,
-        "auto",
-        "",
-        [
-          {
-            denom: String(leftDenom),
-            amount: String(leftValue * Math.pow(10, 6)),
-          },
-        ]
-      );
-      completeSound();
-      alert(`Success, transaction hash: ${res.transactionHash}`);
-      setSwapActive(false);
-    } else {
-      alert("Please connect a wallet");
-    }
   };
 
   return (
@@ -608,7 +367,7 @@ function Cracked({ onClose, onMinimize }) {
           {isWalletConnected ? (
             <div className="walletName">
               <p>
-                {address.slice(0, 9)}....
+                {address.slice(0, 11)}....
                 {address.slice(40, 46)}
               </p>
               <p>{username}</p>
@@ -763,61 +522,14 @@ function Cracked({ onClose, onMinimize }) {
         </div>
       </div>
 
-      {swapActive ? (
-        <Draggable>
-          <div className="swapWindow" onMouseDown={clickSound}>
-            <img
-              className="tradeSwap"
-              id="trade"
-              onClick={() => swapAssets()}
-              onMouseDown={buySound}
-              src={tradeSwap}
-            />
-            <img
-              onClick={() => switchSwapPlace()}
-              className="switchSwap"
-              id="swap"
-              src={switchSwap}
-            />
-            <img
-              className="cancelSwap"
-              id="cancel"
-              onClick={() => setSwapActive(false)}
-              src={cancelSwap}
-            />
-            <input
-              className="inputNumbers"
-              id="leftInput"
-              value={leftValue}
-              onChange={(e) => {
-                setLeftValue(e.target.value);
-                setRightValue(e.target.value * swapPrice);
-              }}
-              type="number"
-            />
-            <input
-              className="inputNumbers"
-              id="rightInput"
-              value={rightValue}
-              onChange={(e) => {
-                setRightValue(e.target.value);
-                setLeftValue(e.target.value / swapPrice);
-              }}
-              type="number"
-            />
-            <div className="leftSwapSymbol">
-              <VoxLoader object={leftSymbol} />
-            </div>
-            <p className="leftSwapName">{leftName}</p>
-            <div className="rightSwapSymbol">
-              <VoxLoader object={rightSymbol} />
-            </div>
-            <p className="rightSwapName">{rightName}</p>
-          </div>
-        </Draggable>
-      ) : (
-        <></>
-      )}
+      <SwapModal
+        left={leftAsset}
+        right={rightAsset}
+        price={swapPrice}
+        isActive={swapActive}
+        onClose={() => setSwapActive(false)}
+        onSwap={() => setRefreshBalances(!refreshBalances)}
+      ></SwapModal>
     </>
   );
 }

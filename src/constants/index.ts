@@ -3,6 +3,7 @@ const SERVER = "https://rest.unicorn.meme";
 export const CONTRACTS = {
   factory: "unicorn1yvgh8xeju5dyr0zxlkvq09htvhjj20fncp5g58np4u25g8rkpgjslkfelc",
   lp: "unicorn1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty",
+  swap: "unicorn16jzpxp0e8550c9aht6q9svcux30vtyyyyxv5w2l2djjra46580wsl825uf"
 };
 export const ENDPOINTS = {
   supply: `${SERVER}/cosmos/bank/v1beta1/supply?pagination.limit=100`,
@@ -11,8 +12,8 @@ export const ENDPOINTS = {
 };
 export const MEMOJI = [
   { ualien: "👽", listed: true },
-  { ubear: "ʕ·͡ᴥ·ʔ", listed: true },
-  { ubearhearth: "ʕっ•ᴥ•ʔっ❤️", listed: true },
+  { ubear: "🐻", listed: true },
+  { ubearhearth: "🐻❤️", listed: true },
   { ublackflag: "🏴", listed: false },
   { ublissful: "(｡◕‿‿◕｡)", listed: true },
   { ublowfish: "🐡", listed: false },
@@ -32,7 +33,7 @@ export const MEMOJI = [
   { uenvelop: "✉️", listed: false },
   { ufahrenheit: "🔥", listed: true },
   { ufrog: "🐸", listed: true },
-  { ugun: "▄︻デ══‐一♡", listed: true },
+  { ugun: "🔫♡", listed: true },
   { umeat: "🥩", listed: true },
   { umoon: "🌕", listed: false },
   { umog: "😹", listed: true },

@@ -77,6 +77,18 @@ function Cracked({ onClose }) {
   const [overSound] = useSound(overMp3);
   const [clickSound] = useSound(clickMp3);
 
+  const padInventory = (balances) => {
+    const emptyBoxes = [];
+    for (let i = 0; i < 24 - balances.length || 0; i++) {
+      emptyBoxes.push(
+        <div className="assetWrapper">
+          <div className="assetEmoji"></div>
+          <div className="assetAmount"></div>
+        </div>
+      );
+    }
+    return emptyBoxes;
+  };
   // Connect Wallet
   useEffect(() => {
     const fn = async () => {
@@ -457,6 +469,7 @@ function Cracked({ onClose }) {
                 </div>
               );
             })}
+            {padInventory(balances)}
           </div>
         ) : null}
 

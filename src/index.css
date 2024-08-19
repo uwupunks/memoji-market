@@ -323,7 +323,6 @@ input[type="number"] {
   border-left: 1px solid #999999;
   border-right: 1px solid #d4cbcb;
   border-bottom: 1px solid #d4cbcb;
-  border-radius: 10px;
 }
 
 .assetWrapper {
@@ -433,8 +432,6 @@ input[type="number"] {
   padding-left: 80px;
   height: 95px;
   float: left;
-  overflow-y: scroll;
-  overflow-x: hidden;
 }
 
 .assetList .asset {
@@ -627,6 +624,8 @@ input[type="number"] {
   -moz-osx-font-smoothing: none;
   font-smoothing: none;
 
+  --ag-row-height: 20px;
+
   --ag-font-family: arial;
   --ag-font-size: 12px;
 
@@ -650,6 +649,11 @@ input[type="number"] {
 
 #assetGrid .ag-header-cell {
   color: rgb(34, 85, 119);
+}
+#assetGrid .ag-cell {
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+  font-smoothing: none;
 }
 #assetGrid .ag-cell-focus {
   border-right: 1px solid #003399;

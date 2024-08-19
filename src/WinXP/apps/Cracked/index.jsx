@@ -460,19 +460,19 @@ function Cracked({ onClose }) {
           </div>
         ) : null}
 
-
         {isWalletConnected ? (
           <div className="assetList">
-            {balances?.map((asset) => {
-              return (
-                <div key={asset.name} className="asset">
-                  {asset.name || asset.emoji} - {asset.amount}
-                </div>
-              );
-            })}
+            <div className="asset">
+              UNICORN - {balances.find((b) => b.emoji === "🦄")?.amount || 0}
+            </div>
+            <div className="asset">
+              BLACK FLAG - {balances.find((b) => b.emoji === "🏴")?.amount || 0}
+            </div>
+            <div className="asset">
+              DIAMOND - {balances.find((b) => b.emoji === "💎")?.amount || 0}
+            </div>
           </div>
-        ) : 
-        null}
+        ) : null}
 
         <div id="bottomBar">
           <div>
@@ -492,22 +492,22 @@ function Cracked({ onClose }) {
           </div>
           <div>
             {isWalletConnected ? (
-                <img
-                  className="walletButton"
-                  id="wallet"
-                  onClick={() => disconnect()}
-                  src={switchButton}
-                />
+              <img
+                className="walletButton"
+                id="wallet"
+                onClick={() => disconnect()}
+                src={switchButton}
+              />
             ) : (
-                <img
-                  className="walletButton"
-                  id="wallet"
-                  onClick={async () => {
-                    await connect();
-                    console.log("connected");
-                  }}
-                  src={connectButton}
-                />
+              <img
+                className="walletButton"
+                id="wallet"
+                onClick={async () => {
+                  await connect();
+                  console.log("connected");
+                }}
+                src={connectButton}
+              />
             )}
           </div>
         </div>

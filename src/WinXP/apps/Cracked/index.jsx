@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import assetsWindow from "../../../assets/img/assets.png";
+import { Tooltip } from 'react-tooltip';
+
 import connectButton from "../../../assets/img/connectwallet.png";
 import exitButton from "../../../assets/img/exit.png";
 import hoverButton from "../../../assets/img/hover.png";
@@ -512,12 +513,21 @@ function Cracked({ onClose }) {
           <div className="walletItems">
             {balances?.map((asset) => {
               return (
-                <div key={asset.name} className="assetWrapper">
+                <div key={asset.name} className="assetWrapper" data-tooltip-id={asset.name}
+                data-tooltip-place="top"
+                data-tooltip-position-strategy="fixed"
+                >
                   <div className="assetEmoji">
                     <img
                       src={MEMOJI.find((m) => m.name === asset.name)?.image}
                     ></img>
                   </div>
+                <Tooltip id={asset.name}>
+                <div style={{ display: 'flex', flexDirection: 'column', fontSize: '14pt' }}>
+                  <span>Name: {asset.emoji} {asset.name}</span>
+                  <span>Amount: {asset.amount}</span>
+                </div>
+              </Tooltip>
                 </div>
               );
             })}

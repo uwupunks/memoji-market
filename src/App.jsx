@@ -5,12 +5,15 @@ import { wallets as keplr } from "@cosmos-kit/keplr";
 import { wallets as leap } from "@cosmos-kit/leap";
 
 import { GasPrice } from "@cosmjs/stargate";
-import '@interchain-ui/react/styles';
+import "@interchain-ui/react/styles";
 
 import { getSigningCosmosClientOptions } from "interchain";
 
+import { WalletSelect } from "components/WalletSelect";
+
 const chain = {
-  chain_name: "unicorn", chain_id: "unicorn-420",
+  chain_name: "unicorn",
+  chain_id: "unicorn-420",
 };
 const chainAssets = {
   chain_name: "unicorn",
@@ -64,7 +67,6 @@ const signerOptions = {
   },
 };
 
-
 const App = () => {
   return (
     <ChainProvider
@@ -74,6 +76,7 @@ const App = () => {
       walletConnectOptions={{
         signClient: { projectId: "42be0f17bcc9f94c391f66c133aaa401" },
       }}
+      walletModal={WalletSelect}
       signerOptions={signerOptions}
       endpointOptions={{
         endpoints: {

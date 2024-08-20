@@ -575,7 +575,8 @@ input[type="number"] {
 }
 
 /* width */
-::-webkit-scrollbar,
+.walletItems::-webkit-scrollbar,
+.walletItems::-webkit-scrollbar,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar {
   background: url("./assets/img/scrollbar.png");
   width: 12px;
@@ -590,7 +591,7 @@ input[type="number"] {
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb,
+.walletItems::-webkit-scrollbar-thumb,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb {
   background: url("./assets/img/scrollbutton.png");
   width: 11px;
@@ -598,7 +599,7 @@ input[type="number"] {
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover,
+.walletItems::-webkit-scrollbar-thumb:hover,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb:hover {
   background: url("./assets/img/scrollbutton.png");
   width: 11px;

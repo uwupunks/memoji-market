@@ -1,0 +1,75 @@
+.react-responsive-modal-modal {
+  padding: 0;
+}
+
+.walletSelectModal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
+  max-width: 360px;
+  min-width: 330px;
+  margin: 0;
+  padding: 10px;
+  min-height: 232px;
+  top: 33%;
+  left: 25%;
+
+  background: url("img/bg-modal.png") no-repeat;
+}
+
+.walletSelectOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: #111418b3;
+}
+.walletSelectModal {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.walletSelectModal .header {
+  height: 25px;
+  width: 100%;
+  min-width: 331px;
+  background: url(img/choose-wallet.png) center no-repeat;
+}
+.walletSelectModal .option {
+  flex-basis: 50%;
+  height: 58px;
+  padding-left: 10px;
+}
+.walletSelectModal .icon {
+  float: left;
+  height: 100%;
+  width: 42px;
+  background: url(img/bg-icon.png) left no-repeat;
+}
+.walletSelectModal .name {
+  float: left;
+  height: 100%;
+  width: 100px;
+  background: url(img/bg-text-box.png) left no-repeat;
+}
+.walletSelectModal .name .textbox {
+  background-color: coral;
+}
+
+.walletSelectModal button {
+  background: url(img/btn.png);
+  background-size: cover;
+}
+.walletSelectModal.open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.walletSelectModal.closed {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+@media (max-width: 600px) {
+  .walletSelectModal {
+    width: 90%;
+    inset: 1% 1%;
+  }
+}

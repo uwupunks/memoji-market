@@ -294,7 +294,8 @@ function Cracked({ onClose }) {
           denomDisplay: info.denomShorthand,
           price: Number(info.price),
           priceDisplay: numberFormatter.format(info.price) + " 🦄",
-          mcap: numberFormatter.format(info.mcap),
+          mcap: info.mcap,
+          mcapDisplay: numberFormatter.format(info.mcap),
           liq: percentFormatter.format(info.liq),
           tvl: numberFormatter.format(info.tvl),
           fdv: numberFormatter.format(info.fdv),
@@ -371,11 +372,17 @@ function Cracked({ onClose }) {
   }, []);
 
   const [colDefs, setColDefs] = useState([
-    { field: "Memoji", valueGetter: (p) => p.data.emoji, flex: 1 },
-    { field: "Price", valueGetter: (p) => p.data.priceDisplay, flex: 1 },
-    { field: "Mcap", valueGetter: (p) => p.data.mcap, flex: 1 },
-    { field: "Liq", valueGetter: (p) => p.data.liq, flex: 1 },
-    { field: "TVL", valueGetter: (p) => p.data.tvl, flex: 1 },
+    { field: "Memoji", valueGetter: (p) => p.data.emoji },
+    { field: "Price", valueGetter: (p) => p.data.priceDisplay },
+    {
+      field: "McapRaw",
+      valueGetter: (p) => p.data.mcap,
+      sort: "desc",
+      hide: true,
+    },
+    { field: "Mcap", valueGetter: (p) => p.data.mcapDisplay },
+    { field: "Liq", valueGetter: (p) => p.data.liq },
+    { field: "TVL", valueGetter: (p) => p.data.tvl },
     {
       field: "Listed",
       valueGetter: (p) => p.data.listed,
@@ -494,6 +501,7 @@ function Cracked({ onClose }) {
                   rowSelection="single"
                   ref={gridRef}
                   onSelectionChanged={onSelectionChanged}
+                  enableSorting
                 />
               </div>{" "}
             </div>

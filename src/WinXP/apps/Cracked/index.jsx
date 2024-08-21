@@ -396,6 +396,7 @@ function Cracked({ onClose }) {
   const defaultColDef = {
     sortable: true,
     flex: 1,
+    cellClass: 'partial-vertical-borders'
   };
 
   return (
@@ -503,6 +504,13 @@ function Cracked({ onClose }) {
                   ref={gridRef}
                   onSelectionChanged={onSelectionChanged}
                   enableSorting
+                  rowClass='row-borders'
+                  // getRowStyle={(params) => {
+                  //   if (params.node.rowIndex % 2 === 0) {
+                  //       return {'border-bottom': '2px solid yellow'}
+                  //   }
+                  //   return {'border-bottom': '2px solid red'}
+                  // }}
                 />
               </div>{" "}
             </div>

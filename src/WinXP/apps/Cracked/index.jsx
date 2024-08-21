@@ -579,7 +579,6 @@ function Cracked({ onClose }) {
                 id="wallet"
                 onClick={async () => {
                   await connect();
-                  console.log("connected");
                 }}
                 src={connectButton}
               />

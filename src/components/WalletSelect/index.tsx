@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, Fragment } from "react";
 import useSound from "use-sound";
 import Draggable from "react-draggable";
 
@@ -34,14 +34,18 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
             overlay: 'walletSelectOverlay',
             modal: 'walletSelectModal',
         }}
+
     >
-        <div className="header"></div>
+
+        <div className="header" onMouseDown={clickSound}></div>
         {walletRepo?.wallets.map(({ walletName, connect }) => (
+
             <div key={walletName} className={'option ' + walletName}
                 onClick={async () => {
                     await connect()
                     setOpen(false)
-                }}>
+                }}
+                onMouseDown={clickSound}>
                 <div className="icon-bg"><div className="icon"></div></div>
                 <div className="name">
                     <div className="textbox">
@@ -50,9 +54,21 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                     >
                     </button>
                 </div>
+                <div className="spacer"></div>
             </div>
-        ))}
-        <div className="option disabled">
+        ))
+        }
+        <div className="option disabled" onMouseDown={clickSound}>
+            <div className="icon-bg"><div className="icon"></div></div>
+            <div className="name">
+                <div className="textbox">
+                </div>
+                <button>
+                </button>
+            </div>
+            <div className="spacer"></div>
+        </div>
+        <div className="option disabled" onMouseDown={clickSound}>
             <div className="icon-bg"><div className="icon"></div></div>
             <div className="name">
                 <div className="textbox">
@@ -61,7 +77,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                 </button>
             </div>
         </div>
-        <div className="option disabled">
+        <div className="option disabled" onMouseDown={clickSound}>
             <div className="icon-bg"><div className="icon"></div></div>
             <div className="name">
                 <div className="textbox">
@@ -70,16 +86,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                 </button>
             </div>
         </div>
-        <div className="option disabled">
-            <div className="icon-bg"><div className="icon"></div></div>
-            <div className="name">
-                <div className="textbox">
-                </div>
-                <button>
-                </button>
-            </div>
-        </div>
-    </Modal> : null
+    </Modal > : null
 }
 
 export { WalletSelect };

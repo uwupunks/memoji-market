@@ -1,6 +1,10 @@
-.react-responsive-modal-modal {
-  padding: 0;
-}
+.react-responsive-modal-root *  {
+    cursor: url("assets/img/idle.png"), auto !important;
+ }
+
+ .react-responsive-modal-root *:active {
+    cursor: url("assets/img/click.png"), auto !important;
+ }
 
 .walletSelectModal {
   display: flex;
@@ -14,7 +18,6 @@
   min-height: 232px;
   top: 33%;
   left: 25%;
-
   background: url("img/bg-modal.png") no-repeat;
 }
 
@@ -44,16 +47,14 @@
   width: 50px;
 }
 .walletSelectModal .option.keplr-extension .icon {
-  background: url(img/logos/keplr.png) center no-repeat ;
+  background: url(img/logos/keplr.png) center no-repeat;
 }
 .walletSelectModal .option.leap-extension .icon {
-  background: url(img/logos/leap.png) center no-repeat ;
+  background: url(img/logos/leap.png) center no-repeat;
 }
 .walletSelectModal .option.leap-metamask-cosmos-snap .icon {
-  background: url(img/logos/metamask.png) center no-repeat ;
+  background: url(img/logos/metamask.png) center no-repeat;
 }
-
-
 
 .walletSelectModal .icon-bg {
   float: left;
@@ -81,17 +82,28 @@
 }
 
 .walletSelectModal .option:hover button {
-    background: url(img/btn-hover.png);
-  }
-  .walletSelectModal .option:active button {
-      background: url(img/btn-active.png);
-    }
+  background: url(img/btn-hover.png);
+}
+.walletSelectModal .option:active button {
+  background: url(img/btn-active.png);
+}
 .walletSelectModal .option.disabled button {
-    background: url(img/btn-disabled.png);
-  }
-  .walletSelectModal .option.disabled::hover button {
-      background: url(img/btn-disabled.png);
-    }
+  background: url(img/btn-disabled.png);
+}
+.walletSelectModal .option.disabled::hover button {
+  background: url(img/btn-disabled.png);
+}
+
+.walletSelectModal .spacer {
+  border-top: 1px solid #225588;
+  border-bottom: 1px solid #88bbdd;
+  height: 0;
+  width: 149px;
+  float: left;
+  margin-left: 5px;
+  position: relative;
+  top: -5px;
+}
 
 .walletSelectModal.open {
   opacity: 1;

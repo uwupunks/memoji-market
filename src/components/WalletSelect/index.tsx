@@ -1,6 +1,5 @@
-import { useEffect, Fragment } from "react";
+import { useEffect } from "react";
 import useSound from "use-sound";
-import Draggable from "react-draggable";
 
 import { WalletModalProps } from "@cosmos-kit/core";
 

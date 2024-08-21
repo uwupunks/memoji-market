@@ -37,6 +37,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                 <div className="icon-bg"><div className="icon"></div></div>
                 <div className="name">
                     <div className="textbox">
+                        <div className={walletName}></div>
                     </div>
                     <button
                     >

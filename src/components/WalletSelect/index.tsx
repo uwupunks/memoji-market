@@ -37,21 +37,48 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
     >
         <div className="header"></div>
         {walletRepo?.wallets.map(({ walletName, connect }) => (
-            <div key={walletName} className={'option ' + walletName}>
+            <div key={walletName} className={'option ' + walletName}
+                onClick={async () => {
+                    await connect()
+                    setOpen(false)
+                }}>
                 <div className="icon-bg"><div className="icon"></div></div>
                 <div className="name">
                     <div className="textbox">
                     </div>
                     <button
-                        onClick={async () => {
-                            await connect()
-                            setOpen(false)
-                        }}
                     >
                     </button>
                 </div>
             </div>
         ))}
+        <div className="option disabled">
+            <div className="icon-bg"><div className="icon"></div></div>
+            <div className="name">
+                <div className="textbox">
+                </div>
+                <button>
+                </button>
+            </div>
+        </div>
+        <div className="option disabled">
+            <div className="icon-bg"><div className="icon"></div></div>
+            <div className="name">
+                <div className="textbox">
+                </div>
+                <button>
+                </button>
+            </div>
+        </div>
+        <div className="option disabled">
+            <div className="icon-bg"><div className="icon"></div></div>
+            <div className="name">
+                <div className="textbox">
+                </div>
+                <button>
+                </button>
+            </div>
+        </div>
     </Modal> : null
 }
 

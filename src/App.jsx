@@ -72,7 +72,11 @@ const App = () => {
     <ChainProvider
       chains={[chain]}
       assetLists={[chainAssets]}
-      wallets={[...keplr, ...leap]} // supported wallets
+      wallets={[
+        keplr[0],
+        leap[0],
+        leap[2],
+      ]}
       walletConnectOptions={{
         signClient: { projectId: "42be0f17bcc9f94c391f66c133aaa401" },
       }}

@@ -79,6 +79,20 @@
   margin-left: 20px;
   height: 17px;
 }
+
+.walletSelectModal .option:hover button {
+    background: url(img/btn-hover.png);
+  }
+  .walletSelectModal .option:active button {
+      background: url(img/btn-active.png);
+    }
+.walletSelectModal .option.disabled button {
+    background: url(img/btn-disabled.png);
+  }
+  .walletSelectModal .option.disabled::hover button {
+      background: url(img/btn-disabled.png);
+    }
+
 .walletSelectModal.open {
   opacity: 1;
   transform: translateY(0);

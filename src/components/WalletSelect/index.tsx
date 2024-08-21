@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import useSound from "use-sound";
 
 import { WalletModalProps } from "@cosmos-kit/core";
@@ -13,17 +13,6 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
     //hooks
     const [clickSound] = useSound(clickMp3);
 
-    // state
-
-    // effects
-    useEffect(() => {
-
-    }, []);
-
-    function onCloseModal() {
-        setOpen(false);
-    }
-
     return isOpen ? <Modal
         open={isOpen}
         onClose={() => setOpen(false)}
@@ -36,7 +25,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
 
     >
 
-        <div className="header" onMouseDown={clickSound}></div>
+        <div className="header" onMouseDown={() => clickSound()}></div>
         {walletRepo?.wallets.map(({ walletName, connect }) => (
 
             <div key={walletName} className={'option ' + walletName}
@@ -44,7 +33,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                     await connect()
                     setOpen(false)
                 }}
-                onMouseDown={clickSound}>
+                onMouseDown={() => clickSound()}>
                 <div className="icon-bg"><div className="icon"></div></div>
                 <div className="name">
                     <div className="textbox">
@@ -57,7 +46,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
             </div>
         ))
         }
-        <div className="option disabled" onMouseDown={clickSound}>
+        <div className="option disabled" onMouseDown={() => clickSound()}>
             <div className="icon-bg"><div className="icon"></div></div>
             <div className="name">
                 <div className="textbox">
@@ -67,7 +56,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
             </div>
             <div className="spacer"></div>
         </div>
-        <div className="option disabled" onMouseDown={clickSound}>
+        <div className="option disabled" onMouseDown={() => clickSound()}>
             <div className="icon-bg"><div className="icon"></div></div>
             <div className="name">
                 <div className="textbox">
@@ -76,7 +65,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                 </button>
             </div>
         </div>
-        <div className="option disabled" onMouseDown={clickSound}>
+        <div className="option disabled" onMouseDown={() => clickSound()}>
             <div className="icon-bg"><div className="icon"></div></div>
             <div className="name">
                 <div className="textbox">

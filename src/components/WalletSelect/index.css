@@ -117,6 +117,7 @@
 @media (max-width: 600px) {
   .walletSelectModal {
     width: 90%;
+    min-width: 333px;
     inset: 1% 1%;
   }
 }

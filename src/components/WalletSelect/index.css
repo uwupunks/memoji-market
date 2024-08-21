@@ -75,6 +75,7 @@
 
 .walletSelectModal button {
   background: url(img/btn.png);
+  border: none;
   background-size: cover;
   width: 48px;
   margin-left: 20px;

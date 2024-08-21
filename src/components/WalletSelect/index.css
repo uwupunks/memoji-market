@@ -28,7 +28,8 @@
 }
 
 .walletSelectModal .header {
-  height: 25px;
+  height: 20px;
+  margin-bottom: 17px;
   width: 100%;
   min-width: 331px;
   background: url(img/choose-wallet.png) center no-repeat;
@@ -36,27 +37,47 @@
 .walletSelectModal .option {
   flex-basis: 50%;
   height: 58px;
-  padding-left: 10px;
+  padding-left: 5px;
 }
-.walletSelectModal .icon {
+.walletSelectModal .option .icon {
+  height: 50px;
+  width: 50px;
+}
+.walletSelectModal .option.keplr-extension .icon {
+  background: url(img/logos/keplr.png) center no-repeat ;
+}
+.walletSelectModal .option.leap-extension .icon {
+  background: url(img/logos/leap.png) center no-repeat ;
+}
+.walletSelectModal .option.leap-metamask-cosmos-snap .icon {
+  background: url(img/logos/metamask.png) center no-repeat ;
+}
+
+
+
+.walletSelectModal .icon-bg {
   float: left;
-  height: 100%;
-  width: 42px;
-  background: url(img/bg-icon.png) left no-repeat;
+  height: 50px;
+  width: 50px;
+  background: url(img/bg-icon.png) center no-repeat;
 }
 .walletSelectModal .name {
   float: left;
-  height: 100%;
-  width: 100px;
-  background: url(img/bg-text-box.png) left no-repeat;
+  height: 58px;
 }
 .walletSelectModal .name .textbox {
-  background-color: coral;
+  height: 22px;
+  width: 92px;
+  margin: 5px 0 1px 10px;
+  background: url(img/bg-text-box.png) left no-repeat;
 }
 
 .walletSelectModal button {
   background: url(img/btn.png);
   background-size: cover;
+  width: 48px;
+  margin-left: 20px;
+  height: 17px;
 }
 .walletSelectModal.open {
   opacity: 1;

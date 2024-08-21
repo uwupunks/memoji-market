@@ -5,7 +5,7 @@ import Draggable from "react-draggable";
 import { WalletModalProps } from "@cosmos-kit/core";
 
 import clickMp3 from "assets/sounds/btclick.mp3";
-import {Modal} from 'react-responsive-modal'
+import { Modal } from 'react-responsive-modal'
 import 'react-responsive-modal/styles.css';
 
 import "./index.css"
@@ -25,33 +25,34 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
         setOpen(false);
     }
 
-    return isOpen ?  <Modal
-            open={isOpen}
-            onClose={() => setOpen(false)}
-            center
-            showCloseIcon={false}
-            classNames={{
-              overlay: 'walletSelectOverlay',
-              modal: 'walletSelectModal',
-            }}
-        >
-            <div className="header"></div>
-            {walletRepo?.wallets.map(({ walletName, connect }) => (
-                <div key={walletName} className="option">
-                    <div className="icon"><img></img></div>
-                    <div className="name">
-                        <div className="textbox"></div>
-                <button
-                    className={walletName}
-                    onClick={async () => {
-                        await connect()
-                        setOpen(false)
-                    }}
-                >
-                </button></div>
+    return isOpen ? <Modal
+        open={isOpen}
+        onClose={() => setOpen(false)}
+        center
+        showCloseIcon={false}
+        classNames={{
+            overlay: 'walletSelectOverlay',
+            modal: 'walletSelectModal',
+        }}
+    >
+        <div className="header"></div>
+        {walletRepo?.wallets.map(({ walletName, connect }) => (
+            <div key={walletName} className={'option ' + walletName}>
+                <div className="icon-bg"><div className="icon"></div></div>
+                <div className="name">
+                    <div className="textbox">
+                    </div>
+                    <button
+                        onClick={async () => {
+                            await connect()
+                            setOpen(false)
+                        }}
+                    >
+                    </button>
                 </div>
-            ))}
-        </Modal> : null
+            </div>
+        ))}
+    </Modal> : null
 }
 
 export { WalletSelect };

@@ -351,9 +351,9 @@ function Cracked({ onClose }) {
     }
   }, [address, rowData.length > 0, refreshBalances]);
 
-  const onSelectionChanged = useCallback(() => {
-    const selectedAsset = gridRef.current.api.getSelectedRows()?.[0];
-    if (!selectedAsset) return;
+  const onRowClicked = (event) => {
+    const rowNode = event.node;
+    const selectedAsset = rowNode.data;
 
     setSwapPrice(selectedAsset.price);
     setSwapLiq(selectedAsset.liq);
@@ -370,7 +370,30 @@ function Cracked({ onClose }) {
     });
 
     setSwapActive(true);
-  }, []);
+  };
+
+  const onInventoryClick = (asset) => {
+    const foundAsset = rowData.find(r=>r.denom.endsWith(asset.name))
+
+    if(!foundAsset) {return null}
+
+    setSwapPrice(foundAsset.price);
+    setSwapLiq(foundAsset.liq);
+
+    setLeftAsset({
+      name: foundAsset.denomDisplay,
+      denom: foundAsset.denom,
+      amount: "1",
+    });
+    setRightAsset({
+      name: "uwunicorn",
+      denom: "uwunicorn",
+      amount: (1 * foundAsset.price).toFixed(4),
+    });
+
+    setSwapActive(true);
+  };
+
 
   const [colDefs, setColDefs] = useState([
     { field: "Memoji", valueGetter: (p) => p.data.emoji },
@@ -502,15 +525,9 @@ function Cracked({ onClose }) {
                   defaultColDef={defaultColDef}
                   rowSelection="single"
                   ref={gridRef}
-                  onSelectionChanged={onSelectionChanged}
+                  onRowClicked={onRowClicked}
                   enableSorting
                   rowClass='row-borders'
-                  // getRowStyle={(params) => {
-                  //   if (params.node.rowIndex % 2 === 0) {
-                  //       return {'border-bottom': '2px solid yellow'}
-                  //   }
-                  //   return {'border-bottom': '2px solid red'}
-                  // }}
                 />
               </div>{" "}
             </div>
@@ -521,7 +538,9 @@ function Cracked({ onClose }) {
           <div className="walletItems">
             {balances?.map((asset) => {
               return (
-                <div key={asset.name} className="assetWrapper" data-tooltip-id={asset.name}
+                <div key={asset.name} className="assetWrapper"
+                onClick={() => onInventoryClick(asset)}
+                data-tooltip-id={asset.name}
                 data-tooltip-place="top"
                 data-tooltip-position-strategy="fixed"
                 >

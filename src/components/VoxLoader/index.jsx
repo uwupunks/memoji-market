@@ -61,9 +61,9 @@ function VoxLoader({ filePath }) {
     renderer.setAnimationLoop(() => {
       const r = Date.now() * 0.0005;
       camera.position.set(
-        700 * Math.cos(r),
+        700 * Math.sin(r),
         0,
-        700 * Math.sin(r)
+        700 * Math.cos(r)
       );
 
       controls.update();

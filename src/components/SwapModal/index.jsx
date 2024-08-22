@@ -11,6 +11,7 @@ import clickMp3 from "assets/sounds/btclick.mp3";
 import completeMp3 from "assets/sounds/dlgnotice.mp3";
 
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import sonicspin from "assets/img/sonicspin.png";
 
 //force module load
 console.log(SigningCosmWasmClient);
@@ -30,6 +31,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   const [rightAsset, setRightAsset] = useState(right);
   const [leftFilePath, setLeftFilePath] = useState();
   const [rightFilePath, setRightFilePath] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   // effects
   useEffect(() => {
@@ -60,6 +62,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
 
   const swapAssets = async () => {
     if (isWalletConnected && leftAsset.denom && rightAsset.denom) {
+      setIsLoading(true);
       const client = await getSigningCosmWasmClient();
 
       let msg = {
@@ -81,20 +84,29 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
         },
       };
       try {
-      let res = await client.execute(address, CONTRACTS.swap, msg, "auto", "", [
-        {
-          denom: String(leftAsset.denom),
-          amount: String(leftAsset.amount * Math.pow(10, 6)),
-        },
-      ]);
-    } catch(err) {
-      alert(`swap failed with error: ${err}`)
-      return null
-    }
-      completeSound();
-      alert(`Success, transaction hash: ${res.transactionHash}`);
-      onSwap();
-      onClose();
+        const res = await client.execute(
+          address,
+          CONTRACTS.swap,
+          msg,
+          "auto",
+          "",
+          [
+            {
+              denom: String(leftAsset.denom),
+              amount: String(leftAsset.amount * Math.pow(10, 6)),
+            },
+          ]
+        );
+        completeSound();
+        alert(`Success, transaction hash: ${res.transactionHash}`);
+        onSwap();
+        onClose();
+      } catch (err) {
+        alert(`swap failed with error: ${err}`);
+        return null;
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       alert("Please connect a wallet");
     }
@@ -127,18 +139,29 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
         {isLowLiq(liq) && (
           <span className="swapMessage">Low Liquidity: {liq}</span>
         )}
-        <img
-          className="tradeSwap"
-          id="trade"
-          onClick={() => swapAssets()}
-          onMouseDown={buySound}
-        />
-        <img
+        {isLoading ? (
+          <img className="swapLoading" src={sonicspin}></img>
+        ) : (
+          <div
+            className="tradeSwap"
+            id="trade"
+            onClick={() => swapAssets()}
+            onMouseDown={buySound}
+          />
+        )}
+        <div
           onClick={() => switchSwapPlace()}
           className="switchSwap"
           id="swap"
         />
-        <img className="cancelSwap" id="cancel" onClick={onClose} />
+        <div
+          className="cancelSwap"
+          id="cancel"
+          onClick={() => {
+            setIsLoading(false);
+            onClose();
+          }}
+        />
         <input
           className="inputNumbers"
           id="leftInput"

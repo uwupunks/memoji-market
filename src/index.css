@@ -126,12 +126,22 @@
   top: 36px;
   z-index: 99 !important;
 }
+
 .tradeSwap:hover {
   background: url("assets/img/tradehover.png");
 }
 .tradeSwap:active {
   background: url("assets/img/tradepressed.png");
 }
+
+.swapLoading {
+  position: absolute;
+  left: 135px;
+  top: 36px;
+  height: 16px;
+  width: 16px;
+}
+
 
 .cancelSwap {
   background: url("assets/img/cancel.png");
@@ -205,6 +215,7 @@ input[type="number"] {
 .switchSwap:active {
   background: url("assets/img/switchpress.png");
 }
+
 
 .genButtons {
   position: absolute;

@@ -62,7 +62,7 @@ function VoxLoader({ filePath }) {
       const r = Date.now() * 0.0005;
       camera.position.set(
         700 * Math.cos(r),
-        700 * Math.sin(r),
+        0,
         700 * Math.sin(r)
       );
 
@@ -72,8 +72,8 @@ function VoxLoader({ filePath }) {
 
     // controls
     controls = new OrbitControls(camera, renderer.domElement);
-    controls.minDistance = 0.03;
-    controls.maxDistance = 0.035;
+    controls.minDistance = 0.09;
+    controls.maxDistance = 0.095;
 
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();

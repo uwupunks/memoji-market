@@ -80,12 +80,17 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
           ],
         },
       };
+      try {
       let res = await client.execute(address, CONTRACTS.swap, msg, "auto", "", [
         {
           denom: String(leftAsset.denom),
           amount: String(leftAsset.amount * Math.pow(10, 6)),
         },
       ]);
+    } catch(err) {
+      debugger
+    }
+      debugger
       completeSound();
       alert(`Success, transaction hash: ${res.transactionHash}`);
       onSwap();
@@ -165,6 +170,9 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
           <VoxLoader filePath={rightFilePath} />
         </div>
         <p className="rightSwapName">{rightAsset?.name}</p>
+        <div>
+          test message
+        </div>
       </div>
     </Draggable>
   ) : null;

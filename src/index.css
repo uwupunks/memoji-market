@@ -658,7 +658,7 @@ input[type="number"] {
   font-smoothing: none;
 }
 #assetGrid .ag-cell {
-  color: black;
+  color: rgb(224 238 255);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: antialiased;
   font-smoothing: antialiased;

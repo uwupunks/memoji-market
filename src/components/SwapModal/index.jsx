@@ -88,9 +88,9 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
         },
       ]);
     } catch(err) {
-      debugger
+      alert(`swap failed with error: ${err}`)
+      return null
     }
-      debugger
       completeSound();
       alert(`Success, transaction hash: ${res.transactionHash}`);
       onSwap();
@@ -170,9 +170,6 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
           <VoxLoader filePath={rightFilePath} />
         </div>
         <p className="rightSwapName">{rightAsset?.name}</p>
-        <div>
-          test message
-        </div>
       </div>
     </Draggable>
   ) : null;

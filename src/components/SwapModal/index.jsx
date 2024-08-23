@@ -6,9 +6,10 @@ import { useChain } from "@cosmos-kit/react";
 import VoxLoader from "components/VoxLoader";
 import { CONTRACTS } from "src/constants";
 
-import buyMp3 from "assets/sounds/btbuy.mp3";
+import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
-import completeMp3 from "assets/sounds/dlgnotice.mp3";
+import successMp3 from "assets/sounds/success.mp3";
+import errorWav from "assets/sounds/error.wav";
 
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
@@ -24,10 +25,11 @@ const isLowLiq = (liq) => liq.replace("%", "") < 0.4;
 
 function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   //hooks
-  const [buySound] = useSound(buyMp3);
+  const [promptSound] = useSound(promptMp3);
   const [clickSound] = useSound(clickMp3);
-  const [completeSound] = useSound(completeMp3);
+  const [successSound] = useSound(successMp3);
   const [overSound] = useSound(overMp3);
+  const [errorSound] = useSound(errorWav);
   const playOverSound = throttle(overSound, 100);
   const { address, isWalletConnected, getSigningCosmWasmClient } =
     useChain("unicorn");
@@ -103,11 +105,12 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             },
           ]
         );
-        completeSound();
+        successSound();
         alert(`Success, transaction hash: ${res.transactionHash}`);
         onSwap();
         onClose();
       } catch (err) {
+        errorSound()
         alert(`swap failed with error: ${err}`);
         return null;
       } finally {
@@ -152,7 +155,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             className="tradeSwap"
             id="trade"
             onClick={() => swapAssets()}
-            onMouseDown={buySound}
+            onMouseDown={promptSound}
             onMouseEnter={playOverSound}
           />
         )}

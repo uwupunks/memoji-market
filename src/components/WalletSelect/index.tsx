@@ -4,6 +4,7 @@ import useSound from "use-sound";
 import { WalletModalProps } from "@cosmos-kit/core";
 
 import clickMp3 from "assets/sounds/btclick.mp3";
+import promptMp3 from "assets/sounds/prompt.mp3";
 import { Modal } from 'react-responsive-modal'
 import 'react-responsive-modal/styles.css';
 
@@ -16,8 +17,8 @@ import "./index.css"
 function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
     //hooks
     const [clickSound] = useSound(clickMp3);
-
     const [overSound] = useSound(overMp3);
+    const [promptSound] = useSound(promptMp3);
 
     const playOverSound = throttle(overSound, 100)
 
@@ -38,6 +39,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
 
             <div key={walletName} className={'option ' + walletName}
                 onClick={async () => {
+                    promptSound()
                     await connect()
                     setOpen(false)
                 }}

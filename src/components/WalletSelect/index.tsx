@@ -19,7 +19,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
 
     const [overSound] = useSound(overMp3);
 
-    const playOverSound = throttle(overSound, 500)
+    const playOverSound = throttle(overSound, 100)
 
     return isOpen ? <Modal
         open={isOpen}
@@ -41,7 +41,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                     await connect()
                     setOpen(false)
                 }}
-                onMouseEnter={()=>playOverSound()}
+                onMouseEnter={() => playOverSound()}
                 onMouseDown={() => clickSound()}>
                 <div className="icon-bg"><div className="icon"></div></div>
                 <div className="name">

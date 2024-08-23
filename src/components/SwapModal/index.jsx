@@ -28,7 +28,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   const [clickSound] = useSound(clickMp3);
   const [completeSound] = useSound(completeMp3);
   const [overSound] = useSound(overMp3);
-  const playOverSound = throttle(overSound, 500);
+  const playOverSound = throttle(overSound, 100);
   const { address, isWalletConnected, getSigningCosmWasmClient } =
     useChain("unicorn");
 

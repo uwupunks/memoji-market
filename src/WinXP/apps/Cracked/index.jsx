@@ -84,7 +84,7 @@ function Cracked({ onClose }) {
   const [overSound] = useSound(overMp3);
   const [clickSound] = useSound(clickMp3);
 
-  const playOverSound = throttle(overSound, 500);
+  const playOverSound = throttle(overSound, 100);
 
   const onGridTabClick = async (e) => {
     const activeTab =

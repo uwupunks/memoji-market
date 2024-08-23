@@ -9,7 +9,7 @@ import 'react-responsive-modal/styles.css';
 
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
-import throttle from 'lodash/throttle'
+import throttle from 'lodash'
 
 import "./index.css"
 

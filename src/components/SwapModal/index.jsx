@@ -12,7 +12,7 @@ import completeMp3 from "assets/sounds/dlgnotice.mp3";
 
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
-import throttle from 'lodash/throttle'
+import throttle from "lodash";
 
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import sonicspin from "assets/img/sonicspin.png";
@@ -28,7 +28,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   const [clickSound] = useSound(clickMp3);
   const [completeSound] = useSound(completeMp3);
   const [overSound] = useSound(overMp3);
-  const playOverSound = throttle(overSound, 500)
+  const playOverSound = throttle(overSound, 500);
   const { address, isWalletConnected, getSigningCosmWasmClient } =
     useChain("unicorn");
 
@@ -160,7 +160,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
           onClick={() => switchSwapPlace()}
           className="switchSwap"
           id="swap"
-            onMouseEnter={playOverSound}
+          onMouseEnter={playOverSound}
         />
         <div
           className="cancelSwap"

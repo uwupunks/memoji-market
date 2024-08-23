@@ -14,7 +14,7 @@ import { throttle } from 'lodash';
 
 import "./index.css"
 
-function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
+function WalletSelect({ isOpen, setOpen, walletRepo }) {
     //hooks
     const [clickSound] = useSound(clickMp3);
     const [overSound] = useSound(overMp3);
@@ -40,7 +40,12 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
             <div key={walletName} className={'option ' + walletName}
                 onClick={async () => {
                     promptSound()
+                    try {
                     await connect()
+                    } catch (err) {
+                        window.alert(err)
+                        console.error(err)
+                    }
                     setOpen(false)
                 }}
                 onMouseEnter={() => playOverSound()}

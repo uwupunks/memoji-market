@@ -50,7 +50,7 @@ import {
   findBalance,
 } from "../../../hooks/balanceUtils.jsx";
 import SwapModal from "../../../components/SwapModal/index.jsx";
-import throttle from "lodash";
+import { throttle } from "lodash";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   maximumFractionDigits: 1,

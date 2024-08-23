@@ -12,7 +12,7 @@ import completeMp3 from "assets/sounds/dlgnotice.mp3";
 
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
-import throttle from "lodash";
+import { throttle } from "lodash";
 
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import sonicspin from "assets/img/sonicspin.png";

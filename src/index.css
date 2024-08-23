@@ -332,10 +332,9 @@ input[type="number"] {
   background-color: #bbccdd;
   border-top: 1px solid #88aabb;
   border-left: 1px solid #88aabb;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   flex: auto;
-  padding: 6px 5px 5px 8px;
   margin: 2px;
 }
 

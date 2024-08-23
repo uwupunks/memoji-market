@@ -1,8 +1,6 @@
 
 import useSound from "use-sound";
 
-import { WalletModalProps } from "@cosmos-kit/core";
-
 import clickMp3 from "assets/sounds/btclick.mp3";
 import promptMp3 from "assets/sounds/prompt.mp3";
 import { Modal } from 'react-responsive-modal'

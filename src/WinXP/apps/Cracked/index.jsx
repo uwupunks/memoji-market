@@ -108,7 +108,7 @@ function Cracked({ onClose }) {
 
   const padInventory = (balances) => {
     const emptyBoxes = [];
-    for (let i = 0; i < 40 - balances.length || 0; i++) {
+    for (let i = 0; i < 40 - balances?.length || 0; i++) {
       emptyBoxes.push(
         <div className="assetWrapper">
           <div className="assetEmoji"></div>
@@ -415,8 +415,8 @@ function Cracked({ onClose }) {
         onMouseDown={clickSound}
         style={{ zIndex: "97" }}
       >
-        <div className="w-1/4">
-          <div className="userSection pt-1 pl-1">
+        <div className="leftSection w-1/4">
+          <div className="userSection p-1">
             <img className="userWindow" src={userWindow} />
             {isWalletConnected ? (
               <div className="walletName">
@@ -429,51 +429,49 @@ function Cracked({ onClose }) {
             ) : null}
           </div>
 
-          {isWalletConnected ? (
-            <div className="walletItems">
-              {balances?.map((asset) => {
-                return (
-                  <div
-                    key={asset.name}
-                    className="assetWrapper"
-                    onClick={() => onInventoryClick(asset)}
-                    data-tooltip-id={asset.name}
-                    data-tooltip-place="top"
-                    data-tooltip-position-strategy="fixed"
-                  >
-                    <div className="assetEmoji">
-                      <img
-                        src={MEMOJI.find((m) => m.name === asset.name)?.image}
-                        onMouseEnter={playOverSound}
-                      ></img>
-                    </div>
-                    <Tooltip id={asset.name}>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          fontSize: "14pt",
-                        }}
-                      >
-                        <span>
-                          Name: {asset.emoji} {asset.name}
-                        </span>
-                        <span>Amount: {asset.amount}</span>
+          <div className="walletItemsSection lg:h-full">
+              <div className="walletItems">
+                {balances?.map((asset) => {
+                  return (
+                    <div
+                      key={asset.name}
+                      className="assetWrapper"
+                      onClick={() => onInventoryClick(asset)}
+                      data-tooltip-id={asset.name}
+                      data-tooltip-place="top"
+                      data-tooltip-position-strategy="fixed"
+                    >
+                      <div className="assetEmoji">
+                        <img
+                          src={MEMOJI.find((m) => m.name === asset.name)?.image}
+                          onMouseEnter={playOverSound}
+                        ></img>
                       </div>
-                    </Tooltip>
-                  </div>
-                );
-              })}
-              {padInventory(balances)}
-            </div>
-          ) : (
-            <div></div>
-          )}
+                      <Tooltip id={asset.name}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            fontSize: "14pt",
+                          }}
+                        >
+                          <span>
+                            Name: {asset.emoji} {asset.name}
+                          </span>
+                          <span>Amount: {asset.amount}</span>
+                        </div>
+                      </Tooltip>
+                    </div>
+                  );
+                })}
+                {padInventory(balances)}
+              </div>
+          </div>
         </div>
-        <div className="w-3/4 flex flex-col pl-2.5">
-          <div class="h-full pt-2.5 pb-2.5 pr-2.5">
+        <div className="w-3/4 flex flex-col">
+          <div className="memeMarketSection h-full p-2.5">
             <Draggable>
-              <div id="memeMarketSection">
+              <div id="memeMarket">
                 <div className="memeSection"></div>
                 <div className="buttonSection">
                   {activeButton === 0 && (
@@ -564,7 +562,7 @@ function Cracked({ onClose }) {
               </div>
             </Draggable>
           </div>
-          <div class="h-[75px] flex flex-row items-baseline">
+          <div className="bottomBar flex flex-row items-baseline">
             {isWalletConnected ? (
               <div className="assetList">
                 <div className="asset">
@@ -590,7 +588,9 @@ function Cracked({ onClose }) {
                   onMouseEnter={playOverSound}
                   className="walletButton"
                   id="wallet"
-                  onClick={() => disconnect()}
+                  onClick={() => {
+                    setBalances(null)
+                    disconnect()}}
                   src={switchButton}
                 />
               ) : (

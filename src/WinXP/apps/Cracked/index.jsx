@@ -114,7 +114,6 @@ function Cracked({ onClose }) {
       emptyBoxes.push(
         <div className="assetWrapper">
           <div className="assetEmoji"></div>
-          <div className="assetAmount"></div>
         </div>
       );
     }

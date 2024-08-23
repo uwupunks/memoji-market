@@ -371,20 +371,6 @@ input[type="number"] {
   right: 5px;
 }
 
-.assetAmount {
-  flex: auto;
-  width: 40px;
-  margin-top: 10px;
-  text-align: center;
-  overflow-wrap: break-word;
-  font-family: "VCR OSD Mono", sans-serif;
-  font-weight: 700;
-  font-size: 11px;
-  background-image: linear-gradient(to right, rgb(215 50 196), rgb(201 19 177));
-  color: transparent;
-  background-clip: text;
-}
-
 .invText {
   width: 120px;
   height: 17px;
@@ -669,12 +655,12 @@ input[type="number"] {
   font-smoothing: none;
 }
 #assetGrid .ag-cell {
-  color: rgb(224 238 255);
+  color: #FFF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: antialiased;
   font-smoothing: antialiased;
   font-size: 8pt;
-  font-weight: 600;
+  font-weight: 500;
 }
 #assetGrid .ag-cell-focus {
   border-right: 1px solid #003399;

@@ -23,10 +23,8 @@ import { ModuleRegistry } from "@ag-grid-community/core";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 import useSound from "use-sound";
-import buyMp3 from "../../../assets/sounds/btbuy.mp3";
 import overMp3 from "../../../assets/sounds/btmouseover.mp3";
 import clickMp3 from "../../../assets/sounds/btclick.mp3";
-import completeMp3 from "../../../assets/sounds/dlgnotice.mp3";
 
 import zeroCharacter from "../../../assets/img/zeroCharacter.png";
 import oneCharacter from "../../../assets/img/oneCharacter.png";

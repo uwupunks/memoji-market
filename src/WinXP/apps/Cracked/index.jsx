@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Tooltip } from 'react-tooltip';
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import { Tooltip } from "react-tooltip";
 
 import connectButton from "../../../assets/img/connectwallet.png";
 import exitButton from "../../../assets/img/exit.png";
@@ -50,6 +50,7 @@ import {
   findBalance,
 } from "../../../hooks/balanceUtils.jsx";
 import SwapModal from "../../../components/SwapModal/index.jsx";
+import throttle from 'lodash/throttle'
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   maximumFractionDigits: 1,
@@ -82,6 +83,8 @@ function Cracked({ onClose }) {
   let gridRef = useRef();
   const [overSound] = useSound(overMp3);
   const [clickSound] = useSound(clickMp3);
+
+  const playOverSound = throttle(overSound, 500)
 
   const onGridTabClick = async (e) => {
     const activeTab =
@@ -373,9 +376,11 @@ function Cracked({ onClose }) {
   };
 
   const onInventoryClick = (asset) => {
-    const foundAsset = rowData.find(r=>r.denom.endsWith(asset.name))
+    const foundAsset = rowData.find((r) => r.denom.endsWith(asset.name));
 
-    if(!foundAsset) {return null}
+    if (!foundAsset) {
+      return null;
+    }
 
     setSwapPrice(foundAsset.price);
     setSwapLiq(foundAsset.liq);
@@ -393,7 +398,6 @@ function Cracked({ onClose }) {
 
     setSwapActive(true);
   };
-
 
   const [colDefs, setColDefs] = useState([
     { field: "Memoji", valueGetter: (p) => p.data.emoji },
@@ -419,7 +423,7 @@ function Cracked({ onClose }) {
   const defaultColDef = {
     sortable: true,
     flex: 1,
-    cellClass: 'partial-vertical-borders'
+    cellClass: "partial-vertical-borders",
   };
 
   return (
@@ -527,7 +531,7 @@ function Cracked({ onClose }) {
                   ref={gridRef}
                   onRowClicked={onRowClicked}
                   enableSorting
-                  rowClass='row-borders'
+                  rowClass="row-borders"
                 />
               </div>{" "}
             </div>
@@ -538,23 +542,34 @@ function Cracked({ onClose }) {
           <div className="walletItems">
             {balances?.map((asset) => {
               return (
-                <div key={asset.name} className="assetWrapper"
-                onClick={() => onInventoryClick(asset)}
-                data-tooltip-id={asset.name}
-                data-tooltip-place="top"
-                data-tooltip-position-strategy="fixed"
+                <div
+                  key={asset.name}
+                  className="assetWrapper"
+                  onClick={() => onInventoryClick(asset)}
+                  data-tooltip-id={asset.name}
+                  data-tooltip-place="top"
+                  data-tooltip-position-strategy="fixed"
                 >
                   <div className="assetEmoji">
                     <img
                       src={MEMOJI.find((m) => m.name === asset.name)?.image}
+                      onMouseEnter={playOverSound}
                     ></img>
                   </div>
-                <Tooltip id={asset.name}>
-                <div style={{ display: 'flex', flexDirection: 'column', fontSize: '14pt' }}>
-                  <span>Name: {asset.emoji} {asset.name}</span>
-                  <span>Amount: {asset.amount}</span>
-                </div>
-              </Tooltip>
+                  <Tooltip id={asset.name}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        fontSize: "14pt",
+                      }}
+                    >
+                      <span>
+                        Name: {asset.emoji} {asset.name}
+                      </span>
+                      <span>Amount: {asset.amount}</span>
+                    </div>
+                  </Tooltip>
                 </div>
               );
             })}
@@ -579,7 +594,7 @@ function Cracked({ onClose }) {
         <div id="bottomBar">
           <div>
             <img
-              onMouseOver={overSound}
+              onMouseEnter={playOverSound}
               className="mascot"
               onClick={() => onClose(onClose)}
               src={mascotButton}
@@ -587,6 +602,7 @@ function Cracked({ onClose }) {
           </div>
           <div>
             <img
+              onMouseEnter={playOverSound}
               className="exit"
               onClick={() => onClose(onClose)}
               src={exitButton}
@@ -595,6 +611,7 @@ function Cracked({ onClose }) {
           <div>
             {isWalletConnected ? (
               <img
+                onMouseEnter={playOverSound}
                 className="walletButton"
                 id="wallet"
                 onClick={() => disconnect()}
@@ -602,6 +619,7 @@ function Cracked({ onClose }) {
               />
             ) : (
               <img
+                onMouseEnter={playOverSound}
                 className="walletButton"
                 id="wallet"
                 onClick={async () => {

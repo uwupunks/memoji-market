@@ -7,11 +7,19 @@ import clickMp3 from "assets/sounds/btclick.mp3";
 import { Modal } from 'react-responsive-modal'
 import 'react-responsive-modal/styles.css';
 
+import overMp3 from "assets/sounds/btmouseover.mp3";
+
+import throttle from 'lodash/throttle'
+
 import "./index.css"
 
 function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
     //hooks
     const [clickSound] = useSound(clickMp3);
+
+    const [overSound] = useSound(overMp3);
+
+    const playOverSound = throttle(overSound, 500)
 
     return isOpen ? <Modal
         open={isOpen}
@@ -33,6 +41,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                     await connect()
                     setOpen(false)
                 }}
+                onMouseEnter={playOverSound}
                 onMouseDown={() => clickSound()}>
                 <div className="icon-bg"><div className="icon"></div></div>
                 <div className="name">

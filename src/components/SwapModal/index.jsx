@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useSound from "use-sound";
 import Draggable from "react-draggable";
-import { useChain, useWallet } from "@cosmos-kit/react";
+import { useChain } from "@cosmos-kit/react";
 
 import VoxLoader from "components/VoxLoader";
 import { CONTRACTS } from "src/constants";
@@ -9,6 +9,10 @@ import { CONTRACTS } from "src/constants";
 import buyMp3 from "assets/sounds/btbuy.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
 import completeMp3 from "assets/sounds/dlgnotice.mp3";
+
+import overMp3 from "assets/sounds/btmouseover.mp3";
+
+import throttle from 'lodash/throttle'
 
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import sonicspin from "assets/img/sonicspin.png";
@@ -23,6 +27,8 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   const [buySound] = useSound(buyMp3);
   const [clickSound] = useSound(clickMp3);
   const [completeSound] = useSound(completeMp3);
+  const [overSound] = useSound(overMp3);
+  const playOverSound = throttle(overSound, 500)
   const { address, isWalletConnected, getSigningCosmWasmClient } =
     useChain("unicorn");
 
@@ -147,12 +153,14 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             id="trade"
             onClick={() => swapAssets()}
             onMouseDown={buySound}
+            onMouseEnter={playOverSound}
           />
         )}
         <div
           onClick={() => switchSwapPlace()}
           className="switchSwap"
           id="swap"
+            onMouseEnter={playOverSound}
         />
         <div
           className="cancelSwap"
@@ -161,6 +169,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             setIsLoading(false);
             onClose();
           }}
+          onMouseEnter={playOverSound}
         />
         <input
           className="inputNumbers"

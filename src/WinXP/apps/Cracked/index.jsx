@@ -315,7 +315,7 @@ function Cracked({ onClose }) {
 
         if (isWalletConnected && rowData.length > 0) {
           const userBalances = await fetchBalancesAsync(address, signal);
-          const balances = userBalances.map((ub) => ({
+          const balances = userBalances?.map((ub) => ({
             name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
             emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
             amount: displayNumber(Number(ub.amount) / 1000000),
@@ -567,15 +567,15 @@ function Cracked({ onClose }) {
               <div className="assetList">
                 <div className="asset">
                   UNICORN -{" "}
-                  {balances.find((b) => b.emoji === "🦄")?.amount || 0}
+                  {balances?.find((b) => b.emoji === "🦄")?.amount || 0}
                 </div>
                 <div className="asset">
                   BLACK FLAG -{" "}
-                  {balances.find((b) => b.emoji === "🏴")?.amount || 0}
+                  {balances?.find((b) => b.emoji === "🏴")?.amount || 0}
                 </div>
                 <div className="asset">
                   DIAMOND -{" "}
-                  {balances.find((b) => b.emoji === "💎")?.amount || 0}
+                  {balances?.find((b) => b.emoji === "💎")?.amount || 0}
                 </div>
               </div>
             ) : (

@@ -288,9 +288,11 @@ input[type="number"] {
 }
 
 .mascot {
-  width: 115px;
+  height: 85px;
+  width: 91px;
   position: relative;
   right: -5px;
+  bottom: 14px;
 }
 
 .exitWrapper {
@@ -310,7 +312,7 @@ input[type="number"] {
   width: 62px;
   height: 22px;
   padding-left: 1rem;
-  margin-top: 73%;
+  margin-top: 42%;
 }
 .leftSection {
   overflow: hidden;
@@ -422,7 +424,7 @@ input[type="number"] {
 .walletButton {
   width: 50px;
   height: 39px;
-  margin-top: 6%;
+  margin-top: 4%;
   margin-left: 5%;
   margin-right: auto;
 }
@@ -483,7 +485,8 @@ input[type="number"] {
 }
 
 .listItems {
-  height: 75%;
+  height: 80%;
+  border-radius: 1px;
 }
 
 .listedItem {
@@ -695,9 +698,10 @@ input[type="number"] {
 }
 .bottomBar {
   background: url(assets/img/brushedsteel.png);
-  height: 15%;
+  background-position: center;
+  height: 13%;
   margin: 0 4px 4px 0;
-  padding-top: 1rem;
+  padding-top: 5px;
   border-radius: 0 10px 10px 0;
 }
 #bottomBarMiddle {

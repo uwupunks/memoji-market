@@ -41,7 +41,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }: WalletModalProps) {
                     await connect()
                     setOpen(false)
                 }}
-                onMouseEnter={playOverSound}
+                onMouseEnter={()=>playOverSound()}
                 onMouseDown={() => clickSound()}>
                 <div className="icon-bg"><div className="icon"></div></div>
                 <div className="name">

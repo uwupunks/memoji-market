@@ -108,7 +108,7 @@ function Cracked({ onClose }) {
 
   const padInventory = (balances) => {
     const emptyBoxes = [];
-    for (let i = 0; i < 24 - balances.length || 0; i++) {
+    for (let i = 0; i < 40 - balances.length || 0; i++) {
       emptyBoxes.push(
         <div className="assetWrapper">
           <div className="assetEmoji"></div>
@@ -179,21 +179,6 @@ function Cracked({ onClose }) {
     T: tCharacter,
     "<": lessThanCharacter,
   });
-
-  function parsedText(text) {
-    let textArray = [];
-    for (let i = 0; i < text.length; i++) {
-      if (sprites[text[i]]) {
-        textArray.push(
-          <img
-            style={{ width: "initial", height: "initial" }}
-            src={sprites[text[i]]}
-          />
-        );
-      }
-    }
-    return textArray;
-  }
 
   function displayNumber(num) {
     if (!num) return "";
@@ -426,205 +411,218 @@ function Cracked({ onClose }) {
   return (
     <>
       <div
-        className="crackedWindow"
+        className="crackedWindow flex flex-row"
         onMouseDown={clickSound}
         style={{ zIndex: "97" }}
       >
-        <div className="userSection">
-          <img className="userWindow" src={userWindow} />
-          {isWalletConnected ? (
-            <div className="walletName">
-              <p>
-                {address.slice(0, 11)}....
-                {address.slice(40, 46)}
-              </p>
-              <p>{username}</p>
-            </div>
-          ) : null}
-        </div>
-
-        <Draggable>
-          <div id="memeMarketSection">
-            <div className="memeSection"></div>
-            <div className="buttonSection">
-              {activeButton === 0 && (
-                <>
-                  <img
-                    className="allButton"
-                    id="allButton"
-                    src={allButton}
-                    onClick={onGridTabClick}
-                  />
-                  <img
-                    onClick={onGridTabClick}
-                    className="hiddenButton"
-                    id="hiddenButton"
-                    style={{ opacity: "0" }}
-                    src={hiddenButton}
-                  />
-                  <img
-                    onClick={onGridTabClick}
-                    className="classicButton"
-                    id="classicButton"
-                    style={{ opacity: "0" }}
-                    src={classicButton}
-                  />
-                </>
-              )}
-              {activeButton === 1 && (
-                <>
-                  <img
-                    onClick={onGridTabClick}
-                    className="allButton"
-                    id="allButton"
-                    style={{ opacity: "0" }}
-                    src={allButton}
-                  />
-                  <img
-                    className="hiddenButton"
-                    id="hiddenButton"
-                    src={hiddenButton}
-                  />
-                  <img
-                    onClick={onGridTabClick}
-                    className="classicButton"
-                    id="classicButton"
-                    style={{ opacity: "0" }}
-                    src={classicButton}
-                  />
-                </>
-              )}
-              {activeButton === 2 && (
-                <>
-                  <img
-                    onClick={onGridTabClick}
-                    className="allButton"
-                    id="allButton"
-                    style={{ opacity: "0" }}
-                    src={allButton}
-                  />
-                  <img
-                    onClick={onGridTabClick}
-                    className="hiddenButton"
-                    id="hiddenButton"
-                    style={{ opacity: "0" }}
-                    src={hiddenButton}
-                  />
-                  <img
-                    className="classicButton"
-                    id="classicButton"
-                    src={classicButton}
-                  />
-                </>
-              )}
-            </div>
-            <div className="listItems">
-              <div id="assetGrid" className="ag-theme-quartz-dark">
-                <AgGridReact
-                  rowData={rowData}
-                  columnDefs={colDefs}
-                  defaultColDef={defaultColDef}
-                  rowSelection="single"
-                  ref={gridRef}
-                  onRowClicked={onRowClicked}
-                  enableSorting
-                  rowClass="row-borders"
-                />
-              </div>{" "}
-            </div>
-          </div>
-        </Draggable>
-
-        {isWalletConnected ? (
-          <div className="walletItems">
-            {balances?.map((asset) => {
-              return (
-                <div
-                  key={asset.name}
-                  className="assetWrapper"
-                  onClick={() => onInventoryClick(asset)}
-                  data-tooltip-id={asset.name}
-                  data-tooltip-place="top"
-                  data-tooltip-position-strategy="fixed"
-                >
-                  <div className="assetEmoji">
-                    <img
-                      src={MEMOJI.find((m) => m.name === asset.name)?.image}
-                      onMouseEnter={playOverSound}
-                    ></img>
-                  </div>
-                  <Tooltip id={asset.name}>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        fontSize: "14pt",
-                      }}
-                    >
-                      <span>
-                        Name: {asset.emoji} {asset.name}
-                      </span>
-                      <span>Amount: {asset.amount}</span>
-                    </div>
-                  </Tooltip>
-                </div>
-              );
-            })}
-            {padInventory(balances)}
-          </div>
-        ) : null}
-
-        {isWalletConnected ? (
-          <div className="assetList">
-            <div className="asset">
-              UNICORN - {balances.find((b) => b.emoji === "🦄")?.amount || 0}
-            </div>
-            <div className="asset">
-              BLACK FLAG - {balances.find((b) => b.emoji === "🏴")?.amount || 0}
-            </div>
-            <div className="asset">
-              DIAMOND - {balances.find((b) => b.emoji === "💎")?.amount || 0}
-            </div>
-          </div>
-        ) : null}
-
-        <div id="bottomBar">
-          <div>
-            <img
-              onMouseEnter={playOverSound}
-              className="mascot"
-              onClick={() => onClose(onClose)}
-              src={mascotButton}
-            />
-          </div>
-          <div>
-            <img
-              onMouseEnter={playOverSound}
-              className="exit"
-              onClick={() => onClose(onClose)}
-              src={exitButton}
-            />
-          </div>
-          <div>
+        <div className="w-1/4">
+          <div className="userSection pt-1 pl-1">
+            <img className="userWindow" src={userWindow} />
             {isWalletConnected ? (
-              <img
-                onMouseEnter={playOverSound}
-                className="walletButton"
-                id="wallet"
-                onClick={() => disconnect()}
-                src={switchButton}
-              />
+              <div className="walletName">
+                <p>
+                  {address.slice(0, 11)}....
+                  {address.slice(40, 46)}
+                </p>
+                <p>{username}</p>
+              </div>
+            ) : null}
+          </div>
+
+          {isWalletConnected ? (
+            <div className="walletItems">
+              {balances?.map((asset) => {
+                return (
+                  <div
+                    key={asset.name}
+                    className="assetWrapper"
+                    onClick={() => onInventoryClick(asset)}
+                    data-tooltip-id={asset.name}
+                    data-tooltip-place="top"
+                    data-tooltip-position-strategy="fixed"
+                  >
+                    <div className="assetEmoji">
+                      <img
+                        src={MEMOJI.find((m) => m.name === asset.name)?.image}
+                        onMouseEnter={playOverSound}
+                      ></img>
+                    </div>
+                    <Tooltip id={asset.name}>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          fontSize: "14pt",
+                        }}
+                      >
+                        <span>
+                          Name: {asset.emoji} {asset.name}
+                        </span>
+                        <span>Amount: {asset.amount}</span>
+                      </div>
+                    </Tooltip>
+                  </div>
+                );
+              })}
+              {padInventory(balances)}
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div className="w-3/4 flex flex-col pl-2.5">
+          <div class="h-full pt-2.5 pb-2.5 pr-2.5">
+            <Draggable>
+              <div id="memeMarketSection">
+                <div className="memeSection"></div>
+                <div className="buttonSection">
+                  {activeButton === 0 && (
+                    <>
+                      <img
+                        className="allButton"
+                        id="allButton"
+                        src={allButton}
+                        onClick={onGridTabClick}
+                      />
+                      <img
+                        onClick={onGridTabClick}
+                        className="hiddenButton"
+                        id="hiddenButton"
+                        style={{ opacity: "0" }}
+                        src={hiddenButton}
+                      />
+                      <img
+                        onClick={onGridTabClick}
+                        className="classicButton"
+                        id="classicButton"
+                        style={{ opacity: "0" }}
+                        src={classicButton}
+                      />
+                    </>
+                  )}
+                  {activeButton === 1 && (
+                    <>
+                      <img
+                        onClick={onGridTabClick}
+                        className="allButton"
+                        id="allButton"
+                        style={{ opacity: "0" }}
+                        src={allButton}
+                      />
+                      <img
+                        className="hiddenButton"
+                        id="hiddenButton"
+                        src={hiddenButton}
+                      />
+                      <img
+                        onClick={onGridTabClick}
+                        className="classicButton"
+                        id="classicButton"
+                        style={{ opacity: "0" }}
+                        src={classicButton}
+                      />
+                    </>
+                  )}
+                  {activeButton === 2 && (
+                    <>
+                      <img
+                        onClick={onGridTabClick}
+                        className="allButton"
+                        id="allButton"
+                        style={{ opacity: "0" }}
+                        src={allButton}
+                      />
+                      <img
+                        onClick={onGridTabClick}
+                        className="hiddenButton"
+                        id="hiddenButton"
+                        style={{ opacity: "0" }}
+                        src={hiddenButton}
+                      />
+                      <img
+                        className="classicButton"
+                        id="classicButton"
+                        src={classicButton}
+                      />
+                    </>
+                  )}
+                </div>
+                <div className="listItems">
+                  <div id="assetGrid" className="ag-theme-quartz-dark">
+                    <AgGridReact
+                      rowData={rowData}
+                      columnDefs={colDefs}
+                      defaultColDef={defaultColDef}
+                      rowSelection="single"
+                      ref={gridRef}
+                      onRowClicked={onRowClicked}
+                      enableSorting
+                      rowClass="row-borders"
+                    />
+                  </div>{" "}
+                </div>
+              </div>
+            </Draggable>
+          </div>
+          <div class="h-[75px] flex flex-row items-baseline">
+            {isWalletConnected ? (
+              <div className="assetList">
+                <div className="asset">
+                  UNICORN -{" "}
+                  {balances.find((b) => b.emoji === "🦄")?.amount || 0}
+                </div>
+                <div className="asset">
+                  BLACK FLAG -{" "}
+                  {balances.find((b) => b.emoji === "🏴")?.amount || 0}
+                </div>
+                <div className="asset">
+                  DIAMOND -{" "}
+                  {balances.find((b) => b.emoji === "💎")?.amount || 0}
+                </div>
+              </div>
             ) : (
+              <div className="assetList"></div>
+            )}
+
+            <div className="w-2/3" id="bottomBarMiddle">
+              {isWalletConnected ? (
+                <img
+                  onMouseEnter={playOverSound}
+                  className="walletButton"
+                  id="wallet"
+                  onClick={() => disconnect()}
+                  src={switchButton}
+                />
+              ) : (
+                <img
+                  onMouseEnter={playOverSound}
+                  className="walletButton"
+                  id="wallet"
+                  onClick={async () => {
+                    await connect();
+                  }}
+                  src={connectButton}
+                />
+              )}
+            </div>
+
+            <div className="exitWrapper mt-auto mb-5 mr-2.5 h-full">
               <img
                 onMouseEnter={playOverSound}
-                className="walletButton"
-                id="wallet"
-                onClick={async () => {
-                  await connect();
-                }}
-                src={connectButton}
+                className="exit"
+                onClick={() => onClose(onClose)}
+                src={exitButton}
               />
-            )}
+            </div>
+
+            <div className="mt-auto">
+              <img
+                onMouseEnter={playOverSound}
+                className="mascot"
+                onClick={() => onClose(onClose)}
+                src={mascotButton}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -350,7 +350,7 @@ input[type="number"] {
 }
 
 .assetWrapper {
-  background-color: #bbccdd;
+  background: url(assets/img/bg-inv-slot.png);
   border-top: 1px solid #88aabb;
   border-left: 1px solid #88aabb;
   width: 41px;

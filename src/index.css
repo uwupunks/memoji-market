@@ -331,6 +331,13 @@ input[type="number"] {
   padding: 5%;
 }
 
+.walletItemsBorder {
+  background: url(assets/img/invslotsborder.png) repeat;
+  width: 209px;
+  height: 242px;
+  padding: 2px;
+}
+
 .walletItems {
   background: url(assets/img/inv-slots-34x34.png) repeat;
   width: 205px;

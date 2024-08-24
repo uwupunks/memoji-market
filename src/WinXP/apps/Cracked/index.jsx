@@ -183,15 +183,11 @@ function Cracked({ onClose }) {
     let textArray = [];
     for (let i = 0; i < text.length; i++) {
       if (sprites[text[i]]) {
-        textArray.push(
-          <img src={sprites[text[i]]}
-          />
-        );
+        textArray.push(<img src={sprites[text[i]]} />);
       }
     }
     return <span className="textImage">{textArray}</span>;
   }
-
 
   function displayNumber(num) {
     if (!num) return "";
@@ -443,6 +439,7 @@ function Cracked({ onClose }) {
           </div>
 
           <div className="walletItemsSection lg:h-full">
+            <div className="walletItemsBorder">
               <div className="walletItems">
                 {balances?.map((asset) => {
                   return (
@@ -463,6 +460,7 @@ function Cracked({ onClose }) {
                 })}
                 {padInventory(balances)}
               </div>
+            </div>
           </div>
         </div>
         <div className="w-3/4 flex flex-col">
@@ -586,8 +584,9 @@ function Cracked({ onClose }) {
                   className="walletButton"
                   id="wallet"
                   onClick={() => {
-                    setBalances(null)
-                    disconnect()}}
+                    setBalances(null);
+                    disconnect();
+                  }}
                   src={switchButton}
                 />
               ) : (

@@ -63,8 +63,6 @@ const suggest = async () => {
   if (window.leap) {
     await window.leap.experimentalSuggestChain(chainInfo);
   }
-
-  return res;
 };
 
 function WalletSelect({ isOpen, setOpen, walletRepo }) {

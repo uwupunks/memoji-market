@@ -361,7 +361,7 @@ input[type="number"] {
 }
 .assetWrapper .textImage {
   position: relative;
-  bottom: 14px;
+  bottom: 20px;
 }
 .assetWrapper .textImage img {
   display: inline;

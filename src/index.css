@@ -320,52 +320,36 @@ input[type="number"] {
 }
 .userSection {
   background: url(assets/img/brushedsteel.png);
-  padding: .6rem;
+  padding: 0.6rem;
   margin: 4px 0 4px 4px;
   border-radius: 10px;
 }
 
 .walletItemsSection {
   background: url(assets/img/brushedsteel.png);
-  padding: .6rem;
-  margin: 0 0 4px 4px;
   border-radius: 10px 10px 0 10px;
-  min-height: 384px;
-  overflow: scroll;
-} 
+  padding: 5%;
+}
 
 .walletItems {
-  display: flex;
-  flex-flow: row wrap;
-  overflow-y: scroll;
+  background: url(assets/img/inv-slots-34x34.png) repeat;
+  width: 205px;
   overflow-x: hidden;
-  position: relative;
-  right: -10px;
-
-  background-color: #ffffff;
-  border-top: 1px solid #999999;
-  border-left: 1px solid #999999;
-  border-right: 1px solid #d4cbcb;
-  border-bottom: 1px solid #d4cbcb;
 }
 
 .assetWrapper {
-  background: url(assets/img/bg-inv-slot.png);
-  border-top: 1px solid #88aabb;
-  border-left: 1px solid #88aabb;
-  width: 40px;
-  height: 40px;
-  flex: auto;
-  margin: 1px;
+  width: 34px;
+  height: 34px;
+  float: left;
   overflow: hidden;
 }
 .assetWrapper .textImage {
   position: relative;
-  bottom: 20px;
+  bottom: 17px;
+  left: 3px;
 }
 .assetWrapper .textImage img {
   display: inline;
-  height: 15px;
 }
 .assetWrapper:last-child {
   flex: initial;

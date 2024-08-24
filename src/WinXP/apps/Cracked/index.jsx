@@ -50,6 +50,12 @@ import SwapModal from "../../../components/SwapModal/index.jsx";
 import { throttle } from "lodash";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
+  maximumFractionDigits: 1,
+  notation: "compact",
+  compactDisplay: "short",
+});
+
+const numberFormatterInventory = new Intl.NumberFormat(navigator.language, {
   maximumFractionDigits: 0,
   notation: "compact",
   compactDisplay: "short",
@@ -193,7 +199,7 @@ function Cracked({ onClose }) {
     if (!num) return "";
     if (Number(num) < 1) return "<1";
 
-    return numberFormatter.format(num);
+    return numberFormatterInventory.format(num);
   }
 
   // fetch supply data

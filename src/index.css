@@ -353,18 +353,27 @@ input[type="number"] {
   background: url(assets/img/bg-inv-slot.png);
   border-top: 1px solid #88aabb;
   border-left: 1px solid #88aabb;
-  width: 41px;
-  height: 39px;
+  width: 40px;
+  height: 40px;
   flex: auto;
   margin: 1px;
+  overflow: hidden;
 }
-
+.assetWrapper .textImage {
+  position: relative;
+  bottom: 14px;
+}
+.assetWrapper .textImage img {
+  display: inline;
+  height: 15px;
+}
 .assetWrapper:last-child {
   flex: initial;
 }
-
 .assetEmoji {
   flex: auto;
+  width: 34px;
+  height: 34px;
 }
 
 .invText {

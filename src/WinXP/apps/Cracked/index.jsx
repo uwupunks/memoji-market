@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { Tooltip } from "react-tooltip";
+import React, { useState, useEffect, useRef } from "react";
 
 import connectButton from "../../../assets/img/connectwallet.png";
 import exitButton from "../../../assets/img/exit.png";
@@ -51,7 +50,7 @@ import SwapModal from "../../../components/SwapModal/index.jsx";
 import { throttle } from "lodash";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
-  maximumFractionDigits: 1,
+  maximumFractionDigits: 0,
   notation: "compact",
   compactDisplay: "short",
 });
@@ -162,7 +161,7 @@ function Cracked({ onClose }) {
     }
   });
 
-  const sprites = Object.freeze({
+  const sprites = {
     0: zeroCharacter,
     1: oneCharacter,
     2: twoCharacter,
@@ -178,7 +177,21 @@ function Cracked({ onClose }) {
     B: bCharacter,
     T: tCharacter,
     "<": lessThanCharacter,
-  });
+  };
+
+  function asImage(text) {
+    let textArray = [];
+    for (let i = 0; i < text.length; i++) {
+      if (sprites[text[i]]) {
+        textArray.push(
+          <img src={sprites[text[i]]}
+          />
+        );
+      }
+    }
+    return <span className="textImage">{textArray}</span>;
+  }
+
 
   function displayNumber(num) {
     if (!num) return "";
@@ -437,9 +450,6 @@ function Cracked({ onClose }) {
                       key={asset.name}
                       className="assetWrapper"
                       onClick={() => onInventoryClick(asset)}
-                      data-tooltip-id={asset.name}
-                      data-tooltip-place="top"
-                      data-tooltip-position-strategy="fixed"
                     >
                       <div className="assetEmoji">
                         <img
@@ -447,20 +457,7 @@ function Cracked({ onClose }) {
                           onMouseEnter={playOverSound}
                         ></img>
                       </div>
-                      <Tooltip id={asset.name}>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            fontSize: "14pt",
-                          }}
-                        >
-                          <span>
-                            Name: {asset.emoji} {asset.name}
-                          </span>
-                          <span>Amount: {asset.amount}</span>
-                        </div>
-                      </Tooltip>
+                      {asImage(asset.amount)}
                     </div>
                   );
                 })}

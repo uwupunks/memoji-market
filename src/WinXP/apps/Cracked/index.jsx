@@ -173,42 +173,7 @@ function Cracked({ onClose }) {
       }
     }
   });
-  //send button
-  useEffect(() => {
-    let send = document.getElementById("send");
-    send.onmousedown = function () {
-      downFunction();
-    };
-    send.onmouseleave = function () {
-      leaveFunction();
-    };
-    send.onmouseenter = function () {
-      enterFunction();
-    };
-    function enterFunction() {
-      if (isWalletConnected) {
-        send.src = btSend2;
-      } else {
-        send.src = btSend1;
-      }
-    }
 
-    function downFunction() {
-      if (isWalletConnected) {
-        send.src = btSend4;
-      } else {
-        send.src = btSend1;
-      }
-    }
-
-    function leaveFunction() {
-      if (isWalletConnected) {
-        send.src = btSend3;
-      } else {
-        send.src = btSend1;
-      }
-    }
-  });
 
   const sprites = {
     0: zeroCharacter,
@@ -491,13 +456,13 @@ function Cracked({ onClose }) {
           <div className="walletItemsSection lg:h-full">
             <div style={{ display: "flex", alignItems: "center" }}>
               <img src={memeInv} />
-              <img
-                onMouseEnter={playOverSound}
+              <button
                 className="send"
                 onClick={() => {
                   setSendActive(!sendActive);
-                }}
-                src={btSend1}
+                }}   
+                onMouseEnter={playOverSound}
+                src={btSend2}
                 id="send"
                 style={{ marginLeft: "17px" }}
               />

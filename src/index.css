@@ -331,6 +331,24 @@ input[type="number"] {
   padding: 5%;
 }
 
+.walletItemsSection .send {
+  background: url(assets/img/btsend/3.png);
+  height: 18px;
+  width: 52px;
+}
+
+.walletItemsSection .send:hover {
+  background: url(assets/img/btsend/2.png);
+}
+
+.walletItemsSection .send:active {
+  background: url(assets/img/btsend/4.png);
+}
+
+.walletItemsSection .send:disabled {
+  background: url(assets/img/btsend/1.png);
+}
+
 .walletItemsBorder {
   background: url(assets/img/invslotsborder.png) repeat;
   width: 209px;

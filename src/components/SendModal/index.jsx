@@ -72,6 +72,7 @@ function SendModal({ isActive, balances, onSend }) {
 
         /** Error code. The transaction succeeded if and only if code is 0. */
         if (res.code === 0) {
+          setIsLoading(false);
           successSound();
           alert(`Success, transaction hash: ${res.transactionHash}`);
           onSend();
@@ -79,6 +80,7 @@ function SendModal({ isActive, balances, onSend }) {
           throw new Error(res.rawLog);
         }
       } catch (err) {
+        setIsLoading(false);
         errorSound();
         alert(`send failed with error: ${err}`);
         return null;

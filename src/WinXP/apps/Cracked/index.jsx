@@ -40,6 +40,11 @@ import mCharacter from "../../../assets/img/mCharacter.png";
 import bCharacter from "../../../assets/img/bCharacter.png";
 import tCharacter from "../../../assets/img/tCharacter.png";
 import lessThanCharacter from "../../../assets/img/lessThanCharacter.png";
+import btSend1 from '../../../assets/img/btsend/1.png';
+import btSend2 from '../../../assets/img/btsend/2.png';
+import btSend3 from '../../../assets/img/btsend/3.png';
+import btSend4 from '../../../assets/img/btsend/4.png';
+import memeInv from '../../../assets/img/memeInv.png';
 import Draggable from "react-draggable";
 import { CONTRACTS, ENDPOINTS, MEMOJI } from "../../../constants";
 import {
@@ -130,6 +135,7 @@ function Cracked({ onClose }) {
     fn();
   }, [mainWallet]);
 
+
   //wallet connected button
   useEffect(() => {
     let wallet = document.getElementById("wallet");
@@ -163,6 +169,42 @@ function Cracked({ onClose }) {
         wallet.src = switchButton;
       } else {
         wallet.src = connectButton;
+      }
+    }
+  });
+  //send button
+  useEffect(() => {
+    let send = document.getElementById("send");
+    send.onmousedown = function () {
+      downFunction();
+    };
+    send.onmouseleave = function () {
+      leaveFunction();
+    };
+    send.onmouseenter = function () {
+      enterFunction();
+    };
+    function enterFunction() {
+      if (isWalletConnected) {
+        send.src = btSend2;
+      } else {
+        send.src = btSend1;
+      }
+    }
+
+    function downFunction() {
+      if (isWalletConnected) {
+        send.src = btSend4;
+      } else {
+        send.src = btSend1;
+      }
+    }
+
+    function leaveFunction() {
+      if (isWalletConnected) {
+        send.src = btSend3;
+      } else {
+        send.src = btSend1;
       }
     }
   });
@@ -445,6 +487,21 @@ function Cracked({ onClose }) {
           </div>
 
           <div className="walletItemsSection lg:h-full">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img
+                 src={memeInv}
+              />
+              <img
+                onMouseEnter={playOverSound}
+                className="send"
+             // onClick={async () => {
+             //   await connect();
+             // }}
+                src={btSend1}
+                id="send"
+                style={{ marginLeft: '17px' }}
+              />
+            </div> 
             <div className="walletItemsBorder">
               <div className="walletItems">
                 {balances?.map((asset) => {
@@ -457,7 +514,7 @@ function Cracked({ onClose }) {
                       <div className="assetEmoji">
                         <img
                           src={MEMOJI.find((m) => m.name === asset.name)?.image}
-                          onMouseEnter={playOverSound}
+                          //onMouseEnter={playOverSound}
                         ></img>
                       </div>
                       {asImage(asset.amount)}

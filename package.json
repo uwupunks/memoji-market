@@ -29,6 +29,7 @@
     "chain-registry": "^1.47.8",
     "cosmos-kit": "^2.11.0",
     "interchain": "^1.10.1",
+    "juno-network": "^0.18.1",
     "lodash": "^4.17.21",
     "lodash.samplesize": "^4.2.0",
     "long": "^5.2.3",

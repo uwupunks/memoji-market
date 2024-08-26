@@ -55,7 +55,6 @@ import SwapModal from "../../../components/SwapModal/index.jsx";
 import SendModal from "../../../components/SendModal/index.jsx";
 import { throttle } from "lodash";
 
-
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   maximumFractionDigits: 1,
   notation: "compact",
@@ -376,6 +375,7 @@ function Cracked({ onClose }) {
           const userBalances = await fetchBalancesAsync(address, signal);
           const balances = userBalances?.map((ub) => ({
             name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
+            denom: ub.denom,
             emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
             amount: displayNumber(Number(ub.amount) / 1000000),
           }));
@@ -495,7 +495,7 @@ function Cracked({ onClose }) {
                 onMouseEnter={playOverSound}
                 className="send"
                 onClick={() => {
-                  setSendActive(!sendActive)
+                  setSendActive(!sendActive);
                 }}
                 src={btSend1}
                 id="send"
@@ -695,7 +695,11 @@ function Cracked({ onClose }) {
         onSwap={() => setRefreshBalances(!refreshBalances)}
       ></SwapModal>
 
-      <SendModal>isActive={sendActive}</SendModal>
+      <SendModal
+        isActive={sendActive}
+        balances={balances}
+        onSend={() => setRefreshBalances(!refreshBalances)}
+      ></SendModal>
     </>
   );
 }

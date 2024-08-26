@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import useSound from "use-sound";
 import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
+import { cosmos } from "juno-network";
 
 import smolguy from "./smolguy.png";
 import { CONTRACTS } from "src/constants";
-
 import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
 import successMp3 from "assets/sounds/success.mp3";
@@ -17,11 +17,12 @@ import { throttle } from "lodash";
 
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import sonicspin from "assets/img/sonicspin.png";
+import "./index.css";
 
 //force module load
 console.log(SigningCosmWasmClient);
 
-function SendModal({ isActive }) {
+function SendModal({ isActive, balances, onSend }) {
   //hooks
   const [promptSound] = useSound(promptMp3);
   const [clickSound] = useSound(clickMp3);
@@ -29,62 +30,57 @@ function SendModal({ isActive }) {
   const [overSound] = useSound(overMp3);
   const [errorSound] = useSound(errorWav);
   const playOverSound = throttle(overSound, 100);
-  const { address, isWalletConnected, getSigningCosmWasmClient } =
+  const { address, isWalletConnected, getSigningStargateClient } =
     useChain("unicorn");
 
   // state
   const [isLoading, setIsLoading] = useState(false);
-
-  // effects
-//   useEffect(() => {
-//     setLeftAsset(left);
-//     setRightAsset(right);
-//   }, [left, right]);
+  const [sendAmount, setSendAmount] = useState('');
+  const [toAddress, setToAddress] = useState("");
+  const [sendDenom, setSendDenom] = useState("");
 
   const sendAsset = async () => {
-    if (isWalletConnected) {
+    if (isWalletConnected && toAddress && sendAmount && sendDenom) {
+      promptSound();
       setIsLoading(true);
-      const client = await getSigningCosmWasmClient();
+      const client = await getSigningStargateClient();
 
-      let msg = {
-        execute_swap_operations: {
-          max_spread: "0.5",
-          minimum_receive: "1",
-          operations: [
+      const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
+
+      try {
+        const msg = send({
+          amount: [
             {
-              astro_swap: {
-                offer_asset_info: {
-                  native_token: { denom: String(leftAsset.denom) },
-                },
-                ask_asset_info: {
-                  native_token: { denom: String(rightAsset.denom) },
-                },
-              },
+              denom: sendDenom,
+              amount: String(sendAmount * Math.pow(10, 6)),
             },
           ],
-        },
-      };
-      try {
-        const res = await client.execute(
-          address,
-          CONTRACTS.swap,
-          msg,
-          "auto",
-          "",
-          [
+          toAddress: toAddress,
+          fromAddress: address,
+        });
+
+        const fee = {
+          amount: [
             {
-              denom: String(leftAsset.denom),
-              amount: String(leftAsset.amount * Math.pow(10, 6)),
+              denom: "uwunicorn",
+              amount: "2576",
             },
-          ]
-        );
-        successSound();
-        alert(`Success, transaction hash: ${res.transactionHash}`);
-        onSwap();
-        onClose();
+          ],
+          gas: "103005",
+        };
+        const res = await client.signAndBroadcast(address, [msg], fee);
+
+        /** Error code. The transaction succeeded if and only if code is 0. */
+        if (res.code === 0) {
+          successSound();
+          alert(`Success, transaction hash: ${res.transactionHash}`);
+          onSend();
+        } else {
+          throw new Error(res.rawLog);
+        }
       } catch (err) {
-        errorSound()
-        alert(`swap failed with error: ${err}`);
+        errorSound();
+        alert(`send failed with error: ${err}`);
         return null;
       } finally {
         setIsLoading(false);
@@ -94,12 +90,47 @@ function SendModal({ isActive }) {
     }
   };
 
-  return isActive  ? (
+  return isActive ? (
     <Draggable onMouseDown={clickSound}>
-      <div className="">
-
-        <img src={smolguy} />
-        
+      <div className="sendModal">
+        <div className="form">
+          <input
+            type="text"
+            placeholder="Receiver"
+            value={toAddress}
+            onClick={() => setToAddress("")}
+            onChange={(e) => {
+              setToAddress(e.target.value);
+            }}
+          ></input>
+          <input
+            type="number"
+            placeholder="Quantity"
+            value={sendAmount}
+            onClick={() => setSendAmount("")}
+            onChange={(e) => {
+              setSendAmount(e.target.value);
+            }}
+          ></input>
+          <select
+            placeholder="Memoji"
+            onChange={(e) => {
+              setSendDenom(e.target.value);
+            }}
+          >
+            <option value="">Select...</option>
+            {balances?.map((b) => (
+              <option key={b.name} value={b.denom}>
+                {b.name}
+              </option>
+            ))}
+          </select>
+          {isLoading ? <img className="loading" src={sonicspin}></img> : <button
+            disabled={!toAddress || !sendAmount || !sendDenom || !toAddress}
+            className="sendButton"
+            onClick={sendAsset}
+          ></button>}
+        </div>
       </div>
     </Draggable>
   ) : null;

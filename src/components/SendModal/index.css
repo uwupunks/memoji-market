@@ -1,0 +1,58 @@
+.sendModal {
+  background: url(./img/bg.png);
+  position: absolute;
+
+  top: 31%;
+  left: 25%;
+  width: 290px;
+  height: 350px;
+}
+
+.sendModal .sendButton {
+  background: url(./img/send-button.png);
+  height: 18px;
+  width: 52px;
+  margin: 44px 0 0 100px;
+}
+
+.sendModal .sendButton:hover {
+  background: url(./img/send-button-hover.png);
+}
+
+.sendModal .sendButton:active {
+  background: url(./img/send-button-active.png);
+}
+
+.sendModal .sendButton:disabled {
+  background: url(./img/send-button-disabled.png);
+}
+
+.sendModal .form:disabled {
+  text-align: end;
+}
+
+.sendModal .form {
+  margin: 215px 0 0 127px;
+}
+
+.sendModal .loading {
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    bottom: 5px;
+}
+
+@keyframes loadingAnimation {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(100px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  .sendModal .loading {
+    animation: loadingAnimation 2s linear infinite;
+  }

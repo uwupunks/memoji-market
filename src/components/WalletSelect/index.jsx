@@ -93,7 +93,6 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
             promptSound();
             try {
               const res = await suggest();
-              debugger;
               await connect();
             } catch (err) {
               window.alert(err);

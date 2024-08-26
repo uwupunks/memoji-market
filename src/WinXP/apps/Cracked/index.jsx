@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import connectButton from "../../../assets/img/connectwallet.png";
-import exitButton from "../../../assets/img/exit.png";
-import hoverButton from "../../../assets/img/hover.png";
-import mascotButton from "../../../assets/img/mascot.png";
-import pressedButton from "../../../assets/img/pressed.png";
-import switchedHover from "../../../assets/img/switchwallethover.png";
-import switchPressed from "../../../assets/img/switchwalletpressed.png";
-import switchButton from "../../../assets/img/switchwallet.png";
-import allButton from "../../../assets/img/all.png";
-import hiddenButton from "../../../assets/img/hidden.png";
-import classicButton from "../../../assets/img/classic.png";
-import userWindow from "../../../assets/img/window.png";
+import connectButton from "assets/img/connectwallet.png";
+import exitButton from "assets/img/exit.png";
+import hoverButton from "assets/img/hover.png";
+import mascotButton from "assets/img/mascot.png";
+import pressedButton from "assets/img/pressed.png";
+import switchedHover from "assets/img/switchwallethover.png";
+import switchPressed from "assets/img/switchwalletpressed.png";
+import switchButton from "assets/img/switchwallet.png";
+import allButton from "assets/img/all.png";
+import hiddenButton from "assets/img/hidden.png";
+import classicButton from "assets/img/classic.png";
+import userWindow from "assets/img/window.png";
 
 import { useChain, useWallet } from "@cosmos-kit/react";
 import { AgGridReact } from "@ag-grid-community/react"; // React Data Grid Component
@@ -22,29 +22,29 @@ import { ModuleRegistry } from "@ag-grid-community/core";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 import useSound from "use-sound";
-import overMp3 from "../../../assets/sounds/btmouseover.mp3";
-import clickMp3 from "../../../assets/sounds/btclick.mp3";
+import overMp3 from "assets/sounds/btmouseover.mp3";
+import clickMp3 from "assets/sounds/btclick.mp3";
 
-import zeroCharacter from "../../../assets/img/zeroCharacter.png";
-import oneCharacter from "../../../assets/img/oneCharacter.png";
-import twoCharacter from "../../../assets/img/twoCharacter.png";
-import threeCharacter from "../../../assets/img/threeCharacter.png";
-import fourCharacter from "../../../assets/img/fourCharacter.png";
-import fiveCharacter from "../../../assets/img/fiveCharacter.png";
-import sixCharacter from "../../../assets/img/sixCharacter.png";
-import sevenCharacter from "../../../assets/img/sevenCharacter.png";
-import eightCharacter from "../../../assets/img/eightCharacter.png";
-import nineCharacter from "../../../assets/img/nineCharacter.png";
-import kCharacter from "../../../assets/img/kCharacter.png";
-import mCharacter from "../../../assets/img/mCharacter.png";
-import bCharacter from "../../../assets/img/bCharacter.png";
-import tCharacter from "../../../assets/img/tCharacter.png";
-import lessThanCharacter from "../../../assets/img/lessThanCharacter.png";
-import btSend1 from '../../../assets/img/btsend/1.png';
-import btSend2 from '../../../assets/img/btsend/2.png';
-import btSend3 from '../../../assets/img/btsend/3.png';
-import btSend4 from '../../../assets/img/btsend/4.png';
-import memeInv from '../../../assets/img/memeInv.png';
+import zeroCharacter from "assets/img/zeroCharacter.png";
+import oneCharacter from "assets/img/oneCharacter.png";
+import twoCharacter from "assets/img/twoCharacter.png";
+import threeCharacter from "assets/img/threeCharacter.png";
+import fourCharacter from "assets/img/fourCharacter.png";
+import fiveCharacter from "assets/img/fiveCharacter.png";
+import sixCharacter from "assets/img/sixCharacter.png";
+import sevenCharacter from "assets/img/sevenCharacter.png";
+import eightCharacter from "assets/img/eightCharacter.png";
+import nineCharacter from "assets/img/nineCharacter.png";
+import kCharacter from "assets/img/kCharacter.png";
+import mCharacter from "assets/img/mCharacter.png";
+import bCharacter from "assets/img/bCharacter.png";
+import tCharacter from "assets/img/tCharacter.png";
+import lessThanCharacter from "assets/img/lessThanCharacter.png";
+import btSend1 from "assets/img/btsend/1.png";
+import btSend2 from "assets/img/btsend/2.png";
+import btSend3 from "assets/img/btsend/3.png";
+import btSend4 from "assets/img/btsend/4.png";
+import memeInv from "assets/img/memeInv.png";
 import Draggable from "react-draggable";
 import { CONTRACTS, ENDPOINTS, MEMOJI } from "../../../constants";
 import {
@@ -52,7 +52,9 @@ import {
   findBalance,
 } from "../../../hooks/balanceUtils.jsx";
 import SwapModal from "../../../components/SwapModal/index.jsx";
+import SendModal from "../../../components/SendModal/index.jsx";
 import { throttle } from "lodash";
+
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   maximumFractionDigits: 1,
@@ -79,6 +81,7 @@ function Cracked({ onClose }) {
   const [activeButton, setActiveButton] = useState(0);
 
   const [swapActive, setSwapActive] = useState(false);
+  const [sendActive, setSendActive] = useState(false);
   const [leftAsset, setLeftAsset] = useState();
   const [rightAsset, setRightAsset] = useState();
   const [swapPrice, setSwapPrice] = useState();
@@ -134,7 +137,6 @@ function Cracked({ onClose }) {
     };
     fn();
   }, [mainWallet]);
-
 
   //wallet connected button
   useEffect(() => {
@@ -487,21 +489,19 @@ function Cracked({ onClose }) {
           </div>
 
           <div className="walletItemsSection lg:h-full">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img
-                 src={memeInv}
-              />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <img src={memeInv} />
               <img
                 onMouseEnter={playOverSound}
                 className="send"
-             // onClick={async () => {
-             //   await connect();
-             // }}
+                onClick={() => {
+                  setSendActive(!sendActive)
+                }}
                 src={btSend1}
                 id="send"
-                style={{ marginLeft: '17px' }}
+                style={{ marginLeft: "17px" }}
               />
-            </div> 
+            </div>
             <div className="walletItemsBorder">
               <div className="walletItems">
                 {balances?.map((asset) => {
@@ -514,7 +514,6 @@ function Cracked({ onClose }) {
                       <div className="assetEmoji">
                         <img
                           src={MEMOJI.find((m) => m.name === asset.name)?.image}
-                          //onMouseEnter={playOverSound}
                         ></img>
                       </div>
                       {asImage(asset.amount)}
@@ -695,6 +694,8 @@ function Cracked({ onClose }) {
         onClose={() => setSwapActive(false)}
         onSwap={() => setRefreshBalances(!refreshBalances)}
       ></SwapModal>
+
+      <SendModal>isActive={sendActive}</SendModal>
     </>
   );
 }

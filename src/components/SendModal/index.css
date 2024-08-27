@@ -12,7 +12,7 @@
   background: url(./img/send-button.png);
   height: 18px;
   width: 52px;
-  margin: 44px 0 0 100px;
+  margin: 23px 0 0 100px;
 }
 
 .sendModal .sendButton:hover {
@@ -32,27 +32,59 @@
 }
 
 .sendModal .form {
-  margin: 215px 0 0 127px;
+  margin: 214px 0 0 120px;
+  color: gray;
+}
+
+.sendModal .form input {
+  padding-left: 5px;
+  line-height: 18px;
+  height: 18px;
+}
+.sendModal .form .receiver {
+  background: url(img/bg-receiver.png) no-repeat left;
+  width: 164px;
+}
+
+.sendModal .form *:focus {
+  outline: none;
+}
+
+.sendModal .form .quantity {
+  background: url(img/bg-quantity.png) no-repeat left;
+  margin-left: 17px;
+}
+.sendModal .form .memoji {
+  float: left;
+  background: url(img/bg-emoji-select.png) no-repeat center;
+  padding: 5px;
+  height: 45px;
+  width: 45px;
+}
+
+.sendModal .form select {
+
+  margin-top: 10px;
 }
 
 .sendModal .loading {
-    height: 35px;
-    width: 35px;
-    position: absolute;
-    bottom: 5px;
+  height: 35px;
+  width: 35px;
+  position: absolute;
+  bottom: 5px;
 }
 
 @keyframes loadingAnimation {
-    0% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(100px);
-    }
-    100% {
-      transform: translateX(0);
-    }
+  0% {
+    transform: translateX(0);
   }
-  .sendModal .loading {
-    animation: loadingAnimation 2s linear infinite;
+  50% {
+    transform: translateX(100px);
   }
+  100% {
+    transform: translateX(0);
+  }
+}
+.sendModal .loading {
+  animation: loadingAnimation 2s linear infinite;
+}

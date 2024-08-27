@@ -4,8 +4,7 @@ import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 import { cosmos } from "juno-network";
 
-import smolguy from "./smolguy.png";
-import { CONTRACTS } from "src/constants";
+import { MEMOJI } from "src/constants";
 import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
 import successMp3 from "assets/sounds/success.mp3";
@@ -35,12 +34,13 @@ function SendModal({ isActive, balances, onSend }) {
 
   // state
   const [isLoading, setIsLoading] = useState(false);
-  const [sendAmount, setSendAmount] = useState('');
+  const [sendAmount, setSendAmount] = useState("");
   const [toAddress, setToAddress] = useState("");
   const [sendDenom, setSendDenom] = useState("");
+  const [addressResolved, setAddressResolved] = useState(false);
 
   const sendAsset = async () => {
-    if (isWalletConnected && toAddress && sendAmount && sendDenom) {
+    if (isWalletConnected && addressResolved && sendAmount && sendDenom) {
       promptSound();
       setIsLoading(true);
       const client = await getSigningStargateClient();
@@ -75,6 +75,7 @@ function SendModal({ isActive, balances, onSend }) {
           setIsLoading(false);
           successSound();
           alert(`Success, transaction hash: ${res.transactionHash}`);
+          debugger
           onSend();
         } else {
           throw new Error(res.rawLog);
@@ -88,7 +89,7 @@ function SendModal({ isActive, balances, onSend }) {
         setIsLoading(false);
       }
     } else {
-      alert("Please connect a wallet");
+      alert("Validation Error or wallet not connected.");
     }
   };
 
@@ -96,16 +97,33 @@ function SendModal({ isActive, balances, onSend }) {
     <Draggable onMouseDown={clickSound}>
       <div className="sendModal">
         <div className="form">
+          {addressResolved ? (
+            <span
+              onClick={(e) => {
+                setAddressResolved(false);
+              }}
+            >
+              {toAddress.slice(0, 11)}....
+              {toAddress.slice(40, 46)}
+            </span>
+          ) : (
+            <input
+              className="receiver"
+              type="text"
+              placeholder="Receiver"
+              value={toAddress}
+              onClick={(e) => {
+                setAddressResolved(false);
+                e.target.setSelectionRange(0, e.target.value.length);
+              }}
+              onChange={(e) => {
+                setToAddress(e.target.value);
+                setAddressResolved(e.target.value.length === 46);
+              }}
+            ></input>
+          )}
           <input
-            type="text"
-            placeholder="Receiver"
-            value={toAddress}
-            onClick={() => setToAddress("")}
-            onChange={(e) => {
-              setToAddress(e.target.value);
-            }}
-          ></input>
-          <input
+            className="quantity"
             type="number"
             placeholder="Quantity"
             value={sendAmount}
@@ -114,8 +132,14 @@ function SendModal({ isActive, balances, onSend }) {
               setSendAmount(e.target.value);
             }}
           ></input>
+          <div className="memoji">
+            <img
+              src={MEMOJI.find((m) => sendDenom.split('/')?.[2] === m.name)?.image}
+            ></img>
+          </div>
           <select
             placeholder="Memoji"
+            value={sendDenom}
             onChange={(e) => {
               setSendDenom(e.target.value);
             }}
@@ -127,11 +151,17 @@ function SendModal({ isActive, balances, onSend }) {
               </option>
             ))}
           </select>
-          {isLoading ? <img className="loading" src={sonicspin}></img> : <button
-            disabled={!toAddress || !sendAmount || !sendDenom || !toAddress}
-            className="sendButton"
-            onClick={sendAsset}
-          ></button>}
+          {isLoading ? (
+            <img className="loading" src={sonicspin}></img>
+          ) : (
+            <button
+              disabled={
+                !toAddress || !sendAmount || !sendDenom || !addressResolved
+              }
+              className="sendButton"
+              onClick={sendAsset}
+            ></button>
+          )}
         </div>
       </div>
     </Draggable>

@@ -174,7 +174,6 @@ function Cracked({ onClose }) {
     }
   });
 
-
   const sprites = {
     0: zeroCharacter,
     1: oneCharacter,
@@ -456,16 +455,18 @@ function Cracked({ onClose }) {
           <div className="walletItemsSection lg:h-full">
             <div style={{ display: "flex", alignItems: "center" }}>
               <img src={memeInv} />
-              <button
-                className="send"
-                onClick={() => {
-                  setSendActive(!sendActive);
-                }}   
-                onMouseEnter={playOverSound}
-                src={btSend2}
-                id="send"
-                style={{ marginLeft: "17px" }}
-              />
+              {isWalletConnected ? (
+                <button
+                  className="send"
+                  onClick={() => {
+                    setSendActive(!sendActive);
+                  }}
+                  onMouseEnter={playOverSound}
+                  src={btSend2}
+                  id="send"
+                  style={{ marginLeft: "17px" }}
+                />
+              ) : null}
             </div>
             <div className="walletItemsBorder">
               <div className="walletItems">
@@ -663,7 +664,7 @@ function Cracked({ onClose }) {
       <SendModal
         isActive={sendActive}
         balances={balances}
-        onSend={() => setRefreshBalances(!refreshBalances)}
+        onSend={() => {setSendActive(false); setRefreshBalances(!refreshBalances)}}
       ></SendModal>
     </>
   );

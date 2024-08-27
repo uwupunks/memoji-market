@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: pokemon;
+  src: url(assets/font/pokemon-rs.ttf);
+}
+
 #root {
   height: 100%;
 }
@@ -467,9 +472,11 @@ input[type="number"] {
   width: 208px;
   height: 20px;
   padding-left: 10px;
-  color: blue;
+  font-family: pokemon;
+  color: #4466ee;
   text-transform: uppercase;
   -webkit-font-smoothing: none;
+  font-smoothing: none;
   line-height: 20px;
   text-align: left;
 }

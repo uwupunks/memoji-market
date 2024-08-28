@@ -75,7 +75,6 @@ function SendModal({ isActive, balances, onSend }) {
           setIsLoading(false);
           successSound();
           alert(`Success, transaction hash: ${res.transactionHash}`);
-          debugger
           onSend();
         } else {
           throw new Error(res.rawLog);
@@ -96,10 +95,16 @@ function SendModal({ isActive, balances, onSend }) {
   return isActive ? (
     <Draggable onMouseDown={clickSound}>
       <div className="sendModal">
+        <button
+          onClick={() => {
+            onSend();
+          }}
+          className="closeButton"
+        ></button>
         <div className="form">
           {addressResolved ? (
             <span
-              onClick={(e) => {
+              onClick={() => {
                 setAddressResolved(false);
               }}
             >
@@ -134,7 +139,11 @@ function SendModal({ isActive, balances, onSend }) {
           ></input>
           <div className="memoji">
             <img
-              src={MEMOJI.find((m) => sendDenom.split('/')?.[2] === m.name)?.image}
+              src={
+                MEMOJI.find(
+                  (m) => sendDenom.split("/")?.[2] || "uwunicorn" === m.name
+                )?.image
+              }
             ></img>
           </div>
           <select

@@ -18,33 +18,6 @@ const chain = {
 const chainAssets = {
   chain_name: "unicorn",
   assets: [
-    /*export interface Asset {
-    deprecated?: boolean;
-    description?: string;
-    extended_description?: string;
-    type_asset?: string;
-    address?: string;
-    denom_units: AssetDenomUnit[];
-    base: string;
-    name: string;
-    display: string;
-    symbol: string;
-    logo_URIs?: LogoImage;
-    images?: LogoImage[];
-    coingecko_id?: string;
-    keywords?: string[];
-    traces?: AssetTrace[];
-    ibc?: {
-        source_channel?: string;
-        source_denom?: string;
-        dst_channel?: string;
-    };
-    socials?: {
-        webiste?: string;
-        website?: string;
-        twitter?: string;
-    };
-}*/
   ],
 };
 

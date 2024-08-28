@@ -247,7 +247,7 @@ function Cracked({ onClose }) {
 
         const getInfo = async (sup) => {
           const denom = sup.denom;
-          const denomShorthand = sup.denom.split("/")[2];
+          const denomShorthand = sup.denom.split("/")?.[2];
           const supply = parseFloat(sup.amount) / 1000000;
           const lpBalance = findBalance(lpBalances, denom);
           const circ = supply - lpBalance;
@@ -255,6 +255,7 @@ function Cracked({ onClose }) {
           if (denom === "uwunicorn") {
             return {
               denom: "uwunicorn",
+              denomShorthand: "uwunicorn",
               emoji: MEMOJI.find((x) => x.name === "uwunicorn")?.emoji,
               supply: supply,
               circ,
@@ -295,7 +296,6 @@ function Cracked({ onClose }) {
         };
 
         const infos = await Promise.all(supplyData.supply.map(getInfo));
-
         const rowData = infos.map((info) => ({
           emoji: String(info.emoji),
           denom: String(info.denom),
@@ -590,15 +590,21 @@ function Cracked({ onClose }) {
               <div className="assetList">
                 <div className="asset">
                   UNICORN -{" "}
-                  {balances?.find((b) => b.emoji === "🦄")?.amount || 0}
+                  <strong>
+                    {balances?.find((b) => b.emoji === "🦄")?.amount || 0}
+                  </strong>
                 </div>
                 <div className="asset">
                   BLACK FLAG -{" "}
-                  {balances?.find((b) => b.emoji === "🏴")?.amount || 0}
+                  <strong>
+                    {balances?.find((b) => b.emoji === "🏴")?.amount || 0}
+                  </strong>
                 </div>
                 <div className="asset">
                   DIAMOND -{" "}
-                  {balances?.find((b) => b.emoji === "💎")?.amount || 0}
+                  <strong>
+                    {balances?.find((b) => b.emoji === "💎")?.amount || 0}
+                  </strong>
                 </div>
               </div>
             ) : (
@@ -664,7 +670,10 @@ function Cracked({ onClose }) {
       <SendModal
         isActive={sendActive}
         balances={balances}
-        onSend={() => {setSendActive(false); setRefreshBalances(!refreshBalances)}}
+        onSend={() => {
+          setSendActive(false);
+          setRefreshBalances(!refreshBalances);
+        }}
       ></SendModal>
     </>
   );

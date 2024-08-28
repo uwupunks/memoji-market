@@ -95,6 +95,7 @@
   width: 48px;
   margin-left: 20px;
   height: 17px;
+  float: left;
 }
 
 .walletSelectModal .option:hover button {

@@ -82,11 +82,9 @@
   text-align: center;
   position: absolute;
   width: 120px;
-  height: 19px;
   left: 5px;
   color: white;
   bottom: 30px;
-  z-index: 98 !important;
 }
 
 .rightSwapSymbol {
@@ -101,11 +99,9 @@
   text-align: center;
   position: absolute;
   width: 120px;
-  height: 19px;
   right: 5px;
   color: white;
   bottom: 30px;
-  z-index: 98 !important;
 }
 
 .tradeSwap {
@@ -647,7 +643,8 @@ input[type="number"] {
 .ag-header-cell:active,
 .ag-header-cell-comp-wrapper:active,
 .ag-header-cell-text:active,
-.ag-cell button:active {
+.ag-cell button:active
+{
   cursor: url("./assets/img/click.png"), auto !important;
 }
 

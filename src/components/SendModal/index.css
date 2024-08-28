@@ -1,3 +1,13 @@
+.sendModal,
+.sendModal * {
+  cursor: url("assets/img/idle.png"), auto !important;
+}
+
+.sendModal:active,
+.sendModal *:active {
+  cursor: url("assets/img/click.png"), auto !important;
+}
+
 .sendModal {
   background: url(./img/bg.png);
   position: absolute;
@@ -7,7 +17,13 @@
   width: 290px;
   height: 350px;
 }
-
+.sendModal .closeButton {
+  background: url(assets/extra/window/close1.png);
+  width: 21px;
+  height: 21px;
+  float: right;
+  margin: 3px;
+}
 .sendModal .sendButton {
   background: url(./img/send-button.png);
   height: 18px;

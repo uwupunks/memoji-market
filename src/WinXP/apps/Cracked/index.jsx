@@ -21,7 +21,6 @@ import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-mod
 import { ModuleRegistry } from "@ag-grid-community/core";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-import useSound from "use-sound";
 import overMp3 from "assets/sounds/btmouseover.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
 
@@ -91,10 +90,8 @@ function Cracked({ onClose }) {
 
   const [rowData, setRowData] = useState([]);
   let gridRef = useRef();
-  const [overSound] = useSound(overMp3);
-  const [clickSound] = useSound(clickMp3);
-
-  const playOverSound = throttle(overSound, 100);
+  const clickSound = new Audio(clickMp3);
+  const overSound = new Audio(overMp3);
 
   const onGridTabClick = async (e) => {
     const activeTab =
@@ -435,7 +432,7 @@ function Cracked({ onClose }) {
     <>
       <div
         className="crackedWindow flex flex-row"
-        onMouseDown={clickSound}
+        onMouseDown={() => clickSound.play()}
         style={{ zIndex: "97" }}
       >
         <div className="leftSection w-1/4">
@@ -461,7 +458,7 @@ function Cracked({ onClose }) {
                   onClick={() => {
                     setSendActive(!sendActive);
                   }}
-                  onMouseEnter={playOverSound}
+                  onMouseEnter={() => overSound.play()}
                   src={btSend2}
                   id="send"
                   style={{ marginLeft: "17px" }}
@@ -614,7 +611,7 @@ function Cracked({ onClose }) {
             <div className="w-2/3" id="bottomBarMiddle">
               {isWalletConnected ? (
                 <img
-                  onMouseEnter={playOverSound}
+                  onMouseEnter={() => overSound.play()}
                   className="walletButton"
                   id="wallet"
                   onClick={() => {
@@ -625,7 +622,7 @@ function Cracked({ onClose }) {
                 />
               ) : (
                 <img
-                  onMouseEnter={playOverSound}
+                  onMouseEnter={() => overSound.play()}
                   className="walletButton"
                   id="wallet"
                   onClick={async () => {
@@ -638,7 +635,7 @@ function Cracked({ onClose }) {
 
             <div className="exitWrapper mt-auto mb-5 mr-2.5 h-full">
               <img
-                onMouseEnter={playOverSound}
+                onMouseEnter={() => overSound.play()}
                 className="exit"
                 onClick={() => onClose(onClose)}
                 src={exitButton}
@@ -647,7 +644,7 @@ function Cracked({ onClose }) {
 
             <div className="mt-auto">
               <img
-                onMouseEnter={playOverSound}
+                onMouseEnter={() => overSound.play()}
                 className="mascot"
                 onClick={() => onClose(onClose)}
                 src={mascotButton}

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import useSound from "use-sound";
 import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 
@@ -25,12 +24,11 @@ const isLowLiq = (liq) => liq.replace("%", "") < 0.4;
 
 function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   //hooks
-  const [promptSound] = useSound(promptMp3);
-  const [clickSound] = useSound(clickMp3);
-  const [successSound] = useSound(successMp3);
-  const [overSound] = useSound(overMp3);
-  const [errorSound] = useSound(errorWav);
-  const playOverSound = throttle(overSound, 100);
+  const promptSound = new Audio(promptMp3);
+  const clickSound = new Audio(clickMp3);
+  const successSound = new Audio(successMp3);
+  const overSound = new Audio(overMp3);
+  const errorSound = new Audio(errorWav);
   const { address, isWalletConnected, getSigningCosmWasmClient } =
     useChain("unicorn");
 
@@ -143,7 +141,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   };
 
   return isActive && price ? (
-    <Draggable onMouseDown={clickSound}>
+    <Draggable onMouseDown={()=>clickSound.play()}>
       <div className="swapWindow">
         {isLowLiq(liq) && (
           <span className="swapMessage">Low Liquidity: {liq}</span>
@@ -155,15 +153,15 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             className="tradeSwap"
             id="trade"
             onClick={() => swapAssets()}
-            onMouseDown={promptSound}
-            onMouseEnter={playOverSound}
+            onMouseDown={()=>promptSound.play()}
+            onMouseEnter={()=>overSound.play()}
           />
         )}
         <div
           onClick={() => switchSwapPlace()}
           className="switchSwap"
           id="swap"
-          onMouseEnter={playOverSound}
+            onMouseEnter={()=>overSound.play()}
         />
         <div
           className="cancelSwap"
@@ -172,7 +170,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             setIsLoading(false);
             onClose();
           }}
-          onMouseEnter={playOverSound}
+          onMouseEnter={()=>overSound.play()}
         />
         <input
           className="inputNumbers"

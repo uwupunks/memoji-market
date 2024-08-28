@@ -43,7 +43,6 @@
     "styled-components": "^4.2.0",
     "three": "^0.167.1",
     "typescript": "^3.2.1",
-    "use-sound": "^4.0.3",
     "vite-plugin-node-stdlib-browser": "^0.2.1",
     "webamp": "1.4.2"
   },

@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import useSound from "use-sound";
+import { useState } from "react";
 import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 import { cosmos } from "juno-network";
@@ -23,12 +22,11 @@ console.log(SigningCosmWasmClient);
 
 function SendModal({ isActive, balances, onSend }) {
   //hooks
-  const [promptSound] = useSound(promptMp3);
-  const [clickSound] = useSound(clickMp3);
-  const [successSound] = useSound(successMp3);
-  const [overSound] = useSound(overMp3);
-  const [errorSound] = useSound(errorWav);
-  const playOverSound = throttle(overSound, 100);
+  const promptSound = new Audio(promptMp3);
+  const clickSound = new Audio(clickMp3);
+  const successSound = new Audio(successMp3);
+  const overSound = new Audio(overMp3);
+  const errorSound = new Audio(errorWav);
   const { address, isWalletConnected, getSigningStargateClient } =
     useChain("unicorn");
 
@@ -41,7 +39,7 @@ function SendModal({ isActive, balances, onSend }) {
 
   const sendAsset = async () => {
     if (isWalletConnected && addressResolved && sendAmount && sendDenom) {
-      promptSound();
+      promptSound.play();
       setIsLoading(true);
       const client = await getSigningStargateClient();
 
@@ -73,7 +71,7 @@ function SendModal({ isActive, balances, onSend }) {
         /** Error code. The transaction succeeded if and only if code is 0. */
         if (res.code === 0) {
           setIsLoading(false);
-          successSound();
+          successSound.play();
           alert(`Success, transaction hash: ${res.transactionHash}`);
           onSend();
         } else {
@@ -81,7 +79,7 @@ function SendModal({ isActive, balances, onSend }) {
         }
       } catch (err) {
         setIsLoading(false);
-        errorSound();
+        errorSound.play();
         alert(`send failed with error: ${err}`);
         return null;
       } finally {
@@ -93,7 +91,7 @@ function SendModal({ isActive, balances, onSend }) {
   };
 
   return isActive ? (
-    <Draggable onMouseDown={clickSound}>
+    <Draggable onMouseDown={()=>clickSound.play()}>
       <div className="sendModal">
         <button
           onClick={() => {

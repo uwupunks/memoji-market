@@ -1,5 +1,3 @@
-import useSound from "use-sound";
-
 import clickMp3 from "assets/sounds/btclick.mp3";
 import promptMp3 from "assets/sounds/prompt.mp3";
 import { Modal } from "react-responsive-modal";
@@ -66,12 +64,10 @@ const suggest = async () => {
 };
 
 function WalletSelect({ isOpen, setOpen, walletRepo }) {
-  //hooks
-  const [clickSound] = useSound(clickMp3);
-  const [overSound] = useSound(overMp3);
-  const [promptSound] = useSound(promptMp3);
 
-  const playOverSound = throttle(overSound, 100);
+  const promptSound = new Audio(promptMp3);
+  const clickSound = new Audio(clickMp3);
+  const overSound = new Audio(overMp3);
 
   return isOpen ? (
     <Modal
@@ -84,13 +80,13 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
         modal: "walletSelectModal",
       }}
     >
-      <div className="header" onMouseDown={() => clickSound()}></div>
+      <div className="header" onMouseDown={() => clickSound.play()}></div>
       {walletRepo?.wallets.map(({ walletName, connect }) => (
         <div
           key={walletName}
           className={"option " + walletName}
           onClick={async () => {
-            promptSound();
+            promptSound.play();
             try {
               const res = await suggest();
               await connect();
@@ -100,8 +96,8 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
             }
             setOpen(false);
           }}
-          onMouseEnter={() => playOverSound()}
-          onMouseDown={() => clickSound()}
+          onMouseEnter={() => overSound.play()}
+          onMouseDown={() => clickSound.play()}
         >
           <div className="icon-bg">
             <div className="icon"></div>
@@ -115,7 +111,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
           <div className="spacer"></div>
         </div>
       ))}
-      <div className="option disabled" onMouseDown={() => clickSound()}>
+      <div className="option disabled" onMouseDown={() => clickSound.play()}>
         <div className="icon-bg">
           <div className="icon"></div>
         </div>
@@ -125,7 +121,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
         </div>
         <div className="spacer"></div>
       </div>
-      <div className="option disabled" onMouseDown={() => clickSound()}>
+      <div className="option disabled" onMouseDown={() => clickSound.play()}>
         <div className="icon-bg">
           <div className="icon"></div>
         </div>
@@ -134,7 +130,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
           <button></button>
         </div>
       </div>
-      <div className="option disabled" onMouseDown={() => clickSound()}>
+      <div className="option disabled" onMouseDown={() => clickSound.play()}>
         <div className="icon-bg">
           <div className="icon"></div>
         </div>

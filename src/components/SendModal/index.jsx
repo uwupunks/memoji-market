@@ -138,8 +138,8 @@ function SendModal({ isActive, balances, onSend }) {
           <div className="memoji">
             <img
               src={
-                MEMOJI.find(
-                  (m) => sendDenom.split("/")?.[2] || "uwunicorn" === m.name
+                sendDenom && MEMOJI.find(
+                  (m) => (sendDenom.split("/")?.[2] || "uwunicorn") === m.name
                 )?.image
               }
             ></img>

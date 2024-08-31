@@ -261,8 +261,8 @@ const Container = styled.footer`
       inset 1px 0 1px rgba(0, 0, 0, 0.7);
   }
 
-
   .footer__window {
+    margin-right: 2px;
     box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.2),
       inset 1px 0 1px rgba(0, 0, 0, 0.7);
   }

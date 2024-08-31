@@ -643,8 +643,7 @@ input[type="number"] {
 .ag-header-cell:active,
 .ag-header-cell-comp-wrapper:active,
 .ag-header-cell-text:active,
-.ag-cell button:active
-{
+.ag-cell button:active {
   cursor: url("./assets/img/click.png"), auto !important;
 }
 
@@ -790,25 +789,27 @@ input[type="number"] {
   margin-top: -15px;
 }
 
-.gZHubY .footer__window {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-.gZHubY .footer__window:before {
-  box-shadow: none !important;
-}
-
 .focus {
-  background: url("./assets/img/activeMenu.png");
-  background-size: 100% 23.5px;
-  background-repeat: no-repeat;
+  background-image: url("assets/winxp/left-bar-2x30-active.png"),
+    url("assets/winxp/right-bar-2x30-active.png"),
+    url("assets/winxp/middle-bar-30-active.png");
+    background-position: left, right, center;
+    background-repeat: no-repeat, no-repeat, repeat-y;
 }
 
 .cover {
-  background: url("./assets/img/unactiveMenu.png");
-  background-size: 100% 23.5px;
-  background-repeat: no-repeat;
+  background-image: url("assets/winxp/left-bar-2x30-inactive.png"),
+    url("assets/winxp/right-bar-2x30-inactive.png"),
+    url("assets/winxp/middle-bar-30-inactive.png");
+    background-position: left, right, center;
+    background-repeat: no-repeat, no-repeat, repeat-y;
+}
+.cover:hover{
+  background-image: url("assets/winxp/left-bar-2x30-inactive-hover.png"),
+    url("assets/winxp/right-bar-2x30-inactive-hover.png"),
+    url("assets/winxp/middle-bar-30-inactive-hover.png");
+    background-position: left, right, center;
+    background-repeat: no-repeat, no-repeat, repeat-y;
 }
 
 #Unicorn,

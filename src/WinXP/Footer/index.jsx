@@ -244,11 +244,6 @@ const Container = styled.footer`
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .footer__window.cover:hover {
-    background-color: #53a3ff;
-    box-shadow: inset -1px 0px rgba(0, 0, 0, 0.3),
-      inset 1px 1px 1px rgba(255, 255, 255, 0.2);
-  }
   .footer__window.cover:before {
     display: block;
     content: "";
@@ -265,17 +260,13 @@ const Container = styled.footer`
     box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
       inset 1px 0 1px rgba(0, 0, 0, 0.7);
   }
-  .footer__window.focus:hover {
-    background-color: #3576f3;
-  }
-  .footer__window.focus:hover:active {
-    background-color: #1e52b7;
-  }
-  .footer__window.focus {
-    background-color: #1e52b7;
+
+
+  .footer__window {
     box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.2),
       inset 1px 0 1px rgba(0, 0, 0, 0.7);
   }
+
   .footer__time {
     margin: 0 5px;
     color: #fff;

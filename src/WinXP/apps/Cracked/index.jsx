@@ -449,10 +449,10 @@ function Cracked({ onClose }) {
             ) : null}
           </div>
           <div className="spacer"></div>
-          <div className="walletItemsSection">
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <img src={memeInv} />
-              {isWalletConnected ? (
+          {isWalletConnected ? (
+            <div className="walletItemsSection">
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img src={memeInv} />
                 <button
                   className="send"
                   onClick={() => {
@@ -463,32 +463,37 @@ function Cracked({ onClose }) {
                   id="send"
                   style={{ marginLeft: "17px" }}
                 />
-              ) : null}
-            </div>
-            <div className="walletItemsBorder">
-              <div className="walletItems">
-                {balances?.map((asset) => {
-                  return (
-                    <div
-                      key={asset.name}
-                      className="assetWrapper"
-                      onClick={() => onInventoryClick(asset)}
-                    >
-                      <div className="assetEmoji">
-                        <img
-                          src={MEMOJI.find((m) => m.name === asset.name)?.image}
-                        ></img>
+              </div>
+
+              <div className="walletItemsBorder">
+                <div className="walletItems">
+                  {balances?.map((asset) => {
+                    return (
+                      <div
+                        key={asset.name}
+                        className="assetWrapper"
+                        onClick={() => onInventoryClick(asset)}
+                      >
+                        <div className="assetEmoji">
+                          <img
+                            src={
+                              MEMOJI.find((m) => m.name === asset.name)?.image
+                            }
+                          ></img>
+                        </div>
+                        {asImage(asset.amount)}
                       </div>
-                      {asImage(asset.amount)}
-                    </div>
-                  );
-                })}
-                {padInventory(balances)}
+                    );
+                  })}
+                  {padInventory(balances)}
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="walletItemsSection"></div>
+          )}
         </div>
-        <div className="w-3/4 flex flex-col">
+        <div className="flex flex-col flex-grow">
           <div className="memeMarketSection h-full p-2.5">
             <Draggable>
               <div id="memeMarket">

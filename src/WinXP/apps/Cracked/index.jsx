@@ -39,10 +39,7 @@ import mCharacter from "assets/img/mCharacter.png";
 import bCharacter from "assets/img/bCharacter.png";
 import tCharacter from "assets/img/tCharacter.png";
 import lessThanCharacter from "assets/img/lessThanCharacter.png";
-import btSend1 from "assets/img/btsend/1.png";
 import btSend2 from "assets/img/btsend/2.png";
-import btSend3 from "assets/img/btsend/3.png";
-import btSend4 from "assets/img/btsend/4.png";
 import memeInv from "assets/img/memeInv.png";
 import Draggable from "react-draggable";
 import { CONTRACTS, ENDPOINTS, MEMOJI } from "../../../constants";
@@ -52,10 +49,8 @@ import {
 } from "../../../hooks/balanceUtils.jsx";
 import SwapModal from "../../../components/SwapModal/index.jsx";
 import SendModal from "../../../components/SendModal/index.jsx";
-import { throttle } from "lodash";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
-  maximumFractionDigits: 1,
   notation: "compact",
   compactDisplay: "short",
 });
@@ -646,7 +641,6 @@ function Cracked({ onClose }) {
 
             <div className="mt-auto">
               <img
-                onMouseEnter={() => overSound.play()}
                 className="mascot"
                 onClick={() => onClose(onClose)}
                 src={mascotButton}

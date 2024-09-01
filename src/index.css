@@ -42,7 +42,7 @@
 
 #memeMarket {
   background: url("./assets/img/bgAssets.png");
-  border-radius: 5px;
+  border: 1px solid black;
   height: 100%;
   width: 100%;
 }
@@ -676,6 +676,10 @@ input[type="number"] {
   --ag-borders: none;
 }
 
+
+#assetGrid {
+  border-bottom: 1px solid black;
+}
 #assetGrid .ag-header-cell {
   color: #224477;
   font-weight: 500;

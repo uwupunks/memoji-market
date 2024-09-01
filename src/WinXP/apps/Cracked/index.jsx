@@ -591,22 +591,17 @@ function Cracked({ onClose }) {
             {isWalletConnected ? (
               <div className="assetList">
                 <div className="asset">
-                  UNICORN -{" "}
-                  <strong>
-                    {balances?.find((b) => b.emoji === "🦄")?.amount || 0}
-                  </strong>
+                  UNICORN
+                  
+                <div className="quantity">{balances?.find((b) => b.emoji === "🦄")?.amount || 0}</div>
                 </div>
                 <div className="asset">
-                  BLACK FLAG -{" "}
-                  <strong>
-                    {balances?.find((b) => b.emoji === "🏴")?.amount || 0}
-                  </strong>
+                  BLACK FLAG 
+                  <div className="quantity">{balances?.find((b) => b.emoji === "🏴")?.amount || 0}</div>
                 </div>
                 <div className="asset">
-                  DIAMOND -{" "}
-                  <strong>
-                    {balances?.find((b) => b.emoji === "💎")?.amount || 0}
-                  </strong>
+                  DIAMOND 
+                  <div className="quantity">{balances?.find((b) => b.emoji === "💎")?.amount || 0}</div>
                 </div>
               </div>
             ) : (

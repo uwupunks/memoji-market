@@ -473,7 +473,7 @@ input[type="number"] {
   background: url("assets/img/bgtextbox.png");
   width: 208px;
   height: 20px;
-  padding-left: 10px;
+  padding: 0 10px;
   font-family: pokemon;
   color: #4466ee;
   text-transform: uppercase;
@@ -481,6 +481,9 @@ input[type="number"] {
   font-smoothing: none;
   line-height: 20px;
   text-align: left;
+}
+.assetList .quantity {
+float: right;
 }
 
 .memeSection {

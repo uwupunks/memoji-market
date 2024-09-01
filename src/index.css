@@ -203,6 +203,7 @@ input[type="number"] {
 }
 
 .genButtons {
+  width: 26px;
   position: absolute;
   right: 6px;
   top: 4px;
@@ -210,6 +211,7 @@ input[type="number"] {
   z-index: 99 !important;
 }
 .genButtons img {
+  float: left;
   width: 13px;
   height: 13px;
   padding: 0px 1px;

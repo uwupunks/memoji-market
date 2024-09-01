@@ -606,36 +606,24 @@ input[type="number"] {
   visibility: hidden !important;
 }
 
-/* width */
-.walletItems::-webkit-scrollbar,
-.walletItems::-webkit-scrollbar,
-.ag-body-vertical-scroll-viewport::-webkit-scrollbar {
+/*
+ *
+ *  custom scrollbar
+ *
+ */
+::-webkit-scrollbar-track {
   background: url("./assets/img/scrollbar.png");
-  width: 12px;
-}
-
-/* Track */
-::-webkit-scrollbar-track,
-.ag-body-vertical-scroll-viewport::-webkit-scrollbar-track {
-  background: url("./assets/img/scrollbar.png");
-  width: 12px;
-  background-repeat: no-repeat;
-}
-
-/* Handle */
-.walletItems::-webkit-scrollbar-thumb,
-.ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb {
-  background: url("./assets/img/scrollbutton.png");
   width: 11px;
-  background-repeat: no-repeat;
 }
-
-/* Handle on hover */
-.walletItems::-webkit-scrollbar-thumb:hover,
-.ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb:hover {
-  background: url("./assets/img/scrollbutton.png");
+::-webkit-scrollbar {
   width: 11px;
-  background-repeat: no-repeat;
+}
+::-webkit-scrollbar-thumb {
+  width: 12px;
+  border-radius: 10px;
+  /*background: rgba(68,153,221,0.8);  */
+  background: rgba(68, 187, 238, 0.8);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 ::-webkit-scrollbar,

@@ -117,7 +117,7 @@ function Cracked({ onClose }) {
 
   const padInventory = (balances) => {
     const emptyBoxes = [];
-    for (let i = 0; i < 40 - balances?.length || 0; i++) {
+    for (let i = 0; i < 60 - balances?.length || 0; i++) {
       emptyBoxes.push(
         <div className="assetWrapper">
           <div className="assetEmoji"></div>
@@ -435,7 +435,7 @@ function Cracked({ onClose }) {
         onMouseDown={() => clickSound.play()}
         style={{ zIndex: "97" }}
       >
-        <div className="leftSection w-1/4">
+        <div className="leftSection w-226px">
           <div className="userSection p-1">
             <img className="userWindow" src={userWindow} />
             {isWalletConnected ? (
@@ -448,8 +448,8 @@ function Cracked({ onClose }) {
               </div>
             ) : null}
           </div>
-
-          <div className="walletItemsSection lg:h-full">
+          <div className="spacer"></div>
+          <div className="walletItemsSection">
             <div style={{ display: "flex", alignItems: "center" }}>
               <img src={memeInv} />
               {isWalletConnected ? (

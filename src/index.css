@@ -316,8 +316,13 @@ input[type="number"] {
   margin-top: 42%;
 }
 .leftSection {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-bottom: 4px solid #003366;
+}
+.spacer {
+  flex-grow: 1;
 }
 .userSection {
   background: url(assets/img/brushedsteel.png);
@@ -329,7 +334,8 @@ input[type="number"] {
 .walletItemsSection {
   background: url(assets/img/brushedsteel.png);
   border-radius: 10px 10px 0 10px;
-  padding: 5%;
+  height: 384px;
+  padding: 15px 18px 0 18px;
 }
 
 .walletItemsSection .send {
@@ -351,9 +357,7 @@ input[type="number"] {
 }
 
 .walletItemsBorder {
-  background: url(assets/img/invslotsborder.png) repeat;
-  width: 209px;
-  height: 242px;
+  background: url(assets/img/invslotsborder.png) no-repeat;
   padding: 2px;
 }
 

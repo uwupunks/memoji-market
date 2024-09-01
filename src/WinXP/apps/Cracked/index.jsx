@@ -463,7 +463,6 @@ function Cracked({ onClose }) {
                 onMouseEnter={() => overSound.play()}
                 src={btSend2}
                 id="send"
-                style={{ marginLeft: "17px" }}
               />
             </div>
 
@@ -579,7 +578,7 @@ function Cracked({ onClose }) {
                       enableSorting
                       rowClass="row-borders"
                     />
-                  </div>{" "}
+                  </div>
                 </div>
               </div>
             </Draggable>

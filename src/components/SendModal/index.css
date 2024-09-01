@@ -17,18 +17,12 @@
   width: 290px;
   height: 350px;
 }
-.sendModal .closeButton {
-  background: url(assets/extra/window/close1.png);
-  width: 21px;
-  height: 21px;
-  float: right;
-  margin: 3px;
-}
+
 .sendModal .sendButton {
   background: url(./img/send-button.png);
   height: 18px;
   width: 52px;
-  margin: 23px 0 0 100px;
+  margin: 23px 0 0 5px;
 }
 
 .sendModal .sendButton:hover {
@@ -42,6 +36,26 @@
 .sendModal .sendButton:disabled {
   background: url(./img/send-button-disabled.png);
 }
+
+.sendModal .cancelButton {
+  background: url(./img/cancel-button.png);
+  height: 19px;
+  width: 60px;
+  margin: 35px 0 0 0;
+}
+
+.sendModal .cancelButton:hover {
+  background: url(./img/cancel-button-hover.png);
+}
+
+.sendModal .cancelButton:active {
+  background: url(./img/cancel-button-active.png);
+}
+
+.sendModal .cancelButton:disabled {
+  background: url(./img/cancel-button-disabled.png);
+}
+
 
 .sendModal .form:disabled {
   text-align: end;

@@ -91,14 +91,8 @@ function SendModal({ isActive, balances, onSend }) {
   };
 
   return isActive ? (
-    <Draggable onMouseDown={()=>clickSound.play()}>
+    <Draggable onMouseDown={() => clickSound.play()}>
       <div className="sendModal">
-        <button
-          onClick={() => {
-            onSend();
-          }}
-          className="closeButton"
-        ></button>
         <div className="form">
           {addressResolved ? (
             <span
@@ -138,7 +132,8 @@ function SendModal({ isActive, balances, onSend }) {
           <div className="memoji">
             <img
               src={
-                sendDenom && MEMOJI.find(
+                sendDenom &&
+                MEMOJI.find(
                   (m) => (sendDenom.split("/")?.[2] || "uwunicorn") === m.name
                 )?.image
               }
@@ -161,13 +156,16 @@ function SendModal({ isActive, balances, onSend }) {
           {isLoading ? (
             <img className="loading" src={sonicspin}></img>
           ) : (
-            <button
-              disabled={
-                !toAddress || !sendAmount || !sendDenom || !addressResolved
-              }
-              className="sendButton"
-              onClick={sendAsset}
-            ></button>
+            <>
+              <button className="cancelButton" onClick={onSend}></button>
+              <button
+                disabled={
+                  !toAddress || !sendAmount || !sendDenom || !addressResolved
+                }
+                className="sendButton"
+                onClick={sendAsset}
+              ></button>
+            </>
           )}
         </div>
       </div>

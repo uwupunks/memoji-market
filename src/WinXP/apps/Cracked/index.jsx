@@ -117,9 +117,9 @@ function Cracked({ onClose }) {
 
   const padInventory = (balances) => {
     const emptyBoxes = [];
-    for (let i = 0; i < 60 - balances?.length || 0; i++) {
+    for (let i = 0; i < 60 - (balances?.length || 0); i++) {
       emptyBoxes.push(
-        <div className="assetWrapper">
+        <div  key={i} className="assetWrapper">
           <div className="assetEmoji"></div>
         </div>
       );
@@ -438,60 +438,62 @@ function Cracked({ onClose }) {
         <div className="leftSection w-226px">
           <div className="userSection p-1">
             <img className="userWindow" src={userWindow} />
-            {isWalletConnected ? (
-              <div className="walletName">
-                <p>
-                  {address.slice(0, 11)}....
-                  {address.slice(40, 46)}
-                </p>
-                <p>{username}</p>
-              </div>
-            ) : null}
+
+            <div className="walletName">
+              {isWalletConnected ? (
+                <>
+                  <p>
+                    {address.slice(0, 11)}....
+                    {address.slice(40, 46)}
+                  </p>
+                  <p>{username}</p>
+                </>
+              ) : null}
+            </div>
           </div>
           <div className="spacer"></div>
-          {isWalletConnected ? (
-            <div className="walletItemsSection">
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <img src={memeInv} />
-                <button
-                  className="send"
-                  onClick={() => {
-                    setSendActive(!sendActive);
-                  }}
-                  onMouseEnter={() => overSound.play()}
-                  src={btSend2}
-                  id="send"
-                  style={{ marginLeft: "17px" }}
-                />
-              </div>
 
-              <div className="walletItemsBorder">
-                <div className="walletItems">
-                  {balances?.map((asset) => {
-                    return (
-                      <div
-                        key={asset.name}
-                        className="assetWrapper"
-                        onClick={() => onInventoryClick(asset)}
-                      >
-                        <div className="assetEmoji">
-                          <img
-                            src={
-                              MEMOJI.find((m) => m.name === asset.name)?.image
-                            }
-                          ></img>
-                        </div>
-                        {asImage(asset.amount)}
+          <div className="walletItemsSection">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <img src={memeInv} />
+
+              <button
+                className="send"
+                onClick={async () => {
+                  if (!isWalletConnected) {
+                    await connect();
+                  }
+                  setSendActive(!sendActive);
+                }}
+                onMouseEnter={() => overSound.play()}
+                src={btSend2}
+                id="send"
+                style={{ marginLeft: "17px" }}
+              />
+            </div>
+
+            <div className="walletItemsBorder">
+              <div className="walletItems">
+                {balances?.map((asset) => {
+                  return (
+                    <div
+                      key={asset.name}
+                      className="assetWrapper"
+                      onClick={() => onInventoryClick(asset)}
+                    >
+                      <div className="assetEmoji">
+                        <img
+                          src={MEMOJI.find((m) => m.name === asset.name)?.image}
+                        ></img>
                       </div>
-                    );
-                  })}
-                  {padInventory(balances)}
-                </div>
+                      {asImage(asset.amount)}
+                    </div>
+                  );
+                })}
+                {padInventory(balances)}
               </div>
             </div>
-          ) : (
-            <div className="walletItemsSection"></div>
-          )}
+          </div>
         </div>
         <div className="flex flex-col flex-grow">
           <div className="memeMarketSection h-full p-2.5">
@@ -588,26 +590,26 @@ function Cracked({ onClose }) {
             </Draggable>
           </div>
           <div className="bottomBar flex flex-row items-baseline">
-            {isWalletConnected ? (
-              <div className="assetList">
-                <div className="asset">
-                  UNICORN
-                  
-                <div className="quantity">{balances?.find((b) => b.emoji === "🦄")?.amount || 0}</div>
-                </div>
-                <div className="asset">
-                  BLACK FLAG 
-                  <div className="quantity">{balances?.find((b) => b.emoji === "🏴")?.amount || 0}</div>
-                </div>
-                <div className="asset">
-                  DIAMOND 
-                  <div className="quantity">{balances?.find((b) => b.emoji === "💎")?.amount || 0}</div>
+            <div className="assetList">
+              <div className="asset">
+                UNICORN
+                <div className="quantity">
+                  {balances?.find((b) => b.emoji === "🦄")?.amount || 0}
                 </div>
               </div>
-            ) : (
-              <div className="assetList"></div>
-            )}
-
+              <div className="asset">
+                BLACK FLAG
+                <div className="quantity">
+                  {balances?.find((b) => b.emoji === "🏴")?.amount || 0}
+                </div>
+              </div>
+              <div className="asset">
+                DIAMOND
+                <div className="quantity">
+                  {balances?.find((b) => b.emoji === "💎")?.amount || 0}
+                </div>
+              </div>
+            </div>
             <div className="w-2/3" id="bottomBarMiddle">
               {isWalletConnected ? (
                 <img

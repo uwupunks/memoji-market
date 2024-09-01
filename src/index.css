@@ -293,6 +293,8 @@ input[type="number"] {
 .mascot {
   height: 85px;
   width: 91px;
+  max-height: 85px;
+  max-width: 91px;
   position: relative;
   right: -5px;
   bottom: 14px;
@@ -313,6 +315,7 @@ input[type="number"] {
 
 .exit {
   width: 62px;
+  min-width: 62px;
   height: 22px;
   padding-left: 1rem;
   margin-top: 42%;
@@ -449,6 +452,7 @@ input[type="number"] {
 
 .walletButton {
   width: 50px;
+  min-width: 50px;
   height: 39px;
   margin-top: 4%;
   margin-left: 5%;

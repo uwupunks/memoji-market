@@ -103,12 +103,12 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             },
           ]
         );
-        successSound();
+        await successSound.play();
         alert(`Success, transaction hash: ${res.transactionHash}`);
         onSwap();
         onClose();
       } catch (err) {
-        errorSound()
+        await errorSound.play()
         alert(`swap failed with error: ${err}`);
         return null;
       } finally {

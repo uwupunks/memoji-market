@@ -103,13 +103,15 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             },
           ]
         );
+        successSound.onended = () =>
+          alert(`Success, transaction hash: ${res.transactionHash}`);
         await successSound.play();
-        alert(`Success, transaction hash: ${res.transactionHash}`);
         onSwap();
         onClose();
       } catch (err) {
-        await errorSound.play()
-        alert(`swap failed with error: ${err}`);
+        errorSound.onended = () => alert(`swap failed with error: ${err}`);
+        await errorSound.play();
+
         return null;
       } finally {
         setIsLoading(false);
@@ -141,7 +143,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   };
 
   return isActive && price ? (
-    <Draggable onMouseDown={()=>clickSound.play()}>
+    <Draggable onMouseDown={() => clickSound.play()}>
       <div className="swapWindow">
         {isLowLiq(liq) && (
           <span className="swapMessage">Low Liquidity: {liq}</span>
@@ -153,15 +155,15 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             className="tradeSwap"
             id="trade"
             onClick={() => swapAssets()}
-            onMouseDown={()=>promptSound.play()}
-            onMouseEnter={()=>overSound.play()}
+            onMouseDown={() => promptSound.play()}
+            onMouseEnter={() => overSound.play()}
           />
         )}
         <div
           onClick={() => switchSwapPlace()}
           className="switchSwap"
           id="swap"
-            onMouseEnter={()=>overSound.play()}
+          onMouseEnter={() => overSound.play()}
         />
         <div
           className="cancelSwap"
@@ -170,7 +172,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
             setIsLoading(false);
             onClose();
           }}
-          onMouseEnter={()=>overSound.play()}
+          onMouseEnter={() => overSound.play()}
         />
         <input
           className="inputNumbers"

@@ -326,9 +326,6 @@ input[type="number"] {
   overflow: hidden;
   border-bottom: 4px solid #003366;
 }
-.spacer {
-  flex-grow: 1;
-}
 .userSection {
   background: url(assets/img/brushedsteel.png);
   padding: 0.6rem;
@@ -341,6 +338,7 @@ input[type="number"] {
   border-radius: 10px 10px 0 10px;
   height: 384px;
   padding: 15px 18px 0 18px;
+  flex-grow: 1;
 }
 
 .walletItemsSection .send {

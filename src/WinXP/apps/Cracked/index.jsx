@@ -446,7 +446,6 @@ function Cracked({ onClose }) {
               ) : null}
             </div>
           </div>
-          <div className="spacer"></div>
 
           <div className="walletItemsSection">
             <div style={{ display: "flex", alignItems: "center" }}>

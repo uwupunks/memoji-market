@@ -616,18 +616,19 @@ input[type="number"] {
  *
  */
 ::-webkit-scrollbar-track {
-  background: url("./assets/img/scrollbar.png");
+  background: url("./assets/img/scrollbar/scrollbar-track.png");
   width: 11px;
 }
 ::-webkit-scrollbar {
-  width: 11px;
+  width: 12px;
 }
 ::-webkit-scrollbar-thumb {
   width: 12px;
-  border-radius: 10px;
-  /*background: rgba(68,153,221,0.8);  */
-  background: rgba(68, 187, 238, 0.8);
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  background-image: url("./assets/img/scrollbar/top.png"),
+    url("./assets/img/scrollbar/bottom.png"),
+    url("./assets/img/scrollbar/middle.png");
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: top, bottom, center;
 }
 
 ::-webkit-scrollbar,

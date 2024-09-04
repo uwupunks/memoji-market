@@ -480,6 +480,7 @@ input[type="number"] {
   height: 20px;
   padding: 0 10px;
   font-family: pokemon;
+  font-size: 11pt;
   color: #4466ee;
   text-transform: uppercase;
   -webkit-font-smoothing: none;
@@ -489,6 +490,11 @@ input[type="number"] {
 }
 .assetList .quantity {
   float: right;
+  color: #3a3a3a;
+  font-weight: bold;
+  font-smoothing: none;
+  -webkit-font-smoothing: none;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .memeSection {

@@ -5,6 +5,7 @@ import genMin from "assets/img/minipress.png";
 import genMin2 from "assets/img/minipress2.png";
 import keygenVideo from "assets/video/keygen-video.mp4"
 import keygenPoster from "assets/video/keygen-poster.png"
+import winxpStormy from "assets/img/bg-winxp-stormy.jpeg"
 
 import "./index.css"
 
@@ -22,6 +23,7 @@ function Keygen({ onClose, onMinimize, patched }) {
     let keygenWindow = document.getElementById("Keygen");
     let keygenIcon = document.getElementById("KeygenIcon");
     let keygenMenu = document.getElementById("Keygenmenu");
+    let desktop = document.getElementsByClassName("winxp")?.[0]
 
     webampWindow.style.display = "initial";
     webampIcon.style.display = "initial";
@@ -32,6 +34,8 @@ function Keygen({ onClose, onMinimize, patched }) {
     keygenMenu.style.display = "none";
     keygenWindow.style.display = "none";
     keygenIcon.style.display = "none";
+
+    desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`
   };
 
   return (

@@ -506,9 +506,9 @@ input[type="number"] {
 }
 
 .buttonSection {
-  background: url("./assets/img/backButtons.png") no-repeat;
-  background-size: 192px 22px;
-  background-color: rgb(34 102 187);
+  background: url(assets/img/backButtons.png), url(assets/img/bg-button-section.png);
+  background-repeat: no-repeat, repeat;
+  background-size: 192px 22px, auto;
   display: flex;
   border-bottom: 1px solid black;
 }

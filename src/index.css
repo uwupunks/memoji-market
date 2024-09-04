@@ -13,15 +13,7 @@
   height: 100%;
 }
 
-.keygenWindow {
-  background: url("./assets/img/keygenbase.png");
-  width: 359px;
-  height: 522px;
-  position: absolute;
-  top: 0;
-  left: -3px;
-  z-index: 99;
-}
+
 .crackedWindow {
   background-color: #003366;
   width: 100%;
@@ -216,78 +208,13 @@ input[type="number"] {
   padding: 0px 1px;
 }
 
-.genInputs {
-  background-color: rgba(33, 33, 33, 0.5);
-  border: 1px solid white;
-  position: absolute;
-  bottom: 40px;
-  left: 5px;
-  width: 96%;
-}
 
-.genInputs input {
-  display: grid;
-  justify-content: center;
-  margin: 5px auto;
-  padding: 1px;
-  width: 90%;
-  background-color: transparent;
-}
 
-#version::placeholder {
-  text-align: left;
-  color: darkgray;
-}
 
-.versionBox p {
-  color: rgba(255, 255, 255, 0.5) !important;
-  position: absolute;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  padding: 1px 3px;
-  top: 20px;
-  right: 18px;
-  cursor: pointer;
-}
 
-.bottomText {
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  width: 100%;
-  height: 40px;
-  left: 0;
-  bottom: 0;
-  margin-left: -10px;
-}
 
-.bottomText p {
-  color: white;
-  text-align: center;
-  padding: 0px 20px;
-  font-size: 0.75rem;
-  cursor: pointer;
-}
 
-.bottomText p::first-letter {
-  text-decoration: underline;
-}
 
-.genInputs input::placeholder {
-  color: white;
-  text-align: center;
-  font-weight: 300;
-}
-
-.genInputs p {
-  color: white;
-  font-weight: 300;
-  margin: 0;
-  margin-top: 5px;
-  margin-left: 12px;
-  font-size: 0.75rem;
-}
 
 .mascot {
   height: 85px;

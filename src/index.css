@@ -510,6 +510,7 @@ input[type="number"] {
   background-size: 192px 22px;
   background-color: rgb(34 102 187);
   display: flex;
+  border-bottom: 1px solid black;
 }
 
 .allButton,
@@ -688,7 +689,7 @@ option:active {
   --ag-borders: none;
 }
 
-.grid-header-bg {
+.ag-header-viewport {
   background-image: url(assets/img/bg-grid-header.png);
 }
 

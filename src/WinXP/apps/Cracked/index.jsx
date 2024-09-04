@@ -48,6 +48,7 @@ import {
 } from "../../../hooks/balanceUtils.jsx";
 import SwapModal from "../../../components/SwapModal/index.jsx";
 import SendModal from "../../../components/SendModal/index.jsx";
+import AlertModal from "../../../components/AlertModal/index.jsx";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   notation: "compact",
@@ -74,6 +75,10 @@ function Cracked({ onClose }) {
 
   const [swapActive, setSwapActive] = useState(false);
   const [sendActive, setSendActive] = useState(false);
+  const [alertActive, setAlertActive] = useState(true);
+  const [alertMessage, setAlertMessage] = useState();
+  const [alertLink, setAlertLink] = useState();
+  const [alertLinkText, setAlertLinkText] = useState();
   const [leftAsset, setLeftAsset] = useState();
   const [rightAsset, setRightAsset] = useState();
   const [swapPrice, setSwapPrice] = useState();
@@ -651,17 +656,39 @@ function Cracked({ onClose }) {
         liq={swapLiq}
         isActive={swapActive}
         onClose={() => setSwapActive(false)}
-        onSwap={() => setRefreshBalances(!refreshBalances)}
+        onSwap={(message, link, linkText) => {
+          setAlertMessage(message)
+          setAlertActive(true)
+          setAlertLink(link)
+          setAlertLinkText(linkText)
+          setRefreshBalances(!refreshBalances)
+        }}
       ></SwapModal>
 
       <SendModal
         isActive={sendActive}
         balances={balances}
-        onSend={() => {
+        onSend={(message, link, linkText) => {
           setSendActive(false);
+          setAlertMessage(message)
+          setAlertActive(true)
+          setAlertLink(link)
+          setAlertLinkText(linkText)
           setRefreshBalances(!refreshBalances);
         }}
       ></SendModal>
+
+      <AlertModal
+        isActive={alertActive}
+        message={alertMessage}
+        link={alertLink}
+        linkText={alertLinkText}
+        onClose={() => {
+          setAlertActive(false);
+          setAlertMessage(null);
+        }}
+
+      ></AlertModal>
     </>
   );
 }

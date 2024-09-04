@@ -1,0 +1,47 @@
+#alertModal {
+  position: absolute;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+  font-smoothing: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  cursor: url("./assets/img/idle.png"), auto !important;
+  top: 31%;
+  left: 28%;
+  width: 194px;
+  height: 132px;
+  background: url(img/alert.png) no-repeat;
+  text-align: center;
+  overflow: visible;
+}
+
+#alertModal,
+#alertModal * {
+cursor: url("assets/img/idle.png"), auto !important;
+}
+#alertModal:active,
+#alertModal *:active {
+  cursor: url("assets/img/click.png"), auto !important;
+}
+#alertModal p {
+  height: 48%;
+  margin-top: 20%;
+  overflow-x: clip;
+}
+#alertModal a { 
+  display: block;
+  color: blue;
+  text-decoration: underline;
+}
+#alertModal button {
+  width: 34px;
+  height: 17px;
+  margin-top: 3px;
+  background: url(img/btok2.png);
+}
+#alertModal button:hover {
+  background: url(img/btok1.png);
+}
+#alertModal button:active {
+  background: url(img/btok3.png);
+}

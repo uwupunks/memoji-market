@@ -104,20 +104,25 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
           ]
         );
         successSound.onended = () =>
-          alert(`Success, transaction hash: ${res.transactionHash}`);
+          onSwap(
+            "Success!",
+            `https://uwu.direct/Unicorn/tx/${res.transactionHash}`,
+            "View TXN"
+          );
         await successSound.play();
-        onSwap();
+
         onClose();
       } catch (err) {
-        errorSound.onended = () => alert(`swap failed with error: ${err}`);
+        errorSound.onended = () => onSwap(`swap failed with error: ${err}`);
         await errorSound.play();
-
+        onClose();
         return null;
       } finally {
         setIsLoading(false);
       }
     } else {
-      alert("Please connect a wallet");
+      onSwap("Please connect a wallet");
+      onClose();
     }
   };
 

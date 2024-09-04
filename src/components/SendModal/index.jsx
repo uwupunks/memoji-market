@@ -72,21 +72,20 @@ function SendModal({ isActive, balances, onSend }) {
         if (res.code === 0) {
           setIsLoading(false);
           successSound.play();
-          alert(`Success, transaction hash: ${res.transactionHash}`);
-          onSend();
+          onSend("Success!", `https://uwu.direct/Unicorn/tx/${res.transactionHash}`, 'View TXN');
         } else {
           throw new Error(res.rawLog);
         }
       } catch (err) {
         setIsLoading(false);
         errorSound.play();
-        alert(`send failed with error: ${err}`);
+        onSend(`send failed with error: ${err}`)
         return null;
       } finally {
         setIsLoading(false);
       }
     } else {
-      alert("Validation Error or wallet not connected.");
+      onSend("Validation Error or wallet not connected.")
     }
   };
 

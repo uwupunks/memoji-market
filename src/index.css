@@ -22,7 +22,6 @@
   left: -3px;
   z-index: 99;
 }
-
 .crackedWindow {
   background-color: #003366;
   width: 100%;
@@ -482,6 +481,7 @@ input[type="number"] {
   color: #4466ee;
   text-transform: uppercase;
   -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
   font-smoothing: none;
   line-height: 20px;
   text-align: left;
@@ -490,6 +490,8 @@ input[type="number"] {
   float: right;
   color: #3a3a3a;
   font-weight: bold;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
   font-smoothing: none;
   -webkit-font-smoothing: none;
   font-family: Arial, Helvetica, sans-serif;
@@ -699,6 +701,7 @@ option:active {
   font-weight: 500;
   text-shadow: #74a4ec 0 0 3px;
   -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
   font-smoothing: none;
 }
 #assetGrid .ag-cell {

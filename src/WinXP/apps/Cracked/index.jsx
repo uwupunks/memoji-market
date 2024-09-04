@@ -41,7 +41,6 @@ import tCharacter from "assets/img/tCharacter.png";
 import lessThanCharacter from "assets/img/lessThanCharacter.png";
 import btSend2 from "assets/img/btsend/2.png";
 import memeInv from "assets/img/memeInv.png";
-import Draggable from "react-draggable";
 import { CONTRACTS, ENDPOINTS, MEMOJI } from "../../../constants";
 import {
   fetchBalancesAsync,
@@ -490,7 +489,6 @@ function Cracked({ onClose }) {
         </div>
         <div className="flex flex-col flex-grow">
           <div className="memeMarketSection h-full p-2.5">
-            <Draggable>
               <div id="memeMarket">
                 <div className="memeSection"></div>
                 <div className="buttonSection">
@@ -580,7 +578,6 @@ function Cracked({ onClose }) {
                   </div>
                 </div>
               </div>
-            </Draggable>
           </div>
           <div className="bottomBar flex flex-row items-baseline">
             <div className="assetList">

@@ -57,6 +57,7 @@ const memoji = [
   { name: "usushi", emoji: "🍣", listed: true },
   { name: "utaco", emoji: "🌮", listed: true },
   { name: "utaiwan", emoji: "🇹🇼", listed: true },
+  { name: "utang", emoji: "🍊", listed: true },
   { name: "utest", emoji: "test", listed: true },
   { name: "uwatermelon", emoji: "🍉", listed: true },
   { name: "uwunicorn", emoji: "🦄", listed: true },

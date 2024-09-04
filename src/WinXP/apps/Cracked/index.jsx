@@ -118,7 +118,7 @@ function Cracked({ onClose }) {
     const emptyBoxes = [];
     for (let i = 0; i < 60 - (balances?.length || 0); i++) {
       emptyBoxes.push(
-        <div  key={i} className="assetWrapper">
+        <div key={i} className="assetWrapper">
           <div className="assetEmoji"></div>
         </div>
       );
@@ -493,95 +493,95 @@ function Cracked({ onClose }) {
         </div>
         <div className="flex flex-col flex-grow">
           <div className="memeMarketSection h-full p-2.5">
-              <div id="memeMarket">
-                <div className="memeSection"></div>
-                <div className="buttonSection">
-                  {activeButton === 0 && (
-                    <>
-                      <img
-                        className="allButton"
-                        id="allButton"
-                        src={allButton}
-                        onClick={onGridTabClick}
-                      />
-                      <img
-                        onClick={onGridTabClick}
-                        className="hiddenButton"
-                        id="hiddenButton"
-                        style={{ opacity: "0" }}
-                        src={hiddenButton}
-                      />
-                      <img
-                        onClick={onGridTabClick}
-                        className="classicButton"
-                        id="classicButton"
-                        style={{ opacity: "0" }}
-                        src={classicButton}
-                      />
-                    </>
-                  )}
-                  {activeButton === 1 && (
-                    <>
-                      <img
-                        onClick={onGridTabClick}
-                        className="allButton"
-                        id="allButton"
-                        style={{ opacity: "0" }}
-                        src={allButton}
-                      />
-                      <img
-                        className="hiddenButton"
-                        id="hiddenButton"
-                        src={hiddenButton}
-                      />
-                      <img
-                        onClick={onGridTabClick}
-                        className="classicButton"
-                        id="classicButton"
-                        style={{ opacity: "0" }}
-                        src={classicButton}
-                      />
-                    </>
-                  )}
-                  {activeButton === 2 && (
-                    <>
-                      <img
-                        onClick={onGridTabClick}
-                        className="allButton"
-                        id="allButton"
-                        style={{ opacity: "0" }}
-                        src={allButton}
-                      />
-                      <img
-                        onClick={onGridTabClick}
-                        className="hiddenButton"
-                        id="hiddenButton"
-                        style={{ opacity: "0" }}
-                        src={hiddenButton}
-                      />
-                      <img
-                        className="classicButton"
-                        id="classicButton"
-                        src={classicButton}
-                      />
-                    </>
-                  )}
-                </div>
-                <div className="listItems">
-                  <div id="assetGrid" className="ag-theme-quartz-dark">
-                    <AgGridReact
-                      rowData={rowData}
-                      columnDefs={colDefs}
-                      defaultColDef={defaultColDef}
-                      rowSelection="single"
-                      ref={gridRef}
-                      onRowClicked={onRowClicked}
-                      enableSorting
-                      rowClass="row-borders"
+            <div id="memeMarket">
+              <div className="memeSection"></div>
+              <div className="buttonSection">
+                {activeButton === 0 && (
+                  <>
+                    <img
+                      className="allButton"
+                      id="allButton"
+                      src={allButton}
+                      onClick={onGridTabClick}
                     />
-                  </div>
+                    <img
+                      onClick={onGridTabClick}
+                      className="hiddenButton"
+                      id="hiddenButton"
+                      style={{ opacity: "0" }}
+                      src={hiddenButton}
+                    />
+                    <img
+                      onClick={onGridTabClick}
+                      className="classicButton"
+                      id="classicButton"
+                      style={{ opacity: "0" }}
+                      src={classicButton}
+                    />
+                  </>
+                )}
+                {activeButton === 1 && (
+                  <>
+                    <img
+                      onClick={onGridTabClick}
+                      className="allButton"
+                      id="allButton"
+                      style={{ opacity: "0" }}
+                      src={allButton}
+                    />
+                    <img
+                      className="hiddenButton"
+                      id="hiddenButton"
+                      src={hiddenButton}
+                    />
+                    <img
+                      onClick={onGridTabClick}
+                      className="classicButton"
+                      id="classicButton"
+                      style={{ opacity: "0" }}
+                      src={classicButton}
+                    />
+                  </>
+                )}
+                {activeButton === 2 && (
+                  <>
+                    <img
+                      onClick={onGridTabClick}
+                      className="allButton"
+                      id="allButton"
+                      style={{ opacity: "0" }}
+                      src={allButton}
+                    />
+                    <img
+                      onClick={onGridTabClick}
+                      className="hiddenButton"
+                      id="hiddenButton"
+                      style={{ opacity: "0" }}
+                      src={hiddenButton}
+                    />
+                    <img
+                      className="classicButton"
+                      id="classicButton"
+                      src={classicButton}
+                    />
+                  </>
+                )}
+              </div>
+              <div className="listItems">
+                <div id="assetGrid" className="ag-theme-quartz-dark">
+                  <AgGridReact
+                    rowData={rowData}
+                    columnDefs={colDefs}
+                    defaultColDef={defaultColDef}
+                    rowSelection="single"
+                    ref={gridRef}
+                    onRowClicked={onRowClicked}
+                    enableSorting
+                    rowClass="row-borders"
+                  />
                 </div>
               </div>
+            </div>
           </div>
           <div className="bottomBar flex flex-row items-baseline">
             <div className="assetList">
@@ -657,11 +657,13 @@ function Cracked({ onClose }) {
         isActive={swapActive}
         onClose={() => setSwapActive(false)}
         onSwap={(message, link, linkText) => {
-          setAlertMessage(message)
-          setAlertActive(true)
-          setAlertLink(link)
-          setAlertLinkText(linkText)
-          setRefreshBalances(!refreshBalances)
+          if (message) {
+            setAlertMessage(message);
+            setAlertActive(true);
+            setAlertLink(link);
+            setAlertLinkText(linkText);
+          }
+          setRefreshBalances(!refreshBalances);
         }}
       ></SwapModal>
 
@@ -670,10 +672,12 @@ function Cracked({ onClose }) {
         balances={balances}
         onSend={(message, link, linkText) => {
           setSendActive(false);
-          setAlertMessage(message)
-          setAlertActive(true)
-          setAlertLink(link)
-          setAlertLinkText(linkText)
+          if (message) {
+            setAlertMessage(message);
+            setAlertActive(true);
+            setAlertLink(link);
+            setAlertLinkText(linkText);
+          }
           setRefreshBalances(!refreshBalances);
         }}
       ></SendModal>
@@ -687,7 +691,6 @@ function Cracked({ onClose }) {
           setAlertActive(false);
           setAlertMessage(null);
         }}
-
       ></AlertModal>
     </>
   );

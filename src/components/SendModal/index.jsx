@@ -156,7 +156,7 @@ function SendModal({ isActive, balances, onSend }) {
             <img className="loading" src={sonicspin}></img>
           ) : (
             <>
-              <button className="cancelButton" onClick={onSend}></button>
+              <button className="cancelButton" onClick={() => onSend(null)}></button>
               <button
                 disabled={
                   !toAddress || !sendAmount || !sendDenom || !addressResolved

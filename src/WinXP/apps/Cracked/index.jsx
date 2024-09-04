@@ -75,7 +75,7 @@ function Cracked({ onClose }) {
 
   const [swapActive, setSwapActive] = useState(false);
   const [sendActive, setSendActive] = useState(false);
-  const [alertActive, setAlertActive] = useState(true);
+  const [alertActive, setAlertActive] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertLink, setAlertLink] = useState();
   const [alertLinkText, setAlertLinkText] = useState();
@@ -690,6 +690,8 @@ function Cracked({ onClose }) {
         onClose={() => {
           setAlertActive(false);
           setAlertMessage(null);
+          setAlertLink(null);
+          setAlertLinkText(null);
         }}
       ></AlertModal>
     </>

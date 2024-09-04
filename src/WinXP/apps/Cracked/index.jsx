@@ -421,6 +421,7 @@ function Cracked({ onClose }) {
     sortable: true,
     flex: 1,
     cellClass: "partial-vertical-borders",
+    headerClass: "grid-header-bg"
   };
 
   return (

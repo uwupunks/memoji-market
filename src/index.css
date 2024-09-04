@@ -683,10 +683,13 @@ option:active {
   --ag-header-height: 24px;
 
   --ag-background-color: rgb(34, 102, 187);
-  --ag-header-background-color: rgb(225, 238, 255);
 
   /* disable all borders */
   --ag-borders: none;
+}
+
+.grid-header-bg {
+  background-image: url(assets/img/bg-grid-header.png);
 }
 
 #assetGrid {

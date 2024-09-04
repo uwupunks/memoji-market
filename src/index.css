@@ -13,7 +13,9 @@
   height: 100%;
 }
 
-
+#Cracked {
+  z-index: 6;
+}
 .crackedWindow {
   background-color: #003366;
   width: 100%;
@@ -208,14 +210,6 @@ input[type="number"] {
   padding: 0px 1px;
 }
 
-
-
-
-
-
-
-
-
 .mascot {
   height: 85px;
   width: 91px;
@@ -263,6 +257,7 @@ input[type="number"] {
   background: url(assets/img/brushedsteel.png);
   border-radius: 10px 10px 0 10px;
   height: 384px;
+  margin: 0 0 0 4px;
   padding: 15px 18px 0 18px;
   flex-grow: 1;
 }
@@ -433,7 +428,8 @@ input[type="number"] {
 }
 
 .buttonSection {
-  background: url(assets/img/backButtons.png), url(assets/img/bg-button-section.png);
+  background: url(assets/img/backButtons.png),
+    url(assets/img/bg-button-section.png);
   background-repeat: no-repeat, repeat;
   background-size: 192px 22px, auto;
   display: flex;

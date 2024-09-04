@@ -427,7 +427,6 @@ function Cracked({ onClose }) {
       <div
         className="crackedWindow flex flex-row"
         onMouseDown={() => clickSound.play()}
-        style={{ zIndex: "97" }}
       >
         <div className="leftSection w-226px">
           <div className="userSection p-1">

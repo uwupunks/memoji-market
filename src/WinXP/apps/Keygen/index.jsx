@@ -19,12 +19,9 @@ function Keygen({ onClose, onMinimize, patched }) {
     let crackedWindow = document.getElementById("Cracked");
     let crackedMenu = document.getElementById("Crackedmenu");
     let crackedIcon = document.getElementById("CrackedIcon");
-    let browserWindow = document.getElementById("Unicorn");
-    let browserIcon = document.getElementById("UnicornIcon");
     let keygenWindow = document.getElementById("Keygen");
     let keygenIcon = document.getElementById("KeygenIcon");
     let keygenMenu = document.getElementById("Keygenmenu");
-    let unicornMenu = document.getElementById("Unicornmenu");
 
     webampWindow.style.display = "initial";
     webampIcon.style.display = "initial";
@@ -32,12 +29,9 @@ function Keygen({ onClose, onMinimize, patched }) {
     crackedWindow.style.display = "initial";
     crackedMenu.style.display = "initial";
     crackedIcon.style.display = "initial";
-    browserIcon.style.display = "none";
-    browserWindow ? (browserWindow.style.display = "none") : null;
     keygenMenu.style.display = "none";
     keygenWindow.style.display = "none";
     keygenIcon.style.display = "none";
-    unicornMenu.style.display = "none";
   };
 
   return (

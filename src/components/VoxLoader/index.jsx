@@ -53,27 +53,22 @@ function VoxLoader({ filePath }) {
         const boundingBox = mesh.geometry.boundingBox;
         const voxelSize = new THREE.Vector3();
         boundingBox.getSize(voxelSize);
-        debugger
-        if (voxelSize.x > 30  || voxelSize.y > 30 || voxelSize.z > 30 ) {
+        if (voxelSize.x > 30 || voxelSize.y > 30 || voxelSize.z > 30) {
           mesh.scale.setScalar(0.00125);
         } else {
           mesh.scale.setScalar(0.0015);
         }
         scene.add(mesh);
-        }
+      }
     });
 
     // renderer
     renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setViewport(-87, 20, 300, 150);
+    renderer.setSize(150, 100);
     renderer.setAnimationLoop(() => {
       const r = Date.now() * 0.0005;
-      camera.position.set(
-        700 * Math.sin(r),
-        0,
-        700 * Math.cos(r)
-      );
+      camera.position.set(700 * Math.sin(r), 0, 700 * Math.cos(r));
 
       controls.update();
       renderer.render(scene, camera);

@@ -223,7 +223,7 @@ const Container = styled.footer`
     border-radius: 2px;
     margin-top: 2px;
     padding: 0 8px;
-    height: 22px;
+    height: 24px;
     font-size: 11px;
     background-color: #3c81f3;
     box-shadow: inset -1px 0px rgba(0, 0, 0, 0.3),

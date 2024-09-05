@@ -150,9 +150,7 @@ function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
   return isActive && price ? (
     <Draggable onMouseDown={() => clickSound.play()}>
       <div className="swapWindow">
-        {isLowLiq(liq) && (
-          <span className="swapMessage">Low Liquidity: {liq}</span>
-        )}
+{/* todo: low liq alert */}
         {isLoading ? (
           <img className="swapLoading" src={sonicspin}></img>
         ) : (

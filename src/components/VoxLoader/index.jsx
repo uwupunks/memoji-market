@@ -64,8 +64,7 @@ function VoxLoader({ filePath }) {
 
     // renderer
     renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(150, 100);
+    renderer.setViewport(-87, 20, 300, 150)
     renderer.setAnimationLoop(() => {
       const r = Date.now() * 0.0005;
       camera.position.set(700 * Math.sin(r), 0, 700 * Math.cos(r));

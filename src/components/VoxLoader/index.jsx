@@ -64,6 +64,7 @@ function VoxLoader({ filePath }) {
 
     // renderer
     renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    //renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setViewport(-87, 20, 300, 150)
     renderer.setAnimationLoop(() => {
       const r = Date.now() * 0.0005;
@@ -78,7 +79,7 @@ function VoxLoader({ filePath }) {
     controls.minDistance = 0.09;
     controls.maxDistance = 0.095;
 
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = 2;
     camera.updateProjectionMatrix();
 
     if (voxAreaRef.current.childNodes.length === 0) {

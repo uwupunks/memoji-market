@@ -49,15 +49,23 @@ function VoxLoader({ filePath }) {
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
         const mesh = new VOXMesh(chunk);
-        mesh.scale.setScalar(0.0015);
+        mesh.geometry.computeBoundingBox();
+        const boundingBox = mesh.geometry.boundingBox;
+        const voxelSize = new THREE.Vector3();
+        boundingBox.getSize(voxelSize);
+        if (voxelSize.y > 30  || voxelSize.y > 30 || voxelSize.z > 30 ) {
+          mesh.scale.setScalar(0.00125);
+        } else {
+          mesh.scale.setScalar(0.0015);
+        }
         scene.add(mesh);
-      }
+        }
     });
 
     // renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(100, 100);
+    renderer.setViewport(-87, 20, 300, 150);
     renderer.setAnimationLoop(() => {
       const r = Date.now() * 0.0005;
       camera.position.set(

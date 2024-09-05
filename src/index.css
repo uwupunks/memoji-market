@@ -255,6 +255,7 @@ input[type="number"] {
 
 .walletItemsSection {
   background: url(assets/img/brushedsteel.png);
+  background-position: bottom right;
   border-radius: 10px 10px 0 10px;
   height: 384px;
   margin: 0 0 0 4px;
@@ -382,22 +383,22 @@ input[type="number"] {
   margin-top: auto;
   height: 100%;
   padding-right: 1rem;
-  background:     
-  /*right border*/ linear-gradient(
-      to bottom,
-      transparent 10%,
-      #999999 10%,
-      #999999 80%,
-      transparent 80%
-    )
-    100% 0 / 1px 100% no-repeat;
+  background: url("assets/img/bgtextbox.png") no-repeat,
+    /*right border*/
+      linear-gradient(
+        to bottom,
+        transparent 10%,
+        #999999 10%,
+        #999999 80%,
+        transparent 80%
+      )
+      100% 0 / 1px 100% no-repeat;
 }
 
 .assetList .asset {
-  background: url("assets/img/bgtextbox.png");
   width: 208px;
   height: 20px;
-  padding: 0 10px;
+  padding: 1px 10px 0 10px;
   font-family: pokemon;
   font-size: 11pt;
   color: #4466ee;
@@ -411,7 +412,6 @@ input[type="number"] {
 .assetList .quantity {
   float: right;
   color: #3a3a3a;
-  font-weight: bold;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: none;
   font-smoothing: none;
@@ -441,6 +441,11 @@ input[type="number"] {
 .classicButton {
   width: 64px;
   height: 22px;
+}
+
+.smidgeDown {
+  position: relative;
+  top: 1px;
 }
 
 .midSection {
@@ -670,8 +675,11 @@ option:active {
 }
 .bottomBar {
   background: url(assets/img/brushedsteel.png);
-  background-position: center;
+  background-position: bottom right;
+  position: relative;
+  left: -1px;
   height: 13%;
+  min-height: 75px;
   margin: 0 4px 4px 0;
   padding-top: 5px;
   border-radius: 0 10px 10px 0;

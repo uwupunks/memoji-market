@@ -66,6 +66,8 @@ const percentFormatter = new Intl.NumberFormat(navigator.language, {
   minimumFractionDigits: 2,
 });
 
+const longNumberFormatter = new Intl.NumberFormat(navigator.language);
+
 function Cracked({ onClose }) {
   const { username, connect, disconnect, address, isWalletConnected } =
     useChain("unicorn");
@@ -338,6 +340,7 @@ function Cracked({ onClose }) {
             denom: ub.denom,
             emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
             amount: displayNumber(Number(ub.amount) / 1000000),
+            amountRaw: Number(ub.amount) / 1000000,
           }));
           console.log(balances);
           setBalances(balances);
@@ -499,7 +502,7 @@ function Cracked({ onClose }) {
                 {activeButton === 0 && (
                   <>
                     <img
-                      className="allButton"
+                      className="allButton smidgeDown"
                       id="allButton"
                       src={allButton}
                       onClick={onGridTabClick}
@@ -530,7 +533,7 @@ function Cracked({ onClose }) {
                       src={allButton}
                     />
                     <img
-                      className="hiddenButton"
+                      className="hiddenButton smidgeDown"
                       id="hiddenButton"
                       src={hiddenButton}
                     />
@@ -560,7 +563,7 @@ function Cracked({ onClose }) {
                       src={hiddenButton}
                     />
                     <img
-                      className="classicButton"
+                      className="classicButton smidgeDown"
                       id="classicButton"
                       src={classicButton}
                     />
@@ -586,21 +589,24 @@ function Cracked({ onClose }) {
           <div className="bottomBar flex flex-row items-baseline">
             <div className="assetList">
               <div className="asset">
-                UNICORN
                 <div className="quantity">
-                  {balances?.find((b) => b.emoji === "🦄")?.amount || 0}
+                  {longNumberFormatter.format(
+                    balances?.find((b) => b.emoji === "🦄")?.amountRaw || 0
+                  )}
                 </div>
               </div>
               <div className="asset">
-                BLACK FLAG
                 <div className="quantity">
-                  {balances?.find((b) => b.emoji === "🏴")?.amount || 0}
+                  {longNumberFormatter.format(
+                    balances?.find((b) => b.emoji === "🏴")?.amountRaw || 0
+                  )}
                 </div>
               </div>
               <div className="asset">
-                DIAMOND
                 <div className="quantity">
-                  {balances?.find((b) => b.emoji === "💎")?.amount || 0}
+                  {longNumberFormatter.format(
+                    balances?.find((b) => b.emoji === "💎")?.amountRaw || 0
+                  )}
                 </div>
               </div>
             </div>

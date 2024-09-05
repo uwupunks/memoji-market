@@ -29,6 +29,7 @@
 }
 .memeMarketSection {
   background: url(assets/img/brushedsteel.png);
+  background-position: bottom right;
   margin: 4px 4px 7px 7px;
   border-radius: 10px;
 }
@@ -248,6 +249,7 @@ input[type="number"] {
 }
 .userSection {
   background: url(assets/img/brushedsteel.png);
+  background-position: bottom right;
   padding: 0.6rem;
   margin: 4px 0 4px 4px;
   border-radius: 10px;

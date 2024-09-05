@@ -53,7 +53,8 @@ function VoxLoader({ filePath }) {
         const boundingBox = mesh.geometry.boundingBox;
         const voxelSize = new THREE.Vector3();
         boundingBox.getSize(voxelSize);
-        if (voxelSize.y > 30  || voxelSize.y > 30 || voxelSize.z > 30 ) {
+        debugger
+        if (voxelSize.x > 30  || voxelSize.y > 30 || voxelSize.z > 30 ) {
           mesh.scale.setScalar(0.00125);
         } else {
           mesh.scale.setScalar(0.0015);

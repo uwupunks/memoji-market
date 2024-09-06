@@ -84,7 +84,6 @@ function Cracked({ onClose }) {
   const [leftAsset, setLeftAsset] = useState();
   const [rightAsset, setRightAsset] = useState();
   const [swapPrice, setSwapPrice] = useState();
-  const [swapLiq, setSwapLiq] = useState();
 
   const [balances, setBalances] = useState([]);
   const [refreshBalances, setRefreshBalances] = useState(false);
@@ -171,7 +170,13 @@ function Cracked({ onClose }) {
       }
     }
   });
-
+  const isLowLiq = (liq) => liq.replace("%", "") < 0.4;
+  const alert = (message, link, linkText) => {
+    setAlertMessage(message);
+    setAlertLink(link);
+    setAlertLinkText(linkText);
+    setAlertActive(true);
+  };
   const sprites = {
     0: zeroCharacter,
     1: oneCharacter,
@@ -363,7 +368,6 @@ function Cracked({ onClose }) {
     const selectedAsset = rowNode.data;
 
     setSwapPrice(selectedAsset.price);
-    setSwapLiq(selectedAsset.liq);
 
     setLeftAsset({
       name: "uwunicorn",
@@ -377,6 +381,12 @@ function Cracked({ onClose }) {
     });
 
     setSwapActive(true);
+
+    if (isLowLiq(selectedAsset.liq)) {
+      alert(
+        "Warning: This pair has low liquidity. Expect high price impact. Consider trading OTC."
+      );
+    }
   };
 
   const onInventoryClick = (asset) => {
@@ -387,7 +397,6 @@ function Cracked({ onClose }) {
     }
 
     setSwapPrice(foundAsset.price);
-    setSwapLiq(foundAsset.liq);
 
     setLeftAsset({
       name: foundAsset.denomDisplay,
@@ -401,6 +410,12 @@ function Cracked({ onClose }) {
     });
 
     setSwapActive(true);
+
+    if (isLowLiq(foundAsset.liq)) {
+      alert(
+        "Warning: This pair has low liquidity. Expect high price impact. Consider trading OTC."
+      );
+    }
   };
 
   const [colDefs, setColDefs] = useState([
@@ -659,15 +674,11 @@ function Cracked({ onClose }) {
         left={leftAsset}
         right={rightAsset}
         price={swapPrice}
-        liq={swapLiq}
         isActive={swapActive}
         onClose={() => setSwapActive(false)}
         onSwap={(message, link, linkText) => {
           if (message) {
-            setAlertMessage(message);
-            setAlertActive(true);
-            setAlertLink(link);
-            setAlertLinkText(linkText);
+            alert(message, link, linkText);
           }
           setRefreshBalances(!refreshBalances);
         }}
@@ -679,10 +690,7 @@ function Cracked({ onClose }) {
         onSend={(message, link, linkText) => {
           setSendActive(false);
           if (message) {
-            setAlertMessage(message);
-            setAlertActive(true);
-            setAlertLink(link);
-            setAlertLinkText(linkText);
+            alert(message, link, linkText);
           }
           setRefreshBalances(!refreshBalances);
         }}

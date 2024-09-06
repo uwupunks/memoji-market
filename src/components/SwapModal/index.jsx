@@ -20,9 +20,7 @@ import sonicspin from "assets/img/sonicspin.png";
 //force module load
 console.log(SigningCosmWasmClient);
 
-const isLowLiq = (liq) => liq.replace("%", "") < 0.4;
-
-function SwapModal({ left, right, price, liq, isActive, onClose, onSwap }) {
+function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
   //hooks
   const promptSound = new Audio(promptMp3);
   const clickSound = new Audio(clickMp3);

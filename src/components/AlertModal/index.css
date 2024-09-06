@@ -40,8 +40,8 @@ cursor: url("assets/img/idle.png"), auto !important;
   background: url(img/btok2.png);
 }
 #alertModal button:hover {
-  background: url(img/btok1.png);
+  background: url(img/btok3.png);
 }
 #alertModal button:active {
-  background: url(img/btok3.png);
+  background: url(img/btok1.png);
 }

@@ -1,126 +1,163 @@
-// from Webamp demo
-
-const album = 'netBloc Vol. 24: tiuqottigeloot';
-
 export const initialTracks = [
   {
     url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Diablo_Swing_Orchestra_-_01_-_Heroines.mp3',
-    duration: 322.612245,
+      'src/assets/music/maple/ToEllinia.mp3',
+    duration: 158,
     metaData: {
-      title: 'Heroines',
-      artist: 'Diablo Swing Orchestra',
-      album,
+      title: 'To Ellinia',
+      artist: 'Wizet',
+      album: 'Maplestory',
     },
   },
   {
     url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Eclectek_-_02_-_We_Are_Going_To_Eclecfunk_Your_Ass.mp3',
-    duration: 190.093061,
+      'src/assets/music/maple/Ellinia.mp3',
+    duration: 158,
     metaData: {
-      title: 'We Are Going To Eclecfunk Your Ass',
-      artist: 'Eclectek',
-      album,
+      title: 'Ellinia',
+      artist: 'Wizet',
+      album: 'Maplestory',
     },
   },
   {
     url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Auto-Pilot_-_03_-_Seventeen.mp3',
-    duration: 214.622041,
+      'src/assets/music/maple/Henesys.mp3',
+    duration: 158,
     metaData: {
-      title: 'Seventeen',
-      artist: 'Auto-Pilot',
-      album,
+      title: 'Henesys',
+      artist: 'Wizet',
+      album: 'Maplestory',
     },
   },
   {
     url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Muha_-_04_-_Microphone.mp3',
-    duration: 181.838367,
+      'src/assets/music/maple/HenesysMarket.mp3',
+    duration: 158,
     metaData: {
-      title: 'Microphone',
-      artist: 'Muha',
-      album,
+      title: 'Henesys Market',
+      artist: 'Wizet',
+      album: 'Maplestory',
     },
   },
   {
     url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Just_Plain_Ant_-_05_-_Stumble.mp3',
-    duration: 86.047347,
+      'src/assets/music/maple/LithHarbor.mp3',
+    duration: 158,
     metaData: {
-      title: 'Stumble',
-      artist: 'Just Plain Ant',
-      album,
+      title: 'Lith Harbor',
+      artist: 'Wizet',
+      album: 'Maplestory',
     },
   },
   {
     url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Sleaze_-_06_-_God_Damn.mp3',
-    duration: 226.795102,
+      'src/assets/music/maple/Shanghai.mp3',
+    duration: 158,
     metaData: {
-      title: 'God Damn',
-      artist: 'Sleaze',
-      album,
+      title: 'Shanghai',
+      artist: 'Wizet',
+      album: 'Maplestory',
     },
   },
   {
     url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Juanitos_-_07_-_Hola_Hola_Bossa_Nova.mp3',
+      'src/assets/music/maple/ShowaTown.mp3',
+    duration: 158,
+    metaData: {
+      title: 'Showa Town',
+      artist: 'Wizet',
+      album: 'Maplestory',
+    },
+  },
+  {
+    url:
+      'src/assets/music/maple/Sleepywood.mp3',
+    duration: 158,
+    metaData: {
+      title: 'Sleepywood',
+      artist: 'Wizet',
+      album: 'Maplestory',
+    },
+  },
+  {
+    url:
+      'src/assets/music/maple/TreeDungeon.mp3',
+    duration: 158,
+    metaData: {
+      title: 'Tree Dungeon',
+      artist: 'Wizet',
+      album: 'Maplestory',
+    },
+  },
+  {
+    url:
+      'src/assets/music/maple/WestofHenesys.mp3',
+    duration: 158,
+    metaData: {
+      title: 'West of Henesys',
+      artist: 'Wizet',
+      album: 'Maplestory',
+    },
+  },
+
+  {
+    url:
+      'https://oldschool.runescape.wiki/images/Autumn_Voyage.ogg',
+    duration: 138,
+    metaData: {
+      title: 'Autumn Voyage',
+      artist: 'Jagex',
+      album: 'Runescape',
+    },
+  },
+  {
+    url:
+      'https://oldschool.runescape.wiki/images/Background.ogg',
+    duration: 243,
+    metaData: {
+      title: 'Background',
+      artist: 'Jagex',
+      album: 'Runescape',
+    },
+  },
+  {
+    url:
+      'https://oldschool.runescape.wiki/images/Dream.ogg',
+    duration: 153,
+    metaData: {
+      title: 'Dream',
+      artist: 'Jagex',
+      album: 'Runescape',
+    },
+  },
+  {
+    url:
+      'https://oldschool.runescape.wiki/images/Home_Sweet_Home.ogg',
+    duration: 321,
+    metaData: {
+      title: 'Home Sweet Home',
+      artist: 'Jagex',
+      album: 'Runescape',
+    },
+  },
+  {
+    url:
+      'https://oldschool.runescape.wiki/images/Spirit.ogg',
+    duration: 234,
+    metaData: {
+      title: 'Spirit',
+      artist: 'Jagex',
+      album: 'Runescape',
+    },
+  },
+  {
+    url:
+      'https://oldschool.runescape.wiki/images/Waterfall.ogg',
     duration: 207.072653,
     metaData: {
-      title: 'Hola Hola Bossa Nova',
-      artist: 'Juanitos',
-      album,
-    },
-  },
-  {
-    url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Entertainment_for_the_Braindead_-_08_-_Resolutions_Chris_Summer_Remix.mp3',
-    duration: 314.331429,
-    metaData: {
-      title: 'Resolutions (Chris Summer Remix)',
-      artist: 'Entertainment for the Braindead',
-      album,
-    },
-  },
-  {
-    url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Nobara_Hayakawa_-_09_-_Trail.mp3',
-    duration: 204.042449,
-    metaData: {
-      title: 'Trail',
-      artist: 'Nobara Hayakawa',
-      album,
-    },
-  },
-  {
-    url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/Paper_Navy_-_10_-_Tongue_Tied.mp3',
-    duration: 201.116735,
-    metaData: {
-      title: 'Tongue Tied',
-      artist: 'Paper Navy',
-      album,
-    },
-  },
-  {
-    url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/60_Tigres_-_11_-_Garage.mp3',
-    duration: 245.394286,
-    metaData: {
-      title: 'Garage',
-      artist: '60 Tigres',
-      album,
-    },
-  },
-  {
-    url:
-      'https://raw.githubusercontent.com/captbaritone/webamp-music/4b556fbf/CM_aka_Creative_-_12_-_The_Cycle_Featuring_Mista_Mista.mp3',
-    duration: 221.44,
-    metaData: {
-      title: 'The Cycle (Featuring Mista Mista)',
-      artist: 'CM aka Creative',
-      album,
+      title: 'Waterfall',
+      artist: 'Jagex',
+      album: 'Runescape',
     },
   },
 ];

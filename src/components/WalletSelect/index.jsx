@@ -5,7 +5,7 @@ import "react-responsive-modal/styles.css";
 
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
-import { throttle } from "lodash";
+import { isMobile } from "react-device-detect";
 
 import "./index.css";
 
@@ -64,7 +64,6 @@ const suggest = async () => {
 };
 
 function WalletSelect({ isOpen, setOpen, walletRepo }) {
-
   const promptSound = new Audio(promptMp3);
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
@@ -111,34 +110,47 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
           <div className="spacer"></div>
         </div>
       ))}
-      <div className="option disabled" onMouseDown={() => clickSound.play()}>
-        <div className="icon-bg">
-          <div className="icon"></div>
-        </div>
-        <div className="name">
-          <div className="textbox"></div>
-          <button></button>
-        </div>
-        <div className="spacer"></div>
-      </div>
-      <div className="option disabled" onMouseDown={() => clickSound.play()}>
-        <div className="icon-bg">
-          <div className="icon"></div>
-        </div>
-        <div className="name">
-          <div className="textbox"></div>
-          <button></button>
-        </div>
-      </div>
-      <div className="option disabled" onMouseDown={() => clickSound.play()}>
-        <div className="icon-bg">
-          <div className="icon"></div>
-        </div>
-        <div className="name">
-          <div className="textbox"></div>
-          <button></button>
-        </div>
-      </div>
+      {!isMobile ? (
+        <>
+          <div
+            className="option disabled"
+            onMouseDown={() => clickSound.play()}
+          >
+            <div className="icon-bg">
+              <div className="icon"></div>
+            </div>
+            <div className="name">
+              <div className="textbox"></div>
+              <button></button>
+            </div>
+            <div className="spacer"></div>
+          </div>
+          <div
+            className="option disabled"
+            onMouseDown={() => clickSound.play()}
+          >
+            <div className="icon-bg">
+              <div className="icon"></div>
+            </div>
+            <div className="name">
+              <div className="textbox"></div>
+              <button></button>
+            </div>
+          </div>
+          <div
+            className="option disabled"
+            onMouseDown={() => clickSound.play()}
+          >
+            <div className="icon-bg">
+              <div className="icon"></div>
+            </div>
+            <div className="name">
+              <div className="textbox"></div>
+              <button></button>
+            </div>
+          </div>
+        </>
+      ) : null}
     </Modal>
   ) : null;
 }

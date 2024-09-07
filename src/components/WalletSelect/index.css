@@ -47,10 +47,12 @@
   height: 50px;
   width: 50px;
 }
-.walletSelectModal .option.keplr-extension .icon {
+.walletSelectModal .option.keplr-extension .icon,
+.walletSelectModal .option.keplr-mobile .icon {
   background: url(img/logos/keplr.png) center no-repeat;
 }
-.walletSelectModal .option.leap-extension .icon {
+.walletSelectModal .option.leap-extension .icon,
+.walletSelectModal .option.leap-cosmos-mobile .icon {
   background: url(img/logos/leap.png) center no-repeat;
 }
 .walletSelectModal .option.leap-metamask-cosmos-snap .icon {
@@ -78,10 +80,12 @@
   height: 100%;
   margin-left: 5px;
 }
-.walletSelectModal .name .textbox div.keplr-extension {
+.walletSelectModal .name .textbox div.keplr-extension,
+.walletSelectModal .name .textbox div.keplr-mobile {
   background: url(img/words/keplr.png) no-repeat center left;
 }
-.walletSelectModal .name .textbox div.leap-extension {
+.walletSelectModal .name .textbox div.leap-extension,
+.walletSelectModal .name .textbox div.leap-cosmos-mobile {
   background: url(img/words/leap.png) no-repeat center left;
 }
 .walletSelectModal .name .textbox div.leap-metamask-cosmos-snap {

@@ -182,6 +182,10 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
           className="inputNumbers"
           id="leftInput"
           value={leftAsset?.amount ?? ""}
+          inputMode="numeric"
+          onTouchStart={(e) => {
+            e.target.focus();
+          }}
           onChange={(e) => {
             setLeftAsset((prev) => ({ ...prev, amount: e.target.value }));
             setRightAsset((prev) => ({
@@ -198,6 +202,7 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
           className="inputNumbers"
           id="rightInput"
           value={rightAsset?.amount ?? ""}
+          inputMode="numeric"
           type="number"
           disabled
         />

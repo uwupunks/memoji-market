@@ -10,7 +10,19 @@ import ToEllinia from "assets/music/maple/ToEllinia.mp3";
 import TreeDungeon from "assets/music/maple/TreeDungeon.mp3";
 import WestofHenesys from "assets/music/maple/WestofHenesys.mp3";
 
-export const initialTracks = [
+
+function shuffleArray(array) {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+  return array;
+}
+
+export const initialTracks = shuffleArray([
   {
     url: ToEllinia,
     duration: 158,
@@ -110,7 +122,6 @@ export const initialTracks = [
       album: "Maplestory",
     },
   },
-
   {
     url: "https://oldschool.runescape.wiki/images/Autumn_Voyage.ogg",
     duration: 138,
@@ -165,4 +176,5 @@ export const initialTracks = [
       album: "Runescape",
     },
   },
-];
+]);
+

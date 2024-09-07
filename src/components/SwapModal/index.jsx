@@ -64,6 +64,10 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
     });
   }, [rightAsset]);
 
+  const handleCancel = () => {
+    setIsLoading(false);
+    onClose();
+  };
   const swapAssets = async () => {
     if (isWalletConnected && leftAsset.denom && rightAsset.denom) {
       setIsLoading(true);
@@ -148,19 +152,20 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
   return isActive && price ? (
     <Draggable onMouseDown={() => clickSound.play()}>
       <div className="swapWindow">
-{/* todo: low liq alert */}
         {isLoading ? (
           <img className="swapLoading" src={sonicspin}></img>
         ) : (
           <div
             className="tradeSwap"
             id="trade"
+            onTouchStart={() => swapAssets()}
             onClick={() => swapAssets()}
             onMouseDown={() => promptSound.play()}
             onMouseEnter={() => overSound.play()}
           />
         )}
         <div
+          onTouchStart={() => switchSwapPlace()}
           onClick={() => switchSwapPlace()}
           className="switchSwap"
           id="swap"
@@ -169,10 +174,8 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
         <div
           className="cancelSwap"
           id="cancel"
-          onClick={() => {
-            setIsLoading(false);
-            onClose();
-          }}
+          onTouchStart={handleCancel}
+          onClick={handleCancel}
           onMouseEnter={() => overSound.play()}
         />
         <input

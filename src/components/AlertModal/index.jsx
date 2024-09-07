@@ -18,7 +18,7 @@ function AlertModal({ isActive, message, link, linkText, onClose }) {
             </a>
           ) : null}
         </p>
-        <button onClick={onClose}></button>
+        <button onClick={onClose} onTouchStart={onClose}></button>
       </div>
     </Draggable>
   ) : null;

@@ -107,6 +107,7 @@ const Div = styled.div`
     }
   }
   .balloon__close:hover {
+    cursor: pointer;
     background-color: #ffa90c;
     border-color: white;
     box-shadow: 1px 1px rgba(0, 0, 0, 0.1);

@@ -5,7 +5,7 @@
   font-smoothing: none;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
-  cursor: url("./assets/img/idle.png"), auto !important;
+  cursor: url("./assets/img/idle.png"), auto;
   top: 31%;
   left: 28%;
   width: 194px;
@@ -17,11 +17,11 @@
 
 #alertModal,
 #alertModal * {
-cursor: url("assets/img/idle.png"), auto !important;
+cursor: url("assets/img/idle.png"), auto;
 }
 #alertModal:active,
 #alertModal *:active {
-  cursor: url("assets/img/click.png"), auto !important;
+  cursor: url("assets/img/click.png"), auto;
 }
 #alertModal p {
   height: 48%;

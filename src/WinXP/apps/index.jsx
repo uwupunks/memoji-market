@@ -26,15 +26,15 @@ export const defaultAppState = [
       icon: keygenIcon,
     },
     defaultSize: {
-      width: 359,
-      height: 522,
+      width: 0,
+      height: 0,
     },
     defaultOffset: {
       x: 0,
       y: 0,
     },
     resizable: true,
-    minimized: false,
+    minimized: true,
     maximized: false,
     id: genId(),
     zIndex: genIndex(),

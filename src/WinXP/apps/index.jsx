@@ -26,8 +26,8 @@ export const defaultAppState = [
       icon: keygenIcon,
     },
     defaultSize: {
-      width: 0,
-      height: 0,
+      width: 359,
+      height: 522,
     },
     defaultOffset: {
       x: 0,

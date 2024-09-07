@@ -13,15 +13,28 @@ import "./index.css";
 function Keygen({ onClose, onMinimize, patched }) {
   const [min, setMin] = useState(0);
   const [close, setClose] = useState(0);
+  
+  const audio = new Audio(song);
+
   // start music
-  const audioRef = useRef(new Audio(song));
   useEffect(() => {
-    const audio = audioRef.current;
+    const tryToPlay = setInterval(() => {
+      audio
+        .play()
+        .then(() => {
+          clearInterval(tryToPlay);
+        })
+        .catch((error) => {
+          console.info("User has not interacted with document yet.");
+        });
+    }, 2500);
+
     audio.loop = true;
     audio.play();
     return () => {
       audio.pause();
       audio.currentTime = 0;
+      clearInterval(tryToPlay)
     };
   }, []);
 
@@ -38,7 +51,6 @@ function Keygen({ onClose, onMinimize, patched }) {
     let desktop = document.getElementsByClassName("winxp")?.[0];
 
     // Stop music
-    const audio = audioRef.current;
     audio.pause();
     audio.currentTime = 0;
 
@@ -55,6 +67,8 @@ function Keygen({ onClose, onMinimize, patched }) {
     if (keygenMenu) keygenMenu.style.display = "none";
     if (keygenWindow) keygenWindow.style.display = "none";
     if (keygenIcon) keygenIcon.style.display = "none";
+
+    onClose()
   };
 
   return (
@@ -68,11 +82,7 @@ function Keygen({ onClose, onMinimize, patched }) {
         }}
       >
         {min === 0 ? (
-          <img
-            onMouseEnter={() => setMin(1)}
-            src={genMin}
-            alt="Minimize"
-          />
+          <img onMouseEnter={() => setMin(1)} src={genMin} alt="Minimize" />
         ) : (
           <img
             onMouseOut={() => setMin(0)}
@@ -82,15 +92,11 @@ function Keygen({ onClose, onMinimize, patched }) {
           />
         )}
         {close === 0 ? (
-          <img
-            onMouseEnter={() => setClose(1)}
-            src={genClose}
-            alt="Close"
-          />
+          <img onMouseEnter={() => setClose(1)} src={genClose} alt="Close" />
         ) : (
           <img
             onMouseOut={() => setClose(0)}
-            onClick={() => onClose(onClose)}
+            onClick={() => onClose()}
             src={genClose2}
             alt="Close Active"
           />
@@ -126,7 +132,7 @@ function Keygen({ onClose, onMinimize, patched }) {
         <div className="bottomText">
           <p onClick={() => swapWindows()}>Patch Host File</p>
           <p>Generate</p>
-          <p onClick={() => onClose(onClose)}>Exit</p>
+          <p onClick={() => onClose()}>Exit</p>
         </div>
       </div>
     </>

@@ -1,6 +1,13 @@
-import React, { useReducer, useRef, useCallback, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import useMouse from 'react-use/lib/useMouse';
+import React, {
+  useReducer,
+  useRef,
+  useCallback,
+  useState,
+  useEffect,
+} from "react";
+import styled, { keyframes } from "styled-components";
+import useMouse from "react-use/lib/useMouse";
+import { useSearchParams } from "react-router-dom";
 
 import {
   ADD_APP,
@@ -15,15 +22,15 @@ import {
   END_SELECT,
   POWER_OFF,
   CANCEL_POWER_OFF,
-} from './constants/actions';
-import { FOCUSING, POWER_STATE } from './constants';
-import { defaultIconState, defaultAppState, appSettings } from './apps';
-import Modal from './Modal';
-import Footer from './Footer';
-import Windows from './Windows';
-import Icons from './Icons';
-import { DashedBox } from '../components';
-import "./index.css"
+} from "./constants/actions";
+import { FOCUSING, POWER_STATE } from "./constants";
+import { defaultIconState, defaultAppState, appSettings } from "./apps";
+import Modal from "./Modal";
+import Footer from "./Footer";
+import Windows from "./Windows";
+import Icons from "./Icons";
+import { DashedBox } from "../components";
+import "./index.css";
 
 const initState = {
   apps: defaultAppState,
@@ -34,11 +41,11 @@ const initState = {
   selecting: false,
   powerState: POWER_STATE.START,
 };
-const reducer = (state, action = { type: '' }) => {
+const reducer = (state, action = { type: "" }) => {
   switch (action.type) {
     case ADD_APP:
       const app = state.apps.find(
-        _app => _app.component === action.payload.component,
+        (_app) => _app.component === action.payload.component
       );
       if (action.payload.multiInstance || !app) {
         return {
@@ -56,10 +63,10 @@ const reducer = (state, action = { type: '' }) => {
           focusing: FOCUSING.WINDOW,
         };
       }
-      const apps = state.apps.map(app =>
+      const apps = state.apps.map((app) =>
         app.component === action.payload.component
           ? { ...app, zIndex: state.nextZIndex, minimized: false }
-          : app,
+          : app
       );
       return {
         ...state,
@@ -71,19 +78,19 @@ const reducer = (state, action = { type: '' }) => {
       if (state.focusing !== FOCUSING.WINDOW) return state;
       return {
         ...state,
-        apps: state.apps.filter(app => app.id !== action.payload),
+        apps: state.apps.filter((app) => app.id !== action.payload),
         focusing:
           state.apps.length > 1
             ? FOCUSING.WINDOW
-            : state.icons.find(icon => icon.isFocus)
+            : state.icons.find((icon) => icon.isFocus)
             ? FOCUSING.ICON
             : FOCUSING.DESKTOP,
       };
     case FOCUS_APP: {
-      const apps = state.apps.map(app =>
+      const apps = state.apps.map((app) =>
         app.id === action.payload
           ? { ...app, zIndex: state.nextZIndex, minimized: false }
-          : app,
+          : app
       );
       return {
         ...state,
@@ -94,8 +101,8 @@ const reducer = (state, action = { type: '' }) => {
     }
     case MINIMIZE_APP: {
       if (state.focusing !== FOCUSING.WINDOW) return state;
-      const apps = state.apps.map(app =>
-        app.id === action.payload ? { ...app, minimized: true } : app,
+      const apps = state.apps.map((app) =>
+        app.id === action.payload ? { ...app, minimized: true } : app
       );
       return {
         ...state,
@@ -105,8 +112,8 @@ const reducer = (state, action = { type: '' }) => {
     }
     case TOGGLE_MAXIMIZE_APP: {
       if (state.focusing !== FOCUSING.WINDOW) return state;
-      const apps = state.apps.map(app =>
-        app.id === action.payload ? { ...app, maximized: !app.maximized } : app,
+      const apps = state.apps.map((app) =>
+        app.id === action.payload ? { ...app, maximized: !app.maximized } : app
       );
       return {
         ...state,
@@ -115,7 +122,7 @@ const reducer = (state, action = { type: '' }) => {
       };
     }
     case FOCUS_ICON: {
-      const icons = state.icons.map(icon => ({
+      const icons = state.icons.map((icon) => ({
         ...icon,
         isFocus: icon.id === action.payload,
       }));
@@ -126,7 +133,7 @@ const reducer = (state, action = { type: '' }) => {
       };
     }
     case SELECT_ICONS: {
-      const icons = state.icons.map(icon => ({
+      const icons = state.icons.map((icon) => ({
         ...icon,
         isFocus: action.payload.includes(icon.id),
       }));
@@ -140,7 +147,7 @@ const reducer = (state, action = { type: '' }) => {
       return {
         ...state,
         focusing: FOCUSING.DESKTOP,
-        icons: state.icons.map(icon => ({
+        icons: state.icons.map((icon) => ({
           ...icon,
           isFocus: false,
         })),
@@ -149,7 +156,7 @@ const reducer = (state, action = { type: '' }) => {
       return {
         ...state,
         focusing: FOCUSING.DESKTOP,
-        icons: state.icons.map(icon => ({
+        icons: state.icons.map((icon) => ({
           ...icon,
           isFocus: false,
         })),
@@ -180,35 +187,37 @@ function WinXP() {
   const ref = useRef(null);
   const mouse = useMouse(ref);
   const focusedAppId = getFocusedAppId();
-  const onFocusApp = useCallback(id => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const onFocusApp = useCallback((id) => {
     dispatch({ type: FOCUS_APP, payload: id });
   }, []);
   const onMaximizeWindow = useCallback(
-    id => {
+    (id) => {
       if (focusedAppId === id) {
         dispatch({ type: TOGGLE_MAXIMIZE_APP, payload: id });
       }
     },
-    [focusedAppId],
+    [focusedAppId]
   );
   const onMinimizeWindow = useCallback(
-    id => {
+    (id) => {
       if (focusedAppId === id) {
         dispatch({ type: MINIMIZE_APP, payload: id });
       }
     },
-    [focusedAppId],
+    [focusedAppId]
   );
-  function PatchState(){
+  function PatchState() {
     return patched;
   }
   const onCloseApp = useCallback(
-    id => {
+    (id) => {
       if (focusedAppId === id) {
         dispatch({ type: DEL_APP, payload: id });
       }
     },
-    [focusedAppId],
+    [focusedAppId]
   );
   function onMouseDownFooterApp(id) {
     if (focusedAppId === id) {
@@ -222,7 +231,7 @@ function WinXP() {
   }
   function onDoubleClickIcon(component) {
     const appSetting = Object.values(appSettings).find(
-      setting => setting.component === component,
+      (setting) => setting.component === component
     );
     dispatch({ type: ADD_APP, payload: appSetting });
   }
@@ -230,29 +239,29 @@ function WinXP() {
     if (state.focusing !== FOCUSING.WINDOW) return -1;
     const focusedApp = [...state.apps]
       .sort((a, b) => b.zIndex - a.zIndex)
-      .find(app => !app.minimized);
+      .find((app) => !app.minimized);
     return focusedApp ? focusedApp.id : -1;
   }
   function onMouseDownFooter() {
     dispatch({ type: FOCUS_DESKTOP });
   }
   function onClickMenuItem(o) {
-    if (o === 'Winamp')
+    if (o === "Winamp")
       dispatch({ type: ADD_APP, payload: appSettings.Winamp });
-    else if (o === 'Unicorn')
-      dispatch({ type: ADD_APP, payload: appSettings['Unicorn'] });
-    else if (o === 'Keygen')
-      dispatch({ type: ADD_APP, payload: appSettings['Keygen'] });
-    else if (o === 'Log Off')
+    else if (o === "Unicorn")
+      dispatch({ type: ADD_APP, payload: appSettings["Unicorn"] });
+    else if (o === "Keygen")
+      dispatch({ type: ADD_APP, payload: appSettings["Keygen"] });
+    else if (o === "Log Off")
       dispatch({ type: POWER_OFF, payload: POWER_STATE.LOG_OFF });
-    else if (o === 'Turn Off Computer')
+    else if (o === "Turn Off Computer")
       dispatch({ type: POWER_OFF, payload: POWER_STATE.TURN_OFF });
     else
       dispatch({
         type: ADD_APP,
         payload: {
           ...appSettings.Error,
-          injectProps: { message: 'C:\\\nApplication not found' },
+          injectProps: { message: "C:\\\nApplication not found" },
         },
       });
   }
@@ -267,10 +276,10 @@ function WinXP() {
     dispatch({ type: END_SELECT });
   }
   const onIconsSelected = useCallback(
-    iconIds => {
+    (iconIds) => {
       dispatch({ type: SELECT_ICONS, payload: iconIds });
     },
-    [dispatch],
+    [dispatch]
   );
   function onClickModalButton(text) {
     dispatch({ type: CANCEL_POWER_OFF });
@@ -282,6 +291,21 @@ function WinXP() {
   function onModalClose() {
     dispatch({ type: CANCEL_POWER_OFF });
   }
+
+  // Trader Mode, full screen trade
+  useEffect(() => {
+    if (searchParams.get("trademode")) {
+      let crackedWindow = document.getElementById("Cracked");
+      if (crackedWindow) crackedWindow.style.display = "initial";
+
+      if (focusedAppId == 0) {
+        onMaximizeWindow(0);
+      } else {
+        onFocusApp(0);
+      }
+    }
+  }, [focusedAppId]);
+
   return (
     <Container
       className="winxp"
@@ -340,14 +364,14 @@ const powerOffAnimation = keyframes`
   }
 `;
 const animation = {
-  [POWER_STATE.START]: '',
+  [POWER_STATE.START]: "",
   [POWER_STATE.TURN_OFF]: powerOffAnimation,
   [POWER_STATE.LOG_OFF]: powerOffAnimation,
 };
 
 const Container = styled.div`
-  @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
-  font-family: Tahoma, 'Noto Sans', sans-serif;
+  @import url("https://fonts.googleapis.com/css?family=Noto+Sans");
+  font-family: Tahoma, "Noto Sans", sans-serif;
   height: 100%;
   overflow: hidden;
   position: relative;

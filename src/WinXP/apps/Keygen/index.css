@@ -50,9 +50,6 @@
   background-color: transparent;
 }
 
-#Keygenmenu {
-  display: none;
-}
 .genInputs input::placeholder {
   color: white;
   text-align: center;

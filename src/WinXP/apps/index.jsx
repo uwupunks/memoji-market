@@ -20,26 +20,6 @@ const genIndex = gen();
 
 export const defaultAppState = [
   {
-    component: Keygen,
-    header: {
-      title: "Keygen",
-      icon: keygenIcon,
-    },
-    defaultSize: {
-      width: 359,
-      height: 522,
-    },
-    defaultOffset: {
-      x: 0,
-      y: 0,
-    },
-    resizable: true,
-    minimized: true,
-    maximized: false,
-    id: genId(),
-    zIndex: genIndex(),
-  },
-  {
     component: Cracked,
     header: {
       title: "Cracked",

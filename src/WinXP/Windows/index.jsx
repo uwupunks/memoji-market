@@ -144,6 +144,7 @@ const Window = memo(function ({
           {component({
             onClose: _onMouseUpClose,
             onMinimize: _onMouseUpMinimize,
+            onMaximize: _onMouseUpMaximize,
             isFocus,
             ...injectProps,
           })}

@@ -16,8 +16,6 @@ function Keygen({ onClose, onMinimize, patched }) {
 
   const audio = new Audio(song);
   audio.loop = true;
-  let keygenMenu = document.getElementById("Keygenmenu");
-  if (keygenMenu) keygenMenu.style.display = "flex";
 
   // start music
   useEffect(() => {
@@ -36,9 +34,6 @@ function Keygen({ onClose, onMinimize, patched }) {
       audio.pause();
       audio.currentTime = 0;
       clearInterval(tryToPlay);
-
-      let keygenMenu = document.getElementById("Keygenmenu");
-      if (keygenMenu) keygenMenu.style.display = "none";
     };
   }, []);
 

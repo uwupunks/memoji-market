@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import genClose from "assets/img/closepress.png";
 import genClose2 from "assets/img/closepress2.png";
 import genMin from "assets/img/minipress.png";
 import genMin2 from "assets/img/minipress2.png";
-import keygenVideo from "assets/video/keygen-video.mp4"
-import keygenPoster from "assets/video/keygen-poster.png"
-import winxpStormy from "assets/img/bg-winxp-stormy.jpeg"
+import keygenVideo from "assets/video/keygen-video.mp4";
+import keygenPoster from "assets/video/keygen-poster.png";
+import winxpStormy from "assets/img/bg-winxp-stormy.jpeg";
+import song from "assets/music/moonflight.mp3";
 
-import "./index.css"
+import "./index.css";
 
 function Keygen({ onClose, onMinimize, patched }) {
   const [min, setMin] = useState(0);
   const [close, setClose] = useState(0);
+  // start music
+  const audioRef = useRef(new Audio(song));
+  useEffect(() => {
+    const audio = audioRef.current;
+    audio.loop = true;
+    audio.play();
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, []);
 
   const swapWindows = () => {
     let webampWindow = document.getElementById("webamp");
@@ -23,19 +35,26 @@ function Keygen({ onClose, onMinimize, patched }) {
     let keygenWindow = document.getElementById("Keygen");
     let keygenIcon = document.getElementById("KeygenIcon");
     let keygenMenu = document.getElementById("Keygenmenu");
-    let desktop = document.getElementsByClassName("winxp")?.[0]
+    let desktop = document.getElementsByClassName("winxp")?.[0];
 
-    webampWindow.style.display = "initial";
-    webampIcon.style.display = "initial";
-    webampMenu.style.display = "initial";
-    crackedWindow.style.display = "initial";
-    crackedMenu.style.display = "initial";
-    crackedIcon.style.display = "initial";
-    keygenMenu.style.display = "none";
-    keygenWindow.style.display = "none";
-    keygenIcon.style.display = "none";
+    // Stop music
+    const audio = audioRef.current;
+    audio.pause();
+    audio.currentTime = 0;
 
-    desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`
+    if (desktop) {
+      desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
+    }
+
+    if (webampWindow) webampWindow.style.display = "initial";
+    if (webampIcon) webampIcon.style.display = "initial";
+    if (webampMenu) webampMenu.style.display = "initial";
+    if (crackedWindow) crackedWindow.style.display = "initial";
+    if (crackedMenu) crackedMenu.style.display = "initial";
+    if (crackedIcon) crackedIcon.style.display = "initial";
+    if (keygenMenu) keygenMenu.style.display = "none";
+    if (keygenWindow) keygenWindow.style.display = "none";
+    if (keygenIcon) keygenIcon.style.display = "none";
   };
 
   return (
@@ -49,30 +68,32 @@ function Keygen({ onClose, onMinimize, patched }) {
         }}
       >
         {min === 0 ? (
-          <>
-            <img onMouseEnter={() => setMin(1)} src={genMin} />
-          </>
+          <img
+            onMouseEnter={() => setMin(1)}
+            src={genMin}
+            alt="Minimize"
+          />
         ) : (
-          <>
-            <img
-              onMouseOut={() => setMin(0)}
-              src={genMin2}
-              onClick={() => onMinimize(onMinimize)}
-            />
-          </>
+          <img
+            onMouseOut={() => setMin(0)}
+            src={genMin2}
+            onClick={() => onMinimize(onMinimize)}
+            alt="Minimize Active"
+          />
         )}
         {close === 0 ? (
-          <>
-            <img onMouseEnter={() => setClose(1)} src={genClose} />
-          </>
+          <img
+            onMouseEnter={() => setClose(1)}
+            src={genClose}
+            alt="Close"
+          />
         ) : (
-          <>
-            <img
-              onMouseOut={() => setClose(0)}
-              onClick={() => onClose(onClose)}
-              src={genClose2}
-            />
-          </>
+          <img
+            onMouseOut={() => setClose(0)}
+            onClick={() => onClose(onClose)}
+            src={genClose2}
+            alt="Close Active"
+          />
         )}
       </span>
       <div className="keygenWindow" style={{ zIndex: "97" }}>

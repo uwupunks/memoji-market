@@ -8,7 +8,7 @@ import React, {
 import styled, { keyframes } from "styled-components";
 import useMouse from "react-use/lib/useMouse";
 import { useSearchParams } from "react-router-dom";
-
+import { isMobile } from "react-device-detect";
 import {
   ADD_APP,
   DEL_APP,
@@ -294,7 +294,7 @@ function WinXP() {
 
   // Trader Mode, full screen trade
   useEffect(() => {
-    if (searchParams.get("trademode")) {
+    if (searchParams.get("trademode") || isMobile) {
       let crackedWindow = document.getElementById("Cracked");
       if (crackedWindow) crackedWindow.style.display = "initial";
 

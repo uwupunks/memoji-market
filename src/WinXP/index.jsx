@@ -334,13 +334,15 @@ function WinXP() {
         focusedAppId={focusedAppId}
         patched={PatchState}
       />
-      <Footer
-        apps={state.apps}
-        onMouseDownApp={onMouseDownFooterApp}
-        focusedAppId={focusedAppId}
-        onMouseDown={onMouseDownFooter}
-        onClickMenuItem={onClickMenuItem}
-      />
+      {!isMobile ? (
+        <Footer
+          apps={state.apps}
+          onMouseDownApp={onMouseDownFooterApp}
+          focusedAppId={focusedAppId}
+          onMouseDown={onMouseDownFooter}
+          onClickMenuItem={onClickMenuItem}
+        />
+      ) : null}
       {state.powerState !== POWER_STATE.START && (
         <Modal
           onClose={onModalClose}

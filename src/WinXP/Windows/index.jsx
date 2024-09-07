@@ -10,6 +10,7 @@ import unm from "../../assets/extra/window/barufm.png";
 
 import { useElementResize } from "../../hooks";
 import HeaderButtons from "./HeaderButtons";
+import { isMobile } from "react-device-detect";
 
 function Windows({
   apps,
@@ -229,7 +230,7 @@ const StyledWindow = styled(Window)`
     flex: 1;
     position: relative;
     margin-top: 27px;
-    height: calc(100% - 27px);
+    height: ${isMobile ? "101%" : "calc(100% - 27px)"};
   }
 `;
 

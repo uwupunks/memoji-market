@@ -13,8 +13,11 @@ import "./index.css";
 function Keygen({ onClose, onMinimize, patched }) {
   const [min, setMin] = useState(0);
   const [close, setClose] = useState(0);
-  
+
   const audio = new Audio(song);
+  audio.loop = true;
+  let keygenMenu = document.getElementById("Keygenmenu");
+  if (keygenMenu) keygenMenu.style.display = "flex";
 
   // start music
   useEffect(() => {
@@ -29,12 +32,13 @@ function Keygen({ onClose, onMinimize, patched }) {
         });
     }, 2500);
 
-    audio.loop = true;
-    audio.play();
     return () => {
       audio.pause();
       audio.currentTime = 0;
-      clearInterval(tryToPlay)
+      clearInterval(tryToPlay);
+
+      let keygenMenu = document.getElementById("Keygenmenu");
+      if (keygenMenu) keygenMenu.style.display = "none";
     };
   }, []);
 
@@ -68,7 +72,7 @@ function Keygen({ onClose, onMinimize, patched }) {
     if (keygenWindow) keygenWindow.style.display = "none";
     if (keygenIcon) keygenIcon.style.display = "none";
 
-    onClose()
+    onClose();
   };
 
   return (

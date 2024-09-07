@@ -12,7 +12,7 @@ export const initialTracks = [
   {
     url:
       'src/assets/music/maple/Ellinia.mp3',
-    duration: 158,
+    duration: 187,
     metaData: {
       title: 'Ellinia',
       artist: 'Wizet',
@@ -22,7 +22,7 @@ export const initialTracks = [
   {
     url:
       'src/assets/music/maple/Henesys.mp3',
-    duration: 158,
+    duration: 137,
     metaData: {
       title: 'Henesys',
       artist: 'Wizet',
@@ -32,7 +32,7 @@ export const initialTracks = [
   {
     url:
       'src/assets/music/maple/HenesysMarket.mp3',
-    duration: 158,
+    duration: 72,
     metaData: {
       title: 'Henesys Market',
       artist: 'Wizet',
@@ -42,7 +42,7 @@ export const initialTracks = [
   {
     url:
       'src/assets/music/maple/LithHarbor.mp3',
-    duration: 158,
+    duration: 271,
     metaData: {
       title: 'Lith Harbor',
       artist: 'Wizet',
@@ -52,7 +52,7 @@ export const initialTracks = [
   {
     url:
       'src/assets/music/maple/Shanghai.mp3',
-    duration: 158,
+    duration: 146,
     metaData: {
       title: 'Shanghai',
       artist: 'Wizet',
@@ -62,7 +62,7 @@ export const initialTracks = [
   {
     url:
       'src/assets/music/maple/ShowaTown.mp3',
-    duration: 158,
+    duration: 157,
     metaData: {
       title: 'Showa Town',
       artist: 'Wizet',
@@ -72,7 +72,7 @@ export const initialTracks = [
   {
     url:
       'src/assets/music/maple/Sleepywood.mp3',
-    duration: 158,
+    duration: 166,
     metaData: {
       title: 'Sleepywood',
       artist: 'Wizet',
@@ -81,8 +81,18 @@ export const initialTracks = [
   },
   {
     url:
+      'src/assets/music/maple/Subway.mp3',
+    duration: 198,
+    metaData: {
+      title: 'Subway',
+      artist: 'Wizet',
+      album: 'Maplestory',
+    },
+  },
+  {
+    url:
       'src/assets/music/maple/TreeDungeon.mp3',
-    duration: 158,
+    duration: 146,
     metaData: {
       title: 'Tree Dungeon',
       artist: 'Wizet',
@@ -92,7 +102,7 @@ export const initialTracks = [
   {
     url:
       'src/assets/music/maple/WestofHenesys.mp3',
-    duration: 158,
+    duration: 128,
     metaData: {
       title: 'West of Henesys',
       artist: 'Wizet',

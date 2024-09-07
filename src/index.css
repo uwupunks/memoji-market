@@ -529,21 +529,21 @@ input[type="number"] {
 }
 
 #Keygen {
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 #Keygen .app__header {
   position: absolute;
-  top: 26px !important;
+  top: 26px;
   width: 110%;
-  z-index: 98 !important;
+  z-index: 98;
 }
 
 #Keygen .header__bg,
 #Keygen .header__button,
 #Keygen .app__header__icon,
 #Keygen .app__header__title {
-  visibility: hidden !important;
+  visibility: hidden;
 }
 
 /*

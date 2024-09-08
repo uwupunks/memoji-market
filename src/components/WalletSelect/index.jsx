@@ -87,13 +87,13 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
           onClick={async () => {
             promptSound.play();
             try {
-              const res = await suggest();
+              await suggest();
               await connect();
+              setOpen(false);
             } catch (err) {
               window.alert(err);
               console.error(err);
             }
-            setOpen(false);
           }}
           onMouseEnter={() => overSound.play()}
           onMouseDown={() => clickSound.play()}

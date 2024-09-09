@@ -7,6 +7,8 @@ import ufrt from "../../assets/extra/window/barufrt.png";
 import uflt from "../../assets/extra/window/baruflt.png";
 import m from "../../assets/extra/window/barm.png";
 import unm from "../../assets/extra/window/barufm.png";
+import borderInactive from "assets/img/window-border-slice-inactive.png";
+import borderActive from "assets/img/window-border-slice-active.png";
 
 import { useElementResize } from "../../hooks";
 import HeaderButtons from "./HeaderButtons";
@@ -19,7 +21,7 @@ function Windows({
   onMinimize,
   onMaximize,
   focusedAppId,
-  dispatch
+  dispatch,
 }) {
   return (
     <div style={{ position: "relative", zIndex: 0 }}>
@@ -152,7 +154,7 @@ const Window = memo(function ({
             isFocus,
             ...injectProps,
             dispatch,
-            id
+            id,
           })}
         </div>
       </div>
@@ -236,6 +238,12 @@ const StyledWindow = styled(Window)`
     position: relative;
     margin-top: 27px;
     height: ${isMobile ? "101%" : "calc(100% - 27px)"};
+
+    border-width: 4px;
+    border-image: ${({ isFocus }) =>
+      `url(${isFocus ? borderActive : borderInactive})`};
+    border-image-slice: 4;
+    border-top: 2px solid #003366;
   }
 `;
 

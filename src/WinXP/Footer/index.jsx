@@ -203,11 +203,9 @@ const Container = styled.footer`
     margin-right: 10px;
     position: relative;
     &:hover {
-      filter: brightness(105%);
     }
     &:active {
       pointer-events: none;
-      filter: brightness(85%);
     }
   }
   .footer__menu-image {
@@ -220,14 +218,10 @@ const Container = styled.footer`
     flex: 1;
     max-width: 150px;
     color: #fff;
-    border-radius: 2px;
-    margin-top: 2px;
+
     padding: 0 8px;
-    height: 24px;
+    height: 30px;
     font-size: 11px;
-    background-color: #3c81f3;
-    box-shadow: inset -1px 0px rgba(0, 0, 0, 0.3),
-      inset 1px 1px 1px rgba(255, 255, 255, 0.2);
     position: relative;
     display: flex;
     align-items: center;
@@ -252,19 +246,12 @@ const Container = styled.footer`
     top: -2px;
     width: 10px;
     height: 1px;
-    border-bottom-right-radius: 50%;
-    box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
   }
   .footer__window.cover:hover:active {
-    background-color: #1e52b7;
-    box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
-      inset 1px 0 1px rgba(0, 0, 0, 0.7);
   }
 
   .footer__window {
     margin-right: 2px;
-    box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.2),
-      inset 1px 0 1px rgba(0, 0, 0, 0.7);
   }
 
   .footer__time {

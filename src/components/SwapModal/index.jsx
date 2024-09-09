@@ -85,7 +85,7 @@ function SwapModal({
 
   const handleMax = () => {
     const maxAmount =
-      balances?.find((b) => b.denom === left.denom)?.amountRaw || "";
+      balances?.find((b) => b.denom === leftAsset.denom)?.amountRaw || "";
     setLeftAsset((prev) => ({
       ...prev,
       amount: maxAmount,

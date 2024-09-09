@@ -3,7 +3,6 @@ import WinXP from "./WinXP";
 import { ChainProvider } from "@cosmos-kit/react";
 import { wallets as keplr } from "@cosmos-kit/keplr";
 import { wallets as leap } from "@cosmos-kit/leap";
-import { wallets as ledger } from "@cosmos-kit/ledger";
 
 import { GasPrice } from "@cosmjs/stargate";
 import "@interchain-ui/react/styles";
@@ -43,7 +42,7 @@ const signerOptions = {
 };
 const supportedWallets = isMobile
   ? [keplr[1], leap[1]]
-  : [keplr[0], leap[0], leap[2], ...ledger];
+  : [keplr[0], leap[0], leap[2]];
 const App = () => {
   return (
     <ChainProvider

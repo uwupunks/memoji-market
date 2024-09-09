@@ -138,7 +138,20 @@
 .cancelSwap:active {
   background: url("assets/img/cancelpressed.png");
 }
-
+button.max {
+  height: 16px;
+  width: 23px;
+  bottom: 11px;
+  left: 120px;
+  position: absolute;
+  background: url(assets/img/max-button.png);
+}
+button.max:hover {
+  background: url(assets/img/max-button-hover.png);
+}
+button.max:active {
+  background: url(assets/img/max-button-active.png);
+}
 #leftInput {
   position: absolute;
   width: 94px;

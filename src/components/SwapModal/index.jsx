@@ -20,7 +20,15 @@ import sonicspin from "assets/img/sonicspin.png";
 //force module load
 console.log(SigningCosmWasmClient);
 
-function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
+function SwapModal({
+  left,
+  right,
+  price,
+  isActive,
+  onClose,
+  onSwap,
+  balances,
+}) {
   //hooks
   const promptSound = new Audio(promptMp3);
   const clickSound = new Audio(clickMp3);
@@ -64,6 +72,26 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
     });
   }, [rightAsset]);
 
+  const handleLeftInputChange = (e) => {
+    setLeftAsset((prev) => ({ ...prev, amount: e.target.value }));
+    setRightAsset((prev) => ({
+      ...prev,
+      amount:
+        rightAsset.denom === "uwunicorn"
+          ? (e.target.value * price).toFixed(4)
+          : (e.target.value / price).toFixed(4),
+    }));
+  };
+
+  const handleMax = () => {
+    const maxAmount =
+      balances?.find((b) => b.denom === left.denom)?.amountRaw || "";
+    setLeftAsset((prev) => ({
+      ...prev,
+      amount: maxAmount,
+    }));
+    handleLeftInputChange({ target: { value: maxAmount } });
+  };
   const handleCancel = () => {
     setIsLoading(false);
     onClose();
@@ -161,7 +189,7 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
             onTouchStart={() => swapAssets()}
             onClick={() => swapAssets()}
             onMouseDown={() => promptSound.play()}
-            onMouseEnter={() => ((new Audio(overMp3)).play())}
+            onMouseEnter={() => new Audio(overMp3).play()}
           />
         )}
         <div
@@ -169,14 +197,14 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
           onClick={() => switchSwapPlace()}
           className="switchSwap"
           id="swap"
-            onMouseEnter={() => ((new Audio(overMp3)).play())}
+          onMouseEnter={() => new Audio(overMp3).play()}
         />
         <div
           className="cancelSwap"
           id="cancel"
           onTouchStart={handleCancel}
           onClick={handleCancel}
-          onMouseEnter={() => ((new Audio(overMp3)).play())}
+          onMouseEnter={() => new Audio(overMp3).play()}
         />
         <input
           className="inputNumbers"
@@ -186,18 +214,14 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
           onTouchStart={(e) => {
             e.target.focus();
           }}
-          onChange={(e) => {
-            setLeftAsset((prev) => ({ ...prev, amount: e.target.value }));
-            setRightAsset((prev) => ({
-              ...prev,
-              amount:
-                rightAsset.denom === "uwunicorn"
-                  ? (e.target.value * price).toFixed(4)
-                  : (e.target.value / price).toFixed(4),
-            }));
-          }}
+          onChange={handleLeftInputChange}
           type="number"
         />
+        <button
+          className="max"
+          onTouchStart={handleMax}
+          onClick={handleMax}
+        ></button>
         <input
           className="inputNumbers"
           id="rightInput"

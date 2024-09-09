@@ -676,6 +676,7 @@ function Cracked({ onClose }) {
         right={rightAsset}
         price={swapPrice}
         isActive={swapActive}
+        balances={balances}
         onClose={() => setSwapActive(false)}
         onSwap={(message, link, linkText) => {
           if (message) {

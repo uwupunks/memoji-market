@@ -19,6 +19,7 @@ function Windows({
   onMinimize,
   onMaximize,
   focusedAppId,
+  dispatch
 }) {
   return (
     <div style={{ position: "relative", zIndex: 0 }}>
@@ -33,6 +34,7 @@ function Windows({
           onMouseUpMaximize={onMaximize}
           isFocus={focusedAppId === app.id} // for styledWindow
           {...app}
+          dispatch={dispatch}
         />
       ))}
     </div>
@@ -55,6 +57,7 @@ const Window = memo(function ({
   zIndex,
   isFocus,
   className,
+  dispatch,
 }) {
   function _onMouseDown() {
     onMouseDown(id);
@@ -148,6 +151,8 @@ const Window = memo(function ({
             onMaximize: _onMouseUpMaximize,
             isFocus,
             ...injectProps,
+            dispatch,
+            id
           })}
         </div>
       </div>

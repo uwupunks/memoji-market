@@ -1,4 +1,5 @@
 export const ADD_APP = 'ADD_APP';
+export const ADD_ICONS = 'ADD_ICONS';
 export const DEL_APP = 'DEL_APP';
 export const FOCUS_APP = 'FOCUS_APP';
 export const MINIMIZE_APP = 'MINIMIZE_APP';

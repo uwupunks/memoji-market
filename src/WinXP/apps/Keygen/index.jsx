@@ -7,10 +7,15 @@ import keygenVideo from "assets/video/keygen-video.mp4";
 import keygenPoster from "assets/video/keygen-poster.png";
 import winxpStormy from "assets/img/bg-winxp-stormy.jpeg";
 import song from "assets/music/moonflight.mp3";
-
+import { appSettings } from "src/WinXP/apps";
 import "./index.css";
 
-function Keygen({ onClose, onMinimize, patched }) {
+import Winamp from "../Winamp";
+import Cracked from "../Cracked";
+import crackedIcon from "assets/windowsIcons/cracked.png";
+import winamp from "assets/windowsIcons/winamp.png";
+
+function Keygen({ onClose, onMinimize, dispatch, id }) {
   const [min, setMin] = useState(0);
   const [close, setClose] = useState(0);
 
@@ -38,34 +43,38 @@ function Keygen({ onClose, onMinimize, patched }) {
   }, []);
 
   const swapWindows = () => {
-    let webampWindow = document.getElementById("webamp");
-    let webampIcon = document.getElementById("WinampIcon");
-    let webampMenu = document.getElementById("Winampmenu");
-    let crackedWindow = document.getElementById("Cracked");
-    let crackedMenu = document.getElementById("Crackedmenu");
-    let crackedIcon = document.getElementById("CrackedIcon");
-    let keygenWindow = document.getElementById("Keygen");
-    let keygenIcon = document.getElementById("KeygenIcon");
-    let keygenMenu = document.getElementById("Keygenmenu");
     let desktop = document.getElementsByClassName("winxp")?.[0];
+    if (desktop) {
+      desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
+    }
 
     // Stop music
     audio.pause();
     audio.currentTime = 0;
 
-    if (desktop) {
-      desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
-    }
+    dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
+    dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
 
-    if (webampWindow) webampWindow.style.display = "initial";
-    if (webampIcon) webampIcon.style.display = "initial";
-    if (webampMenu) webampMenu.style.display = "initial";
-    if (crackedWindow) crackedWindow.style.display = "initial";
-    if (crackedMenu) crackedMenu.style.display = "initial";
-    if (crackedIcon) crackedIcon.style.display = "initial";
-    if (keygenMenu) keygenMenu.style.display = "none";
-    if (keygenWindow) keygenWindow.style.display = "none";
-    if (keygenIcon) keygenIcon.style.display = "none";
+    dispatch({ type: "DEL_APP", payload: id });
+    dispatch({
+      type: "ADD_ICONS",
+      payload: [
+        {
+          id: 2,
+          icon: crackedIcon,
+          title: "Cracked",
+          component: Cracked,
+          isFocus: false,
+        },
+        {
+          id: 3,
+          icon: winamp,
+          title: "Winamp",
+          component: Winamp,
+          isFocus: false,
+        },
+      ],
+    });
 
     onClose();
   };

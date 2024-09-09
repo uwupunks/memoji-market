@@ -19,47 +19,7 @@ const genId = gen();
 const genIndex = gen();
 
 export const defaultAppState = [
-  {
-    component: Cracked,
-    header: {
-      title: "Cracked",
-      icon: crackedIcon,
-    },
-    defaultSize: {
-      width: 911,
-      height: 600,
-    },
-    defaultOffset: {
-      x: 0,
-      y: 0,
-    },
-    resizable: true,
-    minimized: false,
-    maximized: false,
-    id: genId(),
-    zIndex: genIndex(),
-  },
-  {
-    component: Winamp,
-    header: {
-      title: "Winamp",
-      icon: winamp,
-      invisible: true,
-    },
-    defaultSize: {
-      width: 0,
-      height: 0,
-    },
-    defaultOffset: {
-      x: 350,
-      y: 400,
-    },
-    resizable: false,
-    minimized: false,
-    maximized: false,
-    id: genId(),
-    zIndex: genIndex(),
-  },
+
 ];
 
 export const defaultIconState = [
@@ -70,20 +30,7 @@ export const defaultIconState = [
     component: Keygen,
     isFocus: false,
   },
-  {
-    id: 2,
-    icon: crackedIcon,
-    title: "Cracked",
-    component: Cracked,
-    isFocus: false,
-  },
-  {
-    id: 3,
-    icon: winamp,
-    title: "Winamp",
-    component: Winamp,
-    isFocus: false,
-  },
+
 ];
 
 export const appSettings = {
@@ -141,7 +88,7 @@ export const appSettings = {
       x: 0,
       y: 0,
     },
-    resizable: false,
+    resizable: true,
     minimized: false,
     maximized: false,
     multiInstance: false,
@@ -158,8 +105,8 @@ export const appSettings = {
       height: 0,
     },
     defaultOffset: {
-      x: 0,
-      y: 0,
+      x: 750,
+      y: 200,
     },
     resizable: false,
     minimized: false,

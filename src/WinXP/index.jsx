@@ -16,6 +16,7 @@ import {
   MINIMIZE_APP,
   TOGGLE_MAXIMIZE_APP,
   FOCUS_ICON,
+  ADD_ICONS,
   SELECT_ICONS,
   FOCUS_DESKTOP,
   START_SELECT,
@@ -141,6 +142,13 @@ const reducer = (state, action = { type: "" }) => {
         ...state,
         icons,
         focusing: FOCUSING.ICON,
+      };
+    }
+    case ADD_ICONS: {
+      const toAdd = action.payload.filter(i=>state.icons.find(si=>si.id ===i.id) === undefined)
+      return {
+        ...state,
+        icons: [...state.icons, ...toAdd],
       };
     }
     case FOCUS_DESKTOP:
@@ -295,14 +303,7 @@ function WinXP() {
   // Trader Mode, full screen trade
   useEffect(() => {
     if (searchParams.get("trademode") || isMobile) {
-      let crackedWindow = document.getElementById("Cracked");
-      if (crackedWindow) crackedWindow.style.display = "initial";
-
-      if (focusedAppId == 0) {
-        onMaximizeWindow(0);
-      } else {
-        onFocusApp(0);
-      }
+      dispatch({ type: "ADD_APP", payload: ({...appSettings["Cracked"], maximized: true })});
     }
   }, [focusedAppId]);
 
@@ -333,6 +334,7 @@ function WinXP() {
         onMaximize={onMaximizeWindow}
         focusedAppId={focusedAppId}
         patched={PatchState}
+        dispatch={dispatch}
       />
       {!isMobile ? (
         <Footer

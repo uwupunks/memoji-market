@@ -737,25 +737,6 @@ option:active {
     100% 0 / 1px 100% no-repeat;
 }
 
-#CrackedIcon,
-#WinampIcon,
-#Cracked,
-#webamp,
-#Winampmenu,
-#Crackedmenu {
-  display: none;
-}
-
-#Crackedmenu img,
-#Winampmenu img {
-  margin-top: 4px;
-}
-
-#Crackedmenu div,
-#Winampmenu div {
-  margin-top: -15px;
-}
-
 .focus {
   background-image: url("assets/winxp/left-bar-2x30-active.png"),
     url("assets/winxp/right-bar-2x30-active.png"),

@@ -12,6 +12,7 @@ function useElementResize(ref, options) {
   const [offset, setOffset] = useState(defaultOffset);
   const [size, setSize] = useState(defaultSize);
   const cursorPos = useCursor(ref, resizeThreshold, resizable);
+  const [handleDraggable, setHandleDraggable] = useState();
   useEffect(() => {
     const target = ref.current;
     if (!target) return;
@@ -273,6 +274,7 @@ function useElementResize(ref, options) {
       }
     }
     target.addEventListener('mousedown', onMouseDown);
+    setHandleDraggable(()=>onMouseDown)
     return () => {
       target.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onDraggingLeft);
@@ -301,7 +303,7 @@ function useElementResize(ref, options) {
     };
     // eslint-disable-next-line
   }, [boundary.top, boundary.right, boundary.bottom, boundary.left, cursorPos]);
-  return { offset, size };
+  return { offset, size, handleDraggable };
 }
 function useCursor(ref, threshold, resizable) {
   const [position, setPosition] = useState('');

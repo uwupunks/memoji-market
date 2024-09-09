@@ -81,7 +81,11 @@ const Window = memo(function ({
   const [patched, setPatched] = useState(0);
   const ref = useRef(null);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const { offset, size } = useElementResize(ref, {
+  const {
+    offset,
+    size,
+    handleDraggable,
+  } = useElementResize(ref, {
     dragRef,
     defaultOffset,
     defaultSize,
@@ -112,9 +116,12 @@ const Window = memo(function ({
       <div
         patched={patched}
         className={className}
-        ref={ref}
         id={header.title}
-        onMouseDown={_onMouseDown}
+        key={id}
+        onMouseDown={(e) => {
+          _onMouseDown(e);
+          handleDraggable(e);
+        }}
         style={{
           transform: `translate(${x}px,${y}px)`,
           width: width ? `${width}px` : "auto",
@@ -124,8 +131,8 @@ const Window = memo(function ({
       >
         <div className="header__bg" />
         <header
-          className="app__header"
           ref={dragRef}
+          className="app__header"
           onDoubleClick={onDoubleClickHeader}
         >
           <img
@@ -146,7 +153,7 @@ const Window = memo(function ({
             isFocus={isFocus}
           />
         </header>
-        <div className="app__content">
+        <div className="app__content" ref={ref}>
           {component({
             onClose: _onMouseUpClose,
             onMinimize: _onMouseUpMinimize,

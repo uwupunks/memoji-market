@@ -221,6 +221,7 @@ function SwapModal({
           className="max"
           onTouchStart={handleMax}
           onClick={handleMax}
+          onMouseEnter={() => new Audio(overMp3).play()}
         ></button>
         <input
           className="inputNumbers"

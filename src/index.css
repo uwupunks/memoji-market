@@ -348,9 +348,16 @@ input[type="number"] {
   margin-top: -5px;
 }
 
-.userWindow {
+.userWindowWrapper {
+  background: url("./assets/img/window.png");
   width: 228px;
   height: 111px;
+  padding: 4px;
+}
+.userWindow {
+  width: 212px;
+  height: 103px;
+  margin: auto;
 }
 
 .walletName {

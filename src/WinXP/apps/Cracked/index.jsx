@@ -11,7 +11,7 @@ import switchButton from "assets/img/switchwallet.png";
 import allButton from "assets/img/all.png";
 import hiddenButton from "assets/img/hidden.png";
 import classicButton from "assets/img/classic.png";
-import userWindow from "assets/img/window.png";
+import userWindow from "assets/img/user.gif";
 
 import { useChain, useWallet } from "@cosmos-kit/react";
 import { AgGridReact } from "@ag-grid-community/react"; // React Data Grid Component
@@ -453,8 +453,9 @@ function Cracked({ onClose }) {
       >
         <div className="leftSection w-226px">
           <div className="userSection p-1">
+            <div className="userWindowWrapper">
             <img className="userWindow" src={userWindow} />
-
+            </div>
             <div className="walletName">
               {isWalletConnected ? (
                 <>

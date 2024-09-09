@@ -163,12 +163,12 @@ const Window = memo(function ({
 const StyledWindow = styled(Window)`
   display: ${({ show }) => (show ? "flex" : "none")};
   position: absolute;
-  padding: 3px;
-  padding: ${({ header }) => (header.invisible ? 0 : 3)}px;
-  background-color: ${({ isFocus }) => (isFocus ? "#092052" : "#6582f5")};
+  padding: 1px;
+  padding: ${({ header }) => (header.invisible ? 0 : 1)}px;
   flex-direction: column;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  padding: 0px;
   .header__bg {
     background-image: ${({ isFocus }) => `url(${isFocus ? m : unm})`};
     position: absolute;

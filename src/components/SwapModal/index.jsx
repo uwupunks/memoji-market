@@ -161,7 +161,7 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
             onTouchStart={() => swapAssets()}
             onClick={() => swapAssets()}
             onMouseDown={() => promptSound.play()}
-            onMouseEnter={() => overSound.play()}
+            onMouseEnter={() => ((new Audio(overMp3)).play())}
           />
         )}
         <div
@@ -169,14 +169,14 @@ function SwapModal({ left, right, price, isActive, onClose, onSwap }) {
           onClick={() => switchSwapPlace()}
           className="switchSwap"
           id="swap"
-          onMouseEnter={() => overSound.play()}
+            onMouseEnter={() => ((new Audio(overMp3)).play())}
         />
         <div
           className="cancelSwap"
           id="cancel"
           onTouchStart={handleCancel}
           onClick={handleCancel}
-          onMouseEnter={() => overSound.play()}
+          onMouseEnter={() => ((new Audio(overMp3)).play())}
         />
         <input
           className="inputNumbers"

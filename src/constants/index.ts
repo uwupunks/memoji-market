@@ -22,7 +22,7 @@ const memoji = [
   { name: "ucash", emoji: "💸", listed: false },
   { name: "ucat", emoji: "🐱", listed: false },
   { name: "uchains", emoji: "🙍⛓️", listed: true },
-  { name: "ujeet", emoji: "जीत", listed: true },
+  { name: "ujeet", emoji: "🪯", listed: true },
   { name: "ubrainlet", emoji: "🧠🤏", listed: true },
   { name: "uchick", emoji: "🐤", listed: false },
   { name: "uchina", emoji: "🇨🇳", listed: true },

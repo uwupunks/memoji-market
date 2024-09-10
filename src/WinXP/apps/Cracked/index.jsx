@@ -68,6 +68,19 @@ const percentFormatter = new Intl.NumberFormat(navigator.language, {
 
 const longNumberFormatter = new Intl.NumberFormat(navigator.language);
 
+const displayDenom = (denom) => {
+  if (!denom) {
+    return "";
+  }
+  if (denom === "usa") {
+    return "USA";
+  }
+  if (denom === 'uwunicorn') {
+    return 'Unicorn'
+  }
+  return denom?.charAt(1).toUpperCase() + denom?.slice(2);
+};
+
 function Cracked({ onClose }) {
   const { username, connect, disconnect, address, isWalletConnected } =
     useChain("unicorn");
@@ -419,7 +432,11 @@ function Cracked({ onClose }) {
   };
 
   const [colDefs, setColDefs] = useState([
-    { field: "Memoji", valueGetter: (p) => p.data.emoji },
+    {
+      field: "Memoji",
+      valueGetter: (p) => `${p.data.emoji} ${displayDenom(p.data.denomDisplay)}`
+      ,
+    },
     { field: "Price", valueGetter: (p) => p.data.priceDisplay },
     {
       field: "McapRaw",
@@ -454,7 +471,7 @@ function Cracked({ onClose }) {
         <div className="leftSection w-226px">
           <div className="userSection p-1">
             <div className="userWindowWrapper">
-            <img className="userWindow" src={userWindow} />
+              <img className="userWindow" src={userWindow} />
             </div>
             <div className="walletName">
               {isWalletConnected ? (

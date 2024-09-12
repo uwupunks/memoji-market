@@ -405,7 +405,7 @@ function Cracked({ onClose }) {
   const onInventoryClick = (asset) => {
     const foundAsset = rowData.find((r) => r.denom.endsWith(asset.name));
 
-    if (!foundAsset) {
+    if (!foundAsset || foundAsset.denom === 'uwunicorn') {
       return null;
     }
 

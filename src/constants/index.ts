@@ -11,6 +11,11 @@ export const ENDPOINTS = {
   balances: `${SERVER}/cosmos/bank/v1beta1/balances`,
 };
 
+export const STARGAZE = {
+  server: "https://rest.stargaze-apis.com",
+  contract: "stars1fx74nkqkw2748av8j7ew7r3xt9cgjqduwn8m0ur5lhe49uhlsasszc5fhr",
+};
+
 const memoji = [
   { name: "ualien", emoji: "👽", listed: true },
   { name: "ubear", emoji: "🐻", listed: true },
@@ -84,8 +89,12 @@ const loadMemojiModules = async () => {
     return merged;
   });
   const results = await Promise.allSettled(promises);
-  return results.map(r=>r.status === 'fulfilled' ? r.value : null)
+  return results.map((r) => (r.status === "fulfilled" ? r.value : null));
 };
 
 export const MEMOJI = await loadMemojiModules();
-console.log(`constants/index.ts: loaded ${MEMOJI.length} memojis`, 'sample', MEMOJI?.[0])
+console.log(
+  `constants/index.ts: loaded ${MEMOJI.length} memojis`,
+  "sample",
+  MEMOJI?.[0]
+);

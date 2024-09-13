@@ -12,6 +12,7 @@ import allButton from "assets/img/all.png";
 import hiddenButton from "assets/img/hidden.png";
 import classicButton from "assets/img/classic.png";
 import userWindow from "assets/img/user.gif";
+import { getCNSAsync } from "hooks/cns";
 
 import { useChain, useWallet } from "@cosmos-kit/react";
 import { AgGridReact } from "@ag-grid-community/react"; // React Data Grid Component
@@ -75,8 +76,8 @@ const displayDenom = (denom) => {
   if (denom === "usa") {
     return "USA";
   }
-  if (denom === 'uwunicorn') {
-    return 'Unicorn'
+  if (denom === "uwunicorn") {
+    return "Unicorn";
   }
   return denom?.charAt(1).toUpperCase() + denom?.slice(2);
 };
@@ -84,6 +85,7 @@ const displayDenom = (denom) => {
 function Cracked({ onClose }) {
   const { username, connect, disconnect, address, isWalletConnected } =
     useChain("unicorn");
+
   const { status: globalStatus, mainWallet } = useWallet(); // status here is the global wallet status for all activated chains (chain is activated when call useChain)
 
   const [activeButton, setActiveButton] = useState(0);
@@ -97,6 +99,7 @@ function Cracked({ onClose }) {
   const [leftAsset, setLeftAsset] = useState();
   const [rightAsset, setRightAsset] = useState();
   const [swapPrice, setSwapPrice] = useState();
+  const [addressDisplay, setAddressDisplay] = useState();
 
   const [balances, setBalances] = useState([]);
   const [refreshBalances, setRefreshBalances] = useState(false);
@@ -146,6 +149,19 @@ function Cracked({ onClose }) {
     };
     fn();
   }, [mainWallet]);
+
+  useEffect(() => {
+    const fn = async () => {
+      const addressDisplay = await getCNSAsync(address);
+      if (addressDisplay) {
+        setAddressDisplay(addressDisplay);
+      }
+    };
+    if (address) {
+      setAddressDisplay(`${address.slice(0, 11)}...${address.slice(40, 46)}`);
+      fn();
+    }
+  }, [address]);
 
   //wallet connected button
   useEffect(() => {
@@ -405,7 +421,7 @@ function Cracked({ onClose }) {
   const onInventoryClick = (asset) => {
     const foundAsset = rowData.find((r) => r.denom.endsWith(asset.name));
 
-    if (!foundAsset || foundAsset.denom === 'uwunicorn') {
+    if (!foundAsset || foundAsset.denom === "uwunicorn") {
       return null;
     }
 
@@ -434,8 +450,8 @@ function Cracked({ onClose }) {
   const [colDefs, setColDefs] = useState([
     {
       field: "Memoji",
-      valueGetter: (p) => `${p.data.emoji} ${displayDenom(p.data.denomDisplay)}`
-      ,
+      valueGetter: (p) =>
+        `${p.data.emoji} ${displayDenom(p.data.denomDisplay)}`,
     },
     { field: "Price", valueGetter: (p) => p.data.priceDisplay },
     {
@@ -476,10 +492,7 @@ function Cracked({ onClose }) {
             <div className="walletName">
               {isWalletConnected ? (
                 <>
-                  <p>
-                    {address.slice(0, 11)}....
-                    {address.slice(40, 46)}
-                  </p>
+                  <p>{addressDisplay}</p>
                   <p>{username}</p>
                 </>
               ) : null}

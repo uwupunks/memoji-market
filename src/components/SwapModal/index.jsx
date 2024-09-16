@@ -12,8 +12,6 @@ import errorWav from "assets/sounds/error.wav";
 
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
-import { throttle } from "lodash";
-
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import sonicspin from "assets/img/sonicspin.png";
 

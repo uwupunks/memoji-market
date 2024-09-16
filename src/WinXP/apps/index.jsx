@@ -18,9 +18,7 @@ const gen = () => {
 const genId = gen();
 const genIndex = gen();
 
-export const defaultAppState = [
-
-];
+export const defaultAppState = [];
 
 export const defaultIconState = [
   {
@@ -30,7 +28,6 @@ export const defaultIconState = [
     component: Keygen,
     isFocus: false,
   },
-
 ];
 
 export const appSettings = {
@@ -85,7 +82,7 @@ export const appSettings = {
       height: 600,
     },
     defaultOffset: {
-      x: 0,
+      x: 50,
       y: 0,
     },
     resizable: true,
@@ -105,8 +102,8 @@ export const appSettings = {
       height: 0,
     },
     defaultOffset: {
-      x: 750,
-      y: 200,
+      x: 150,
+      y: 650,
     },
     resizable: false,
     minimized: false,

@@ -76,6 +76,7 @@ function Keygen({ onClose, onMinimize, dispatch, id }) {
       ],
     });
 
+    localStorage.setItem("cracked", "yes");
     onClose();
   };
 

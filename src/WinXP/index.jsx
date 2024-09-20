@@ -31,6 +31,7 @@ import Footer from "./Footer";
 import Windows from "./Windows";
 import Icons from "./Icons";
 import { DashedBox } from "../components";
+import winxpStormy from "assets/img/bg-winxp-stormy.jpeg";
 import "./index.css";
 
 const initState = {
@@ -145,7 +146,9 @@ const reducer = (state, action = { type: "" }) => {
       };
     }
     case ADD_ICONS: {
-      const toAdd = action.payload.filter(i=>state.icons.find(si=>si.id ===i.id) === undefined)
+      const toAdd = action.payload.filter(
+        (i) => state.icons.find((si) => si.id === i.id) === undefined
+      );
       return {
         ...state,
         icons: [...state.icons, ...toAdd],
@@ -303,9 +306,20 @@ function WinXP() {
   // Trader Mode, full screen trade
   useEffect(() => {
     if (searchParams.get("trademode") || isMobile) {
-      dispatch({ type: "ADD_APP", payload: ({...appSettings["Cracked"], maximized: true })});
+      dispatch({
+        type: "ADD_APP",
+        payload: { ...appSettings["Cracked"], maximized: true },
+      });
+    } else if (localStorage.getItem("cracked")) {
+      let desktop = document.getElementsByClassName("winxp")?.[0];
+      if (desktop) {
+        desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
+      }
+      dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
+      dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
+      dispatch({ type: "DEL_APP", payload: 0 });
     }
-  }, [focusedAppId]);
+  }, []);
 
   return (
     <Container

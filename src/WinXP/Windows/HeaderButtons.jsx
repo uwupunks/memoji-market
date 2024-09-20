@@ -83,6 +83,10 @@ export default styled(HeaderButtons)`
     height: 21px;
     border: 0px solid #fff;
     border-radius: 0px;
+    cursor: auto;
+  }
+  .header__button button:active {
+    cursor: auto;
   }
   .header__button--minimize {
     background-image: ${({ isFocus }) => `url(${isFocus ? mm : mmuuh})`};

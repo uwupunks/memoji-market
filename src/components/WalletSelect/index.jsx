@@ -95,7 +95,7 @@ function WalletSelect({ isOpen, setOpen, walletRepo }) {
               console.error(err);
             }
           }}
-          onMouseEnter={() => overSound.play()}
+          onMouseEnter={() => new Audio(overMp3).play()}
           onMouseDown={() => clickSound.play()}
         >
           <div className="icon-bg">

@@ -1,9 +1,9 @@
 .react-responsive-modal-root * {
-  cursor: url("assets/img/idle.png"), auto !important;
+  cursor: url("assets/img/idle.png"), auto;
 }
 
 .react-responsive-modal-root *:active {
-  cursor: url("assets/img/click.png"), auto !important;
+  cursor: url("assets/img/click.png"), auto;
 }
 
 .walletSelectModal {

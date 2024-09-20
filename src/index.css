@@ -274,7 +274,7 @@ input[type="number"] {
   border-radius: 10px 10px 0 10px;
   height: 384px;
   margin: 0 0 0 4px;
-  padding: 15px 18px 0 18px;
+  padding: 5px 18px 0 18px;
   flex-grow: 1;
 }
 
@@ -614,7 +614,7 @@ option:hover {
 button:active,
 select:active,
 option:active {
-  cursor: url("./assets/img/click.png"), auto !important;
+  cursor: url("./assets/img/click.png"), auto;
 }
 
 #assetGrid.ag-theme-quartz-dark {

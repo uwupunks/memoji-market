@@ -419,8 +419,9 @@ input[type="number"] {
 
 .assetList .asset {
   width: 208px;
-  height: 20px;
-  padding: 1px 10px 0 10px;
+  height: 21px;
+  line-height: 21px;
+  padding: 0 10px;
   font-family: pokemon;
   font-size: 11pt;
   color: #4466ee;
@@ -428,7 +429,6 @@ input[type="number"] {
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: none;
   font-smoothing: none;
-  line-height: 20px;
   text-align: left;
 }
 .assetList .quantity {

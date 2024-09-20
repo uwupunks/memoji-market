@@ -317,7 +317,6 @@ function WinXP() {
       }
       dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
       dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
-      dispatch({ type: "DEL_APP", payload: 0 });
     }
   }, []);
 

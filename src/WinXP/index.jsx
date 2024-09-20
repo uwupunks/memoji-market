@@ -32,6 +32,8 @@ import Windows from "./Windows";
 import Icons from "./Icons";
 import { DashedBox } from "../components";
 import winxpStormy from "assets/img/bg-winxp-stormy.jpeg";
+import crackedIcon from "assets/windowsIcons/cracked.png";
+import winamp from "assets/windowsIcons/winamp.png";
 import "./index.css";
 
 const initState = {

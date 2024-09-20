@@ -317,6 +317,25 @@ function WinXP() {
       }
       dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
       dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
+      dispatch({
+        type: "ADD_ICONS",
+        payload: [
+          {
+            id: 2,
+            icon: crackedIcon,
+            title: "Cracked",
+            component: Cracked,
+            isFocus: false,
+          },
+          {
+            id: 3,
+            icon: winamp,
+            title: "Winamp",
+            component: Winamp,
+            isFocus: false,
+          },
+        ],
+      });
     }
   }, []);
 

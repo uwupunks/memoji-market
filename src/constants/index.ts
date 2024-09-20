@@ -45,6 +45,7 @@ const memoji = [
   { name: "ufrog", emoji: "🐸", listed: true },
   { name: "ugun", emoji: "🔫♡", listed: true },
   { name: "uhammer", emoji: "🔨", listed: true },
+  { name: "uharambe", emoji: "🦍🍌", listed: true },
   { name: "umeat", emoji: "🥩", listed: true },
   { name: "umoon", emoji: "🌕", listed: false },
   { name: "umog", emoji: "😹", listed: true },

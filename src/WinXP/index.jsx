@@ -31,6 +31,8 @@ import Footer from "./Footer";
 import Windows from "./Windows";
 import Icons from "./Icons";
 import { DashedBox } from "../components";
+import Winamp from "./apps/Winamp";
+import Cracked from "./apps/Cracked";
 import winxpStormy from "assets/img/bg-winxp-stormy.jpeg";
 import crackedIcon from "assets/windowsIcons/cracked.png";
 import winamp from "assets/windowsIcons/winamp.png";

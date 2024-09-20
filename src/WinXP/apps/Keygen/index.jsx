@@ -62,7 +62,7 @@ function Keygen({ onClose, onMinimize, dispatch, id }) {
         {
           id: 2,
           icon: crackedIcon,
-          title: "Cracked",
+          title: "[Cracked] Unicorn Memoji Market",
           component: Cracked,
           isFocus: false,
         },

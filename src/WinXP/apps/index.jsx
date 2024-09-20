@@ -24,7 +24,7 @@ export const defaultIconState = [
   {
     id: 1,
     icon: keygenIcon,
-    title: "Keygen",
+    title: "[RAD] uwunicorn keygen V0.5.exe",
     component: Keygen,
     isFocus: false,
   },
@@ -74,7 +74,7 @@ export const appSettings = {
   Cracked: {
     header: {
       icon: crackedIcon,
-      title: "Cracked",
+      title: "[Cracked] Unicorn Memoji Market",
     },
     component: Cracked,
     defaultSize: {

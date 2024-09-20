@@ -102,7 +102,7 @@
   float: left;
 }
 
-.walletSelectModal .option:hover button {
+.walletSelectModal .option button:hover {
   background: url(img/btn-hover.png);
 }
 .walletSelectModal .option:active button {
@@ -111,7 +111,7 @@
 .walletSelectModal .option.disabled button {
   background: url(img/btn-disabled.png);
 }
-.walletSelectModal .option.disabled::hover button {
+.walletSelectModal .option.disabled button:hover {
   background: url(img/btn-disabled.png);
 }
 

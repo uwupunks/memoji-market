@@ -46,6 +46,7 @@ function Windows({
 const Window = memo(function ({
   injectProps,
   id,
+  key={id},
   onMouseDown,
   onMouseUpClose,
   onMouseUpMinimize,
@@ -112,7 +113,6 @@ const Window = memo(function ({
   }
 
   return (
-    <>
       <div
         patched={patched}
         className={className}
@@ -165,7 +165,6 @@ const Window = memo(function ({
           })}
         </div>
       </div>
-    </>
   );
 });
 

@@ -61,10 +61,10 @@ function SendModal({ isActive, balances, onSend }) {
           amount: [
             {
               denom: "uwunicorn",
-              amount: "2576",
+              amount: "2891",
             },
           ],
-          gas: "103005",
+          gas: "115632",
         };
         const res = await client.signAndBroadcast(address, [msg], fee);
 

@@ -43,6 +43,7 @@ const memoji = [
   { name: "uenvelop", emoji: "✉️", listed: false },
   { name: "ufahrenheit", emoji: "🔥", listed: true },
   { name: "ufrog", emoji: "🐸", listed: true },
+  { name: "ugirl", emoji: "🎀", listed: true },
   { name: "ugun", emoji: "🔫♡", listed: true },
   { name: "uhammer", emoji: "🔨", listed: true },
   { name: "uharambe", emoji: "🦍🍌", listed: true },

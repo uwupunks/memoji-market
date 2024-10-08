@@ -58,6 +58,7 @@ const memoji = [
   { name: "uplaceholder", emoji: "placeholder", listed: true },
   { name: "upoo", emoji: "💩", listed: true },
   { name: "upretzel", emoji: "🥨", listed: true },
+  { name: "upurplepill", emoji: "💊", listed: true },
   { name: "uretard", emoji: "🫵🤡", listed: true },
   { name: "urock", emoji: "🪨", listed: false },
   { name: "urocket", emoji: "🚀", listed: true },

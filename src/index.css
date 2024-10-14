@@ -1,4 +1,5 @@
 @import url("https://fonts.cdnfonts.com/css/vcr-osd-mono");
+@import url('https://fonts.cdnfonts.com/css/nintendo-ds-bios');
 
 @tailwind base;
 @tailwind components;
@@ -449,6 +450,54 @@ input[type="number"] {
   height: 70px;
 }
 
+.bridgeSection {
+  background-image: url("./assets/img/bridge.png"),
+    url("./assets/img/bridgesend.png"), url("./assets/img/bridgemiddle.png");
+  background-position: left bottom, right bottom, bottom;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  height: 70px;
+}
+
+.airdropSection {
+  background-image: url("./assets/img/airdrop.png"),
+    url("./assets/img/airdropend.png"), url("./assets/img/airdropmiddle.png");
+  background-position: left bottom, right bottom, bottom;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  height: 70px;
+}
+
+.memeSection, .bridgeSection, .airdropSection{
+  display: flex;
+}
+
+#memesButton{
+ transform: translate(0px, 10px);
+  height: 33px;
+  opacity: 0;
+}
+
+#bridgeButton{
+  transform: translate(130.5px, 10px);
+  height: 33px;
+  opacity: 0;
+}
+
+#airdropButton{
+  transform: translate(130.5px, 10px);
+  height: 33px;
+  opacity: 0;
+}
+
+.constructionDiv{
+  background: url(assets/img/tiledHammer.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 90%;
+  margin: 0 auto;
+}
+
 .buttonSection {
   background: url(assets/img/backButtons.png),
     url(assets/img/bg-button-section.png);
@@ -815,4 +864,11 @@ option:active {
 #Unicorn .header__bg {
   left: 3px !important;
   width: 99.2% !important;
+}
+
+.centerText{
+  position: relative;
+  top: 15%;
+  left: 25%;
+  margin: 0 auto;
 }

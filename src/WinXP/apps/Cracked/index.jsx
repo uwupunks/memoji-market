@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import Ztext from 'react-ztext';
 import connectButton from "assets/img/connectwallet.png";
 import exitButton from "assets/img/exit.png";
 import hoverButton from "assets/img/hover.png";
@@ -11,6 +11,7 @@ import switchButton from "assets/img/switchwallet.png";
 import allButton from "assets/img/all.png";
 import hiddenButton from "assets/img/hidden.png";
 import classicButton from "assets/img/classic.png";
+import mainTabButton from "assets/img/mainTabButton.png";
 import userWindow from "assets/img/user.gif";
 import { getCNSAsync } from "hooks/cns";
 
@@ -100,6 +101,7 @@ function Cracked({ onClose }) {
   const [rightAsset, setRightAsset] = useState();
   const [swapPrice, setSwapPrice] = useState();
   const [addressDisplay, setAddressDisplay] = useState();
+  const [mainTab, setMainTab] = useState(0);
 
   const [balances, setBalances] = useState([]);
   const [refreshBalances, setRefreshBalances] = useState(false);
@@ -543,8 +545,19 @@ function Cracked({ onClose }) {
         <div className="flex flex-col flex-grow">
           <div className="memeMarketSection h-full p-2.5">
             <div id="memeMarket">
-              <div className="memeSection"></div>
-              <div className="buttonSection">
+              {mainTab === 0 && (<><div className="memeSection">
+                <img id="bridgeButton" src={mainTabButton} onClick={() => setMainTab(1)} style={{transform: 'translate(130.5px, 10px)'}}/>
+                <img id="airdropButton" src={mainTabButton} onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
+              </div></>)}
+              {mainTab === 1 && (<><div className="bridgeSection">
+                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
+                <img id="airdropButton" src={mainTabButton}  onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
+              </div></>)}
+              {mainTab === 2 && (<><div className="airdropSection">
+                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
+                <img id="bridgeButton" src={mainTabButton}  onClick={() => setMainTab(1)} style={{transform: 'translate(0px, 10px)'}} />
+              </div></>)}
+             {mainTab === 0 && (<> <div className="buttonSection">
                 {activeButton === 0 && (
                   <>
                     <img
@@ -629,7 +642,67 @@ function Cracked({ onClose }) {
                     rowClass="row-borders"
                   />
                 </div>
-              </div>
+              </div></>)}
+            {mainTab === 1 && (<>
+              <div className="constructionDiv">
+              <span className="centerText">
+               <Ztext id="construction"
+                  depth='1rem'
+                  direction='both'
+                  event='pointer'
+                  eventRotation='30deg'
+                  eventDirection='default'
+                  fade={false}
+                  layers={10}
+                  perspective='500px'
+                  style={{
+                    fontSize: '6rem'
+                  }}
+                  >
+                  <span role='img' style={{marginTop: '0px',
+  marginBottom: '50px',
+  textAlign: 'center',
+  fontFamily: "'Nintendo DS BIOS', sans-serif",
+  letterSpacing: '0.15rem',
+  textTransform: 'uppercase',
+  color: '#fff',
+  textShadow: "-4px 4px #ef3550,-8px 8px #f48fb1,-12px 12px #7e57c2,-16px 16px #2196f3,-20px 20px #26c6da,-24px 24px #43a047,-28px 28px #eeff41,-32px 32px #f9a825,-36px 36px #ff5722"}} aria-label='emoji'>
+                  UNDER CONSTRUCTION
+                  </span>
+                </Ztext>
+                </span>
+                </div>
+            </>)}
+                 {mainTab === 2 && (<>
+              <div className="constructionDiv">
+              <span className="centerText">
+               <Ztext id="construction"
+                  depth='1rem'
+                  direction='both'
+                  event='pointer'
+                  eventRotation='30deg'
+                  eventDirection='default'
+                  fade={false}
+                  layers={10}
+                  perspective='500px'
+                  style={{
+                    fontSize: '6rem'
+                  }}
+                  >
+                  <span role='img' style={{marginTop: '0px',
+  marginBottom: '50px',
+  textAlign: 'center',
+  fontFamily: "'Nintendo DS BIOS', sans-serif",
+  letterSpacing: '0.15rem',
+  textTransform: 'uppercase',
+  color: '#fff',
+  textShadow: "-4px 4px #ef3550,-8px 8px #f48fb1,-12px 12px #7e57c2,-16px 16px #2196f3,-20px 20px #26c6da,-24px 24px #43a047,-28px 28px #eeff41,-32px 32px #f9a825,-36px 36px #ff5722"}} aria-label='emoji'>
+                  UNDER CONSTRUCTION
+                  </span>
+                </Ztext>
+                </span>
+                </div>
+            </>)}
             </div>
           </div>
           <div className="bottomBar flex flex-row items-baseline">

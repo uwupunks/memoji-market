@@ -130,6 +130,13 @@ function Cracked({ onClose }) {
     return () => clearInterval(intervalId);
   }, []);
 
+  const generateLayers = () => {
+    return Array.from({ length: 8 }, (_, index) => ({
+      color: index === 0 ? 'white' : rainbowColors[(colorIndex + index) % rainbowColors.length],
+      textShadow: index === 0 ? '1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000' : 'none'
+    }));
+  };
+
   const onGridTabClick = async (e) => {
     const activeTab =
       e.target.className === "hiddenButton"
@@ -600,15 +607,11 @@ function Cracked({ onClose }) {
                         eventRotation='30deg'
                         eventDirection='default'
                         fade={false}
-                        layers={8}
+                        layers={generateLayers()}
                         perspective='1200px'
                         style={{
                           fontSize: '4.5rem'
                         }}
-                        layerStyle={(index) => ({
-                          color: index === 0 ? 'white' : rainbowColors[(colorIndex + index) % rainbowColors.length],
-                          WebkitTextStroke: index === 0 ? '1px black' : 'none'
-                        })}
                       >
                         UNDER CONSTRUCTION
                       </Ztext>

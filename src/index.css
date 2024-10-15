@@ -492,10 +492,10 @@ input[type="number"] {
   background: url(assets/img/tiledHammer.png);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: top;
   width: 100%;
   height: 84%;
-  margin: 0 auto;
+  padding: 0;
 }
 
 .buttonSection {
@@ -867,8 +867,43 @@ option:active {
 }
 
 .centerText{
-  position: relative;
-  top: 15%;
-  left: 25%;
-  margin: 0 auto;
+  position: absolute;
+  top: 40%;
+  left: 40%;
+}
+
+.sc-aXZVg{
+  font-family: 'Nintendo DS BIOS', sans-serif;
+}
+
+.sc-aXZVg:nth-child(1) h1{
+  color: white;
+}
+
+.sc-aXZVg:nth-child(2) h1{
+  color: #ff0000;
+}
+
+.sc-aXZVg:nth-child(3) h1{
+  color: #ffa500;
+}
+
+.sc-aXZVg:nth-child(4) h1{
+  color: #ffff00;
+}
+
+.sc-aXZVg:nth-child(5) h1{
+  color: #008000;
+}
+
+.sc-aXZVg:nth-child(6) h1{
+  color: #0000ff;
+}
+
+.sc-aXZVg:nth-child(7) h1{
+  color: #4b0082;
+}
+
+.sc-aXZVg:nth-child(8) h1{
+  color: #ee82ee;
 }

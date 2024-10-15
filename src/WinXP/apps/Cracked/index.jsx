@@ -646,29 +646,22 @@ function Cracked({ onClose }) {
             {mainTab === 1 && (<>
               <div className="constructionDiv">
               <span className="centerText">
-               <Ztext id="construction"
-                  depth='1rem'
+              <Ztext
+                  depth='60px'
                   direction='both'
                   event='pointer'
                   eventRotation='30deg'
                   eventDirection='default'
                   fade={false}
-                  layers={10}
-                  perspective='500px'
+                  layers={8}
+                  perspective='1200px'
                   style={{
-                    fontSize: '6rem'
+                    fontSize: '4.5rem'
                   }}
                   >
-                  <span role='img' style={{marginTop: '0px',
-  marginBottom: '50px',
-  textAlign: 'center',
-  fontFamily: "'Nintendo DS BIOS', sans-serif",
-  letterSpacing: '0.15rem',
-  textTransform: 'uppercase',
-  color: '#fff',
-  textShadow: "-4px 4px #ef3550,-8px 8px #f48fb1,-12px 12px #7e57c2,-16px 16px #2196f3,-20px 20px #26c6da,-24px 24px #43a047,-28px 28px #eeff41,-32px 32px #f9a825,-36px 36px #ff5722"}} aria-label='emoji'>
-                  UNDER CONSTRUCTION
-                  </span>
+                   <h1>
+   <span>UNDER CONSTRUCTION</span>
+</h1>
                 </Ztext>
                 </span>
                 </div>
@@ -676,29 +669,22 @@ function Cracked({ onClose }) {
                  {mainTab === 2 && (<>
               <div className="constructionDiv">
               <span className="centerText">
-               <Ztext id="construction"
-                  depth='1rem'
+               <Ztext
+                  depth='60px'
                   direction='both'
                   event='pointer'
                   eventRotation='30deg'
                   eventDirection='default'
                   fade={false}
-                  layers={10}
-                  perspective='500px'
+                  layers={8}
+                  perspective='1200px'
                   style={{
-                    fontSize: '6rem'
+                    fontSize: '4.5rem'
                   }}
                   >
-                  <span role='img' style={{marginTop: '0px',
-  marginBottom: '50px',
-  textAlign: 'center',
-  fontFamily: "'Nintendo DS BIOS', sans-serif",
-  letterSpacing: '0.15rem',
-  textTransform: 'uppercase',
-  color: '#fff',
-  textShadow: "-4px 4px #ef3550,-8px 8px #f48fb1,-12px 12px #7e57c2,-16px 16px #2196f3,-20px 20px #26c6da,-24px 24px #43a047,-28px 28px #eeff41,-32px 32px #f9a825,-36px 36px #ff5722"}} aria-label='emoji'>
-                  UNDER CONSTRUCTION
-                  </span>
+                   <h1>
+   <span>UNDER CONSTRUCTION</span>
+</h1>
                 </Ztext>
                 </span>
                 </div>

@@ -51,6 +51,7 @@ import {
 import SwapModal from "../../../components/SwapModal/index.jsx";
 import SendModal from "../../../components/SendModal/index.jsx";
 import AlertModal from "../../../components/AlertModal/index.jsx";
+import styled, { keyframes } from 'styled-components';
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   notation: "compact",
@@ -82,6 +83,21 @@ const displayDenom = (denom) => {
   }
   return denom?.charAt(1).toUpperCase() + denom?.slice(2);
 };
+
+const colorCycle = keyframes`
+  0%, 100% { color: red; }
+  14% { color: orange; }
+  28% { color: yellow; }
+  42% { color: green; }
+  57% { color: blue; }
+  71% { color: indigo; }
+  85% { color: violet; }
+`;
+
+const AnimatedLayer = styled.span`
+  animation: ${colorCycle} 7s infinite;
+  animation-delay: ${props => props.delay}s;
+`;
 
 function Cracked({ onClose }) {
   const { username, connect, disconnect, address, isWalletConnected } =
@@ -656,34 +672,28 @@ function Cracked({ onClose }) {
               </div></>)}
             {mainTab === 1 && (<>
               <div className="constructionDiv">
-              <span className="centerText">
-              <Ztext
-                depth="60px"
-                direction="both"
-                event="pointer"
-                eventRotation="30deg"
-                eventDirection="default"
-                fade={false}
-                perspective="1200px"
-                style={{
-                  fontSize: '4.5rem',
-                  color: 'white',
-                }}
-                layers={colors.length + 1} 
-              >
-                {colors.map((color, index) => (
-                  <span
-                    key={index}
+                <span className="centerText">
+                  <Ztext
+                    depth='60px'
+                    direction='both'
+                    event='pointer'
+                    eventRotation='30deg'
+                    eventDirection='default'
+                    fade={false}
+                    layers={7}
+                    perspective='1200px'
                     style={{
-                      color: colors[(index + colorIndex) % colors.length],
+                      fontSize: '4.5rem'
                     }}
                   >
-                    UNDER CONSTRUCTION
-                  </span>
-                ))}
-                <span style={{ color: 'white' }}>UNDER CONSTRUCTION</span>
-              </Ztext>
-              </span>
+                    {Array.from({ length: 7 }).map((_, index) => (
+                      <AnimatedLayer key={index} delay={index * 0.1}>
+                        UNDER CONSTRUCTION
+                      </AnimatedLayer>
+                    ))}
+                    <span style={{ color: 'white' }}>UNDER CONSTRUCTION</span>
+                  </Ztext>
+                </span>
               </div>
             </>)}
                  {mainTab === 2 && (<>

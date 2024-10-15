@@ -111,6 +111,17 @@ function Cracked({ onClose }) {
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
 
+  const [colorIndex, setColorIndex] = useState(0);
+  const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#8B00FF']; // Rainbow colors
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setColorIndex((prevIndex) => (prevIndex + 1) % colors.length);
+    }, 1000); // Change color every second
+
+    return () => clearInterval(interval);
+  }, []);
+
   const onGridTabClick = async (e) => {
     const activeTab =
       e.target.className === "hiddenButton"
@@ -647,24 +658,31 @@ function Cracked({ onClose }) {
               <div className="constructionDiv">
               <span className="centerText">
               <Ztext
-                  depth='60px'
-                  direction='both'
-                  event='pointer'
-                  eventRotation='30deg'
-                  eventDirection='default'
-                  fade={false}
-                  layers={8}
-                  perspective='1200px'
-                  style={{
-                    fontSize: '4.5rem'
-                  }}
-                  >
-                   <h1>
-   <span>UNDER CONSTRUCTION</span>
-</h1>
-                </Ztext>
-                </span>
-                </div>
+                depth='60px'
+                direction='both'
+                event='pointer'
+                eventRotation='30deg'
+                eventDirection='default'
+                fade={false}
+                layers={8}
+                perspective='1200px'
+                style={{
+                  fontSize: '4.5rem'
+                }}
+              >
+                <h1>
+                  <span style={{
+                    color: 'white',
+                    textShadow: colors.map((color, index) => 
+                      `0 0 ${(index + 1) * 7.5}px ${color}`
+                    ).join(', ')
+                  }}>
+                    UNDER CONSTRUCTION
+                  </span>
+                </h1>
+              </Ztext>
+              </span>
+              </div>
             </>)}
                  {mainTab === 2 && (<>
               <div className="constructionDiv">

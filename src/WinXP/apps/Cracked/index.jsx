@@ -111,32 +111,6 @@ function Cracked({ onClose }) {
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
 
-  const rainbowColors = [
-    '#FF0000', // Red
-    '#FF7F00', // Orange
-    '#FFFF00', // Yellow
-    '#00FF00', // Green
-    '#0000FF', // Blue
-    '#8B00FF', // Violet
-  ];
-
-  const [colorIndex, setColorIndex] = useState(0);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setColorIndex((prevIndex) => (prevIndex + 1) % rainbowColors.length);
-    }, 1000); // Change color every 1 second
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const generateLayers = () => {
-    return Array.from({ length: 8 }, (_, index) => ({
-      color: index === 0 ? 'white' : rainbowColors[(colorIndex + index) % rainbowColors.length],
-      textShadow: index === 0 ? '1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000' : 'none'
-    }));
-  };
-
   const onGridTabClick = async (e) => {
     const activeTab =
       e.target.className === "hiddenButton"
@@ -575,51 +549,15 @@ function Cracked({ onClose }) {
                 <img id="bridgeButton" src={mainTabButton} onClick={() => setMainTab(1)} style={{transform: 'translate(130.5px, 10px)'}}/>
                 <img id="airdropButton" src={mainTabButton} onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
               </div></>)}
-              {mainTab === 1 && (
-                <div className="constructionDiv">
-                  <span className="centerText">
-                    <Ztext
-                      depth='60px'
-                      direction='both'
-                      event='pointer'
-                      eventRotation='30deg'
-                      eventDirection='default'
-                      fade={false}
-                      layers={8}
-                      perspective='1200px'
-                      style={{
-                        fontSize: '4.5rem'
-                      }}
-                    >
-                      UNDER CONSTRUCTION
-                    </Ztext>
-                  </span>
-                </div>
-              )}
-              {mainTab === 2 && (
-                <>
-                  <div className="constructionDiv">
-                    <span className="centerText">
-                      <Ztext
-                        depth='60px'
-                        direction='both'
-                        event='pointer'
-                        eventRotation='30deg'
-                        eventDirection='default'
-                        fade={false}
-                        layers={generateLayers()}
-                        perspective='1200px'
-                        style={{
-                          fontSize: '4.5rem'
-                        }}
-                      >
-                        UNDER CONSTRUCTION
-                      </Ztext>
-                    </span>
-                  </div>
-                </>
-              )}
-              {mainTab === 0 && (<> <div className="buttonSection">
+              {mainTab === 1 && (<><div className="bridgeSection">
+                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
+                <img id="airdropButton" src={mainTabButton}  onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
+              </div></>)}
+              {mainTab === 2 && (<><div className="airdropSection">
+                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
+                <img id="bridgeButton" src={mainTabButton}  onClick={() => setMainTab(1)} style={{transform: 'translate(0px, 10px)'}} />
+              </div></>)}
+             {mainTab === 0 && (<> <div className="buttonSection">
                 {activeButton === 0 && (
                   <>
                     <img
@@ -705,6 +643,52 @@ function Cracked({ onClose }) {
                   />
                 </div>
               </div></>)}
+            {mainTab === 1 && (<>
+              <div className="constructionDiv">
+              <span className="centerText">
+              <Ztext
+                  depth='60px'
+                  direction='both'
+                  event='pointer'
+                  eventRotation='30deg'
+                  eventDirection='default'
+                  fade={false}
+                  layers={8}
+                  perspective='1200px'
+                  style={{
+                    fontSize: '4.5rem'
+                  }}
+                  >
+                   <h1>
+   <span>UNDER CONSTRUCTION</span>
+</h1>
+                </Ztext>
+                </span>
+                </div>
+            </>)}
+                 {mainTab === 2 && (<>
+              <div className="constructionDiv">
+              <span className="centerText">
+               <Ztext
+                  depth='60px'
+                  direction='both'
+                  event='pointer'
+                  eventRotation='30deg'
+                  eventDirection='default'
+                  fade={false}
+                  layers={8}
+                  perspective='1200px'
+                  style={{
+                    fontSize: '4.5rem'
+                  }}
+                  >
+                   <h1>
+   <span>UNDER CONSTRUCTION</span>
+</h1>
+                </Ztext>
+                </span>
+                </div>
+            </>)}
             </div>
           </div>
           <div className="bottomBar flex flex-row items-baseline">

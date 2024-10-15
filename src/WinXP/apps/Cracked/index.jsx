@@ -51,7 +51,6 @@ import {
 import SwapModal from "../../../components/SwapModal/index.jsx";
 import SendModal from "../../../components/SendModal/index.jsx";
 import AlertModal from "../../../components/AlertModal/index.jsx";
-import styled, { keyframes } from 'styled-components';
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   notation: "compact",
@@ -84,21 +83,6 @@ const displayDenom = (denom) => {
   return denom?.charAt(1).toUpperCase() + denom?.slice(2);
 };
 
-const colorCycle = keyframes`
-  0%, 100% { color: red; }
-  14% { color: orange; }
-  28% { color: yellow; }
-  42% { color: green; }
-  57% { color: blue; }
-  71% { color: indigo; }
-  85% { color: violet; }
-`;
-
-const AnimatedLayer = styled.span`
-  animation: ${colorCycle} 7s infinite;
-  animation-delay: ${props => props.delay}s;
-`;
-
 function Cracked({ onClose }) {
   const { username, connect, disconnect, address, isWalletConnected } =
     useChain("unicorn");
@@ -127,15 +111,23 @@ function Cracked({ onClose }) {
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
 
+  const rainbowColors = [
+    '#FF0000', // Red
+    '#FF7F00', // Orange
+    '#FFFF00', // Yellow
+    '#00FF00', // Green
+    '#0000FF', // Blue
+    '#8B00FF', // Violet
+  ];
+
   const [colorIndex, setColorIndex] = useState(0);
-  const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setColorIndex((prevIndex) => (prevIndex + 1) % colors.length);
-    }, 1000); // Change color every second
+    const intervalId = setInterval(() => {
+      setColorIndex((prevIndex) => (prevIndex + 1) % rainbowColors.length);
+    }, 1000); // Change color every 1 second
 
-    return () => clearInterval(interval);
+    return () => clearInterval(intervalId);
   }, []);
 
   const onGridTabClick = async (e) => {
@@ -672,52 +664,58 @@ function Cracked({ onClose }) {
               </div></>)}
             {mainTab === 1 && (<>
               <div className="constructionDiv">
-                <span className="centerText">
-                  <Ztext
-                    depth='60px'
-                    direction='both'
-                    event='pointer'
-                    eventRotation='30deg'
-                    eventDirection='default'
-                    fade={false}
-                    layers={7}
-                    perspective='1200px'
-                    style={{
-                      fontSize: '4.5rem'
-                    }}
-                  >
-                    {Array.from({ length: 7 }).map((_, index) => (
-                      <AnimatedLayer key={index} delay={index * 0.1}>
-                        UNDER CONSTRUCTION
-                      </AnimatedLayer>
-                    ))}
-                    <span style={{ color: 'white' }}>UNDER CONSTRUCTION</span>
-                  </Ztext>
-                </span>
+              <span className="centerText">
+              <Ztext
+                depth='60px'
+                direction='both'
+                event='pointer'
+                eventRotation='30deg'
+                eventDirection='default'
+                fade={false}
+                layers={8}
+                perspective='1200px'
+                style={{
+                  fontSize: '4.5rem'
+                }}
+              >
+                <h1>
+                  <span style={{
+                    color: 'white',
+                    WebkitTextStroke: '1px black'
+                  }}>
+                    UNDER CONSTRUCTION
+                  </span>
+                </h1>
+              </Ztext>
+              </span>
               </div>
             </>)}
                  {mainTab === 2 && (<>
               <div className="constructionDiv">
               <span className="centerText">
                <Ztext
-                  depth='60px'
-                  direction='both'
-                  event='pointer'
-                  eventRotation='30deg'
-                  eventDirection='default'
-                  fade={false}
-                  layers={8}
-                  perspective='1200px'
-                  style={{
-                    fontSize: '4.5rem'
-                  }}
-                  >
-                   <h1>
-   <span>UNDER CONSTRUCTION</span>
-</h1>
-                </Ztext>
-                </span>
-                </div>
+                depth='60px'
+                direction='both'
+                event='pointer'
+                eventRotation='30deg'
+                eventDirection='default'
+                fade={false}
+                layers={8}
+                perspective='1200px'
+                style={{
+                  fontSize: '4.5rem'
+                }}
+                layerStyle={(index) => ({
+                  color: index === 0 ? 'white' : rainbowColors[(colorIndex + index) % rainbowColors.length],
+                  WebkitTextStroke: index === 0 ? '1px black' : 'none'
+                })}
+              >
+                <h1>
+                  <span>UNDER CONSTRUCTION</span>
+                </h1>
+              </Ztext>
+              </span>
+              </div>
             </>)}
             </div>
           </div>

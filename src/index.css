@@ -1,4 +1,5 @@
 @import url("https://fonts.cdnfonts.com/css/vcr-osd-mono");
+@import url('https://fonts.cdnfonts.com/css/nintendo-ds-bios');
 
 @tailwind base;
 @tailwind components;
@@ -138,6 +139,7 @@
 .cancelSwap:active {
   background: url("assets/img/cancelpressed.png");
 }
+
 button.max {
   height: 16px;
   width: 23px;
@@ -447,6 +449,84 @@ input[type="number"] {
   background-position: left bottom, right bottom, bottom;
   background-repeat: no-repeat, no-repeat, repeat-x;
   height: 70px;
+}
+
+.bridgeSection {
+  background-image: url("./assets/img/bridge.png"),
+    url("./assets/img/bridgesend.png"), url("./assets/img/bridgemiddle.png");
+  background-position: left bottom, right bottom, bottom;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  height: 70px;
+}
+
+.airdropSection {
+  background-image: url("./assets/img/airdrop.png"),
+    url("./assets/img/airdropend.png"), url("./assets/img/airdropmiddle.png");
+  background-position: left bottom, right bottom, bottom;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  height: 70px;
+}
+
+.memeSection, .bridgeSection, .airdropSection{
+  display: flex;
+}
+
+#memesButton{
+ transform: translate(0px, 10px);
+  height: 33px;
+  opacity: 0;
+}
+
+#bridgeButton{
+  transform: translate(130.5px, 10px);
+  height: 33px;
+  opacity: 0;
+}
+
+#airdropButton{
+  transform: translate(130.5px, 10px);
+  height: 33px;
+  opacity: 0;
+}
+
+:root {
+  --backgroundSize: 1200px;
+}
+
+.constructionDiv {
+  position: relative;
+  width: 100%;
+  height: 84%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.constructionDiv::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(assets/img/tiledHammer.png);
+  background-repeat: repeat;
+  background-size: var(--backgroundSize);
+  animation: backgroundScroll 14s linear infinite;
+  z-index: 1;
+}
+
+.centerText {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin: 0;
+}
+
+@keyframes backgroundScroll {
+  from { background-position: 0 var(--backgroundSize); }
+  to { background-position: var(--backgroundSize) 0; }
 }
 
 .buttonSection {
@@ -816,3 +896,52 @@ option:active {
   left: 3px !important;
   width: 99.2% !important;
 }
+
+
+
+.sc-aXZVg{
+  font-family: 'Nintendo DS BIOS', sans-serif;
+}
+
+@keyframes rainbow {
+  0%, 100% { color: #ff0000; } /* Red */
+  8.33% { color: #ff4500; }    /* Orange-Red */
+  16.67% { color: #ffa500; }   /* Orange */
+  25% { color: #ffd700; }      /* Gold */
+  33.33% { color: #ffff00; }   /* Yellow */
+  41.67% { color: #9acd32; }   /* Yellow-Green */
+  50% { color: #00ff00; }      /* Lime Green */
+  58.33% { color: #00fa9a; }   /* Medium Spring Green */
+  66.67% { color: #00ffff; }   /* Cyan */
+  75% { color: #1e90ff; }      /* Dodger Blue */
+  83.33% { color: #0000ff; }   /* Blue */
+  91.67% { color: #9932cc; }   /* Dark Orchid */
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.sc-aXZVg:nth-child(1) h1 {
+  color: white;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.sc-aXZVg:not(:first-child) h1 {
+  animation: 
+    rainbow 1.5s linear infinite,
+    pulse 1.5s ease-in-out infinite;
+}
+
+.sc-aXZVg:nth-child(2) h1 { animation-delay: 0s, 0s; }
+.sc-aXZVg:nth-child(3) h1 { animation-delay: 0.125s, 0.125s; }
+.sc-aXZVg:nth-child(4) h1 { animation-delay: 0.25s, 0.25s; }
+.sc-aXZVg:nth-child(5) h1 { animation-delay: 0.375s, 0.375s; }
+.sc-aXZVg:nth-child(6) h1 { animation-delay: 0.5s, 0.5s; }
+.sc-aXZVg:nth-child(7) h1 { animation-delay: 0.625s, 0.625s; }
+.sc-aXZVg:nth-child(8) h1 { animation-delay: 0.75s, 0.75s; }
+.sc-aXZVg:nth-child(9) h1 { animation-delay: 0.875s, 0.875s; }
+.sc-aXZVg:nth-child(10) h1 { animation-delay: 1s, 1s; }
+.sc-aXZVg:nth-child(11) h1 { animation-delay: 1.125s, 1.125s; }
+.sc-aXZVg:nth-child(12) h1 { animation-delay: 1.25s, 1.25s; }

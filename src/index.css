@@ -513,7 +513,7 @@ input[type="number"] {
   background-image: url(assets/img/tiledHammer.png);
   background-repeat: repeat;
   background-size: var(--backgroundSize);
-  animation: backgroundScroll 7s linear infinite;
+  animation: backgroundScroll 14s linear infinite;
   z-index: 1;
 }
 

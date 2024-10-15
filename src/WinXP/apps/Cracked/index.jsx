@@ -568,15 +568,55 @@ function Cracked({ onClose }) {
                 <img id="bridgeButton" src={mainTabButton} onClick={() => setMainTab(1)} style={{transform: 'translate(130.5px, 10px)'}}/>
                 <img id="airdropButton" src={mainTabButton} onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
               </div></>)}
-              {mainTab === 1 && (<><div className="bridgeSection">
-                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
-                <img id="airdropButton" src={mainTabButton}  onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
-              </div></>)}
-              {mainTab === 2 && (<><div className="airdropSection">
-                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
-                <img id="bridgeButton" src={mainTabButton}  onClick={() => setMainTab(1)} style={{transform: 'translate(0px, 10px)'}} />
-              </div></>)}
-             {mainTab === 0 && (<> <div className="buttonSection">
+              {mainTab === 1 && (
+                <div className="constructionDiv">
+                  <span className="centerText">
+                    <Ztext
+                      depth='60px'
+                      direction='both'
+                      event='pointer'
+                      eventRotation='30deg'
+                      eventDirection='default'
+                      fade={false}
+                      layers={8}
+                      perspective='1200px'
+                      style={{
+                        fontSize: '4.5rem'
+                      }}
+                    >
+                      UNDER CONSTRUCTION
+                    </Ztext>
+                  </span>
+                </div>
+              )}
+              {mainTab === 2 && (
+                <>
+                  <div className="constructionDiv">
+                    <span className="centerText">
+                      <Ztext
+                        depth='60px'
+                        direction='both'
+                        event='pointer'
+                        eventRotation='30deg'
+                        eventDirection='default'
+                        fade={false}
+                        layers={8}
+                        perspective='1200px'
+                        style={{
+                          fontSize: '4.5rem'
+                        }}
+                        layerStyle={(index) => ({
+                          color: index === 0 ? 'white' : rainbowColors[(colorIndex + index) % rainbowColors.length],
+                          WebkitTextStroke: index === 0 ? '1px black' : 'none'
+                        })}
+                      >
+                        UNDER CONSTRUCTION
+                      </Ztext>
+                    </span>
+                  </div>
+                </>
+              )}
+              {mainTab === 0 && (<> <div className="buttonSection">
                 {activeButton === 0 && (
                   <>
                     <img
@@ -662,61 +702,6 @@ function Cracked({ onClose }) {
                   />
                 </div>
               </div></>)}
-            {mainTab === 1 && (<>
-              <div className="constructionDiv">
-              <span className="centerText">
-              <Ztext
-                depth='60px'
-                direction='both'
-                event='pointer'
-                eventRotation='30deg'
-                eventDirection='default'
-                fade={false}
-                layers={8}
-                perspective='1200px'
-                style={{
-                  fontSize: '4.5rem'
-                }}
-              >
-                <h1>
-                  <span style={{
-                    color: 'white',
-                    WebkitTextStroke: '1px black'
-                  }}>
-                    UNDER CONSTRUCTION
-                  </span>
-                </h1>
-              </Ztext>
-              </span>
-              </div>
-            </>)}
-                 {mainTab === 2 && (<>
-              <div className="constructionDiv">
-              <span className="centerText">
-               <Ztext
-                depth='60px'
-                direction='both'
-                event='pointer'
-                eventRotation='30deg'
-                eventDirection='default'
-                fade={false}
-                layers={8}
-                perspective='1200px'
-                style={{
-                  fontSize: '4.5rem'
-                }}
-                layerStyle={(index) => ({
-                  color: index === 0 ? 'white' : rainbowColors[(colorIndex + index) % rainbowColors.length],
-                  WebkitTextStroke: index === 0 ? '1px black' : 'none'
-                })}
-              >
-                <h1>
-                  <span>UNDER CONSTRUCTION</span>
-                </h1>
-              </Ztext>
-              </span>
-              </div>
-            </>)}
             </div>
           </div>
           <div className="bottomBar flex flex-row items-baseline">

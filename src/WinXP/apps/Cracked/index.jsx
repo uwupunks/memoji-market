@@ -112,7 +112,7 @@ function Cracked({ onClose }) {
   const overSound = new Audio(overMp3);
 
   const [colorIndex, setColorIndex] = useState(0);
-  const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#8B00FF']; // Rainbow colors
+  const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -658,28 +658,30 @@ function Cracked({ onClose }) {
               <div className="constructionDiv">
               <span className="centerText">
               <Ztext
-                depth='60px'
-                direction='both'
-                event='pointer'
-                eventRotation='30deg'
-                eventDirection='default'
+                depth="60px"
+                direction="both"
+                event="pointer"
+                eventRotation="30deg"
+                eventDirection="default"
                 fade={false}
-                layers={8}
-                perspective='1200px'
+                perspective="1200px"
                 style={{
-                  fontSize: '4.5rem'
+                  fontSize: '4.5rem',
+                  color: 'white',
                 }}
+                layers={colors.length + 1} 
               >
-                <h1>
-                  <span style={{
-                    color: 'white',
-                    textShadow: colors.map((color, index) => 
-                      `0 0 ${(index + 1) * 7.5}px ${color}`
-                    ).join(', ')
-                  }}>
+                {colors.map((color, index) => (
+                  <span
+                    key={index}
+                    style={{
+                      color: colors[(index + colorIndex) % colors.length],
+                    }}
+                  >
                     UNDER CONSTRUCTION
                   </span>
-                </h1>
+                ))}
+                <span style={{ color: 'white' }}>UNDER CONSTRUCTION</span>
               </Ztext>
               </span>
               </div>

@@ -318,6 +318,7 @@ function WinXP() {
       let desktop = document.getElementsByClassName("winxp")?.[0];
       if (desktop) {
         desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
+        desktop.style.backgroundSize = 'cover';
       }
       dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
       dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });

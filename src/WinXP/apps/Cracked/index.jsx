@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import Ztext from 'react-ztext';
+import Ztext from "react-ztext";
 import connectButton from "assets/img/connectwallet.png";
 import exitButton from "assets/img/exit.png";
 import hoverButton from "assets/img/hover.png";
@@ -51,6 +51,7 @@ import {
 import SwapModal from "../../../components/SwapModal/index.jsx";
 import SendModal from "../../../components/SendModal/index.jsx";
 import AlertModal from "../../../components/AlertModal/index.jsx";
+import { useInterval } from "src/hooks/useInterval.js";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   notation: "compact",
@@ -102,14 +103,151 @@ function Cracked({ onClose }) {
   const [swapPrice, setSwapPrice] = useState();
   const [addressDisplay, setAddressDisplay] = useState();
   const [mainTab, setMainTab] = useState(0);
-
   const [balances, setBalances] = useState([]);
   const [refreshBalances, setRefreshBalances] = useState(false);
-
   const [rowData, setRowData] = useState([]);
   let gridRef = useRef();
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
+
+  const fetchSupplyData = async () => {
+    try {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const supplyResponse = await fetch(ENDPOINTS.supply, { signal });
+      const supplyData = await supplyResponse.json();
+      const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
+      const getPair = async (denom) => {
+        const res = await fetch(
+          `${ENDPOINTS.factory}/${btoa(
+            JSON.stringify({
+              pair: {
+                asset_infos: [
+                  { native_token: { denom: denom } },
+                  { native_token: { denom: "uwunicorn" } },
+                ],
+              },
+            })
+          )}`,
+          { signal }
+        );
+        const data = await res.json();
+        return data.data.contract_addr;
+      };
+
+      const getPriceAndTvl = async (denom) => {
+        const pair = await getPair(denom);
+        const balances = await fetchBalancesAsync(pair, signal);
+        const ubal = findBalance(balances, "uwunicorn");
+        const dbal = findBalance(balances, denom);
+        return { price: ubal / dbal, tvl: ubal };
+      };
+
+      const getInfo = async (sup) => {
+        const denom = sup.denom;
+        const denomShorthand = sup.denom.split("/")?.[2];
+        const supply = parseFloat(sup.amount) / 1000000;
+        const lpBalance = findBalance(lpBalances, denom);
+        const circ = supply - lpBalance;
+
+        if (denom === "uwunicorn") {
+          return {
+            denom: "uwunicorn",
+            denomShorthand: "uwunicorn",
+            emoji: MEMOJI.find((x) => x.name === "uwunicorn")?.emoji,
+            supply: supply,
+            circ,
+            mcap: supply,
+            fdv: supply,
+            tvl: 0,
+            liq: 0,
+            price: 1,
+            balance: lpBalance,
+            share: lpBalance / circ,
+            value: lpBalance,
+            listed: true,
+          };
+        } else {
+          const priceAndTvl = await getPriceAndTvl(denom);
+          const price = priceAndTvl.price;
+          const tvl = priceAndTvl.tvl;
+          const info = {
+            denom: denom,
+            denomShorthand,
+            emoji: MEMOJI.find((x) => x.name === denomShorthand)?.emoji,
+            supply: supply,
+            circ,
+            mcap: price * circ,
+            fdv: price * supply,
+            tvl,
+            liq: tvl / (price * circ),
+            price,
+            balance: lpBalance,
+            share: lpBalance / circ,
+            value: lpBalance * price,
+            listed: MEMOJI.find((x) => x.name === denomShorthand)?.listed
+              ? 1
+              : 0,
+          };
+          return info;
+        }
+      };
+
+      const infos = await Promise.all(supplyData.supply.map(getInfo));
+      const rowData = infos.map((info) => ({
+        emoji: String(info.emoji),
+        denom: String(info.denom),
+        denomDisplay: info.denomShorthand,
+        price: Number(info.price),
+        priceDisplay: numberFormatter.format(info.price) + " 🦄",
+        mcap: info.mcap,
+        mcapDisplay: numberFormatter.format(info.mcap),
+        liq: percentFormatter.format(info.liq),
+        tvl: numberFormatter.format(info.tvl),
+        fdv: numberFormatter.format(info.fdv),
+        supply: info.supply,
+        balance: info.balance,
+        share: info.share,
+        value: info.value,
+        circ: info.circ,
+        listed: info.listed,
+      }));
+
+      setRowData(rowData);
+      return () => {
+        // cancel rest requests before component unmounts
+        controller.abort();
+      };
+    } catch (error) {
+      console.error("Error fetching market data: ", error);
+    }
+  };
+
+  const fetchUserBalances = async () => {
+    try {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      if (isWalletConnected && rowData.length > 0) {
+        const userBalances = await fetchBalancesAsync(address, signal);
+        const balances = userBalances?.map((ub) => ({
+          name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
+          denom: ub.denom,
+          emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
+          amount: displayNumber(Number(ub.amount) / 1000000),
+          amountRaw: Number(ub.amount) / 1000000,
+        }));
+        setBalances(balances);
+      }
+      return () => {
+        // cancel rest requests before component unmounts
+        controller.abort();
+      };
+    } catch (error) {
+      console.error("Error fetching user balance data: ", error);
+    }
+  };
 
   const onGridTabClick = async (e) => {
     const activeTab =
@@ -201,6 +339,7 @@ function Cracked({ onClose }) {
       }
     }
   });
+
   const isLowLiq = (liq) => liq.replace("%", "") < 0.4;
   const alert = (message, link, linkText) => {
     setAlertMessage(message);
@@ -245,154 +384,21 @@ function Cracked({ onClose }) {
 
   // fetch supply data
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        const supplyResponse = await fetch(ENDPOINTS.supply, { signal });
-        const supplyData = await supplyResponse.json();
-        const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
-        const getPair = async (denom) => {
-          const res = await fetch(
-            `${ENDPOINTS.factory}/${btoa(
-              JSON.stringify({
-                pair: {
-                  asset_infos: [
-                    { native_token: { denom: denom } },
-                    { native_token: { denom: "uwunicorn" } },
-                  ],
-                },
-              })
-            )}`,
-            { signal }
-          );
-          const data = await res.json();
-          return data.data.contract_addr;
-        };
-
-        const getPriceAndTvl = async (denom) => {
-          const pair = await getPair(denom);
-          const balances = await fetchBalancesAsync(pair, signal);
-          const ubal = findBalance(balances, "uwunicorn");
-          const dbal = findBalance(balances, denom);
-          return { price: ubal / dbal, tvl: ubal };
-        };
-
-        const getInfo = async (sup) => {
-          const denom = sup.denom;
-          const denomShorthand = sup.denom.split("/")?.[2];
-          const supply = parseFloat(sup.amount) / 1000000;
-          const lpBalance = findBalance(lpBalances, denom);
-          const circ = supply - lpBalance;
-
-          if (denom === "uwunicorn") {
-            return {
-              denom: "uwunicorn",
-              denomShorthand: "uwunicorn",
-              emoji: MEMOJI.find((x) => x.name === "uwunicorn")?.emoji,
-              supply: supply,
-              circ,
-              mcap: supply,
-              fdv: supply,
-              tvl: 0,
-              liq: 0,
-              price: 1,
-              balance: lpBalance,
-              share: lpBalance / circ,
-              value: lpBalance,
-              listed: true,
-            };
-          } else {
-            const priceAndTvl = await getPriceAndTvl(denom);
-            const price = priceAndTvl.price;
-            const tvl = priceAndTvl.tvl;
-            const info = {
-              denom: denom,
-              denomShorthand,
-              emoji: MEMOJI.find((x) => x.name === denomShorthand)?.emoji,
-              supply: supply,
-              circ,
-              mcap: price * circ,
-              fdv: price * supply,
-              tvl,
-              liq: tvl / (price * circ),
-              price,
-              balance: lpBalance,
-              share: lpBalance / circ,
-              value: lpBalance * price,
-              listed: MEMOJI.find((x) => x.name === denomShorthand)?.listed
-                ? 1
-                : 0,
-            };
-            return info;
-          }
-        };
-
-        const infos = await Promise.all(supplyData.supply.map(getInfo));
-        const rowData = infos.map((info) => ({
-          emoji: String(info.emoji),
-          denom: String(info.denom),
-          denomDisplay: info.denomShorthand,
-          price: Number(info.price),
-          priceDisplay: numberFormatter.format(info.price) + " 🦄",
-          mcap: info.mcap,
-          mcapDisplay: numberFormatter.format(info.mcap),
-          liq: percentFormatter.format(info.liq),
-          tvl: numberFormatter.format(info.tvl),
-          fdv: numberFormatter.format(info.fdv),
-          supply: info.supply,
-          balance: info.balance,
-          share: info.share,
-          value: info.value,
-          circ: info.circ,
-          listed: info.listed,
-        }));
-
-        setRowData(rowData);
-        return () => {
-          // cancel rest requests before component unmounts
-          controller.abort();
-        };
-      } catch (error) {
-        console.error("Error fetching market data: ", error);
-      }
-    };
-
-    fetchData();
+    fetchSupplyData();
   }, []);
 
   // fetch user balances
   useEffect(() => {
-    const fetchUserBalances = async () => {
-      try {
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        if (isWalletConnected && rowData.length > 0) {
-          const userBalances = await fetchBalancesAsync(address, signal);
-          const balances = userBalances?.map((ub) => ({
-            name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
-            denom: ub.denom,
-            emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
-            amount: displayNumber(Number(ub.amount) / 1000000),
-            amountRaw: Number(ub.amount) / 1000000,
-          }));
-          console.log(balances);
-          setBalances(balances);
-        }
-        return () => {
-          // cancel rest requests before component unmounts
-          controller.abort();
-        };
-      } catch (error) {
-        console.error("Error fetching user balance data: ", error);
-      }
-    };
     if (address) {
       fetchUserBalances();
     }
   }, [address, rowData.length > 0, refreshBalances]);
+
+  // Poll prices and balances
+  useInterval(async () => {
+    fetchSupplyData();
+    fetchUserBalances();
+  }, 60_000);
 
   const onRowClicked = (event) => {
     const rowNode = event.node;
@@ -545,150 +551,201 @@ function Cracked({ onClose }) {
         <div className="flex flex-col flex-grow">
           <div className="memeMarketSection h-full p-2.5">
             <div id="memeMarket">
-              {mainTab === 0 && (<><div className="memeSection">
-                <img id="bridgeButton" src={mainTabButton} onClick={() => setMainTab(1)} style={{transform: 'translate(130.5px, 10px)'}}/>
-                <img id="airdropButton" src={mainTabButton} onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
-              </div></>)}
-              {mainTab === 1 && (<><div className="bridgeSection">
-                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
-                <img id="airdropButton" src={mainTabButton}  onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
-              </div></>)}
-              {mainTab === 2 && (<><div className="airdropSection">
-                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
-                <img id="bridgeButton" src={mainTabButton}  onClick={() => setMainTab(1)} style={{transform: 'translate(0px, 10px)'}} />
-              </div></>)}
-             {mainTab === 0 && (<> <div className="buttonSection">
-                {activeButton === 0 && (
-                  <>
+              {mainTab === 0 && (
+                <>
+                  <div className="memeSection">
                     <img
-                      className="allButton smidgeDown"
-                      id="allButton"
-                      src={allButton}
-                      onClick={onGridTabClick}
+                      id="bridgeButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(1)}
+                      style={{ transform: "translate(130.5px, 10px)" }}
                     />
                     <img
-                      onClick={onGridTabClick}
-                      className="hiddenButton"
-                      id="hiddenButton"
-                      style={{ opacity: "0" }}
-                      src={hiddenButton}
+                      id="airdropButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(2)}
+                      style={{ transform: "translate(130.5px, 10px)" }}
+                    />
+                  </div>
+                </>
+              )}
+              {mainTab === 1 && (
+                <>
+                  <div className="bridgeSection">
+                    <img
+                      id="memesButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(0)}
+                      style={{ transform: "translate(0px, 10px)" }}
                     />
                     <img
-                      onClick={onGridTabClick}
-                      className="classicButton"
-                      id="classicButton"
-                      style={{ opacity: "0" }}
-                      src={classicButton}
+                      id="airdropButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(2)}
+                      style={{ transform: "translate(130.5px, 10px)" }}
                     />
-                  </>
-                )}
-                {activeButton === 1 && (
-                  <>
+                  </div>
+                </>
+              )}
+              {mainTab === 2 && (
+                <>
+                  <div className="airdropSection">
                     <img
-                      onClick={onGridTabClick}
-                      className="allButton"
-                      id="allButton"
-                      style={{ opacity: "0" }}
-                      src={allButton}
-                    />
-                    <img
-                      className="hiddenButton smidgeDown"
-                      id="hiddenButton"
-                      src={hiddenButton}
+                      id="memesButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(0)}
+                      style={{ transform: "translate(0px, 10px)" }}
                     />
                     <img
-                      onClick={onGridTabClick}
-                      className="classicButton"
-                      id="classicButton"
-                      style={{ opacity: "0" }}
-                      src={classicButton}
+                      id="bridgeButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(1)}
+                      style={{ transform: "translate(0px, 10px)" }}
                     />
-                  </>
-                )}
-                {activeButton === 2 && (
-                  <>
-                    <img
-                      onClick={onGridTabClick}
-                      className="allButton"
-                      id="allButton"
-                      style={{ opacity: "0" }}
-                      src={allButton}
-                    />
-                    <img
-                      onClick={onGridTabClick}
-                      className="hiddenButton"
-                      id="hiddenButton"
-                      style={{ opacity: "0" }}
-                      src={hiddenButton}
-                    />
-                    <img
-                      className="classicButton smidgeDown"
-                      id="classicButton"
-                      src={classicButton}
-                    />
-                  </>
-                )}
-              </div>
-              <div className="listItems">
-                <div id="assetGrid" className="ag-theme-quartz-dark">
-                  <AgGridReact
-                    rowData={rowData}
-                    columnDefs={colDefs}
-                    defaultColDef={defaultColDef}
-                    rowSelection="single"
-                    ref={gridRef}
-                    onRowClicked={onRowClicked}
-                    enableSorting
-                    rowClass="row-borders"
-                  />
-                </div>
-              </div></>)}
-            {mainTab === 1 && (<>
-              <div className="constructionDiv">
-              <span className="centerText">
-              <Ztext
-                  depth='60px'
-                  direction='both'
-                  event='pointer'
-                  eventRotation='30deg'
-                  eventDirection='default'
-                  fade={false}
-                  layers={8}
-                  perspective='1200px'
-                  style={{
-                    fontSize: '4.5rem'
-                  }}
-                  >
-                   <h1>
-   <span>UNDER CONSTRUCTION</span>
-</h1>
-                </Ztext>
-                </span>
-                </div>
-            </>)}
-                 {mainTab === 2 && (<>
-              <div className="constructionDiv">
-              <span className="centerText">
-               <Ztext
-                  depth='60px'
-                  direction='both'
-                  event='pointer'
-                  eventRotation='30deg'
-                  eventDirection='default'
-                  fade={false}
-                  layers={8}
-                  perspective='1200px'
-                  style={{
-                    fontSize: '4.5rem'
-                  }}
-                  >
-                   <h1>
-   <span>UNDER CONSTRUCTION</span>
-</h1>
-                </Ztext>
-                </span>
-                </div>
-            </>)}
+                  </div>
+                </>
+              )}
+              {mainTab === 0 && (
+                <>
+                  {" "}
+                  <div className="buttonSection">
+                    {activeButton === 0 && (
+                      <>
+                        <img
+                          className="allButton smidgeDown"
+                          id="allButton"
+                          src={allButton}
+                          onClick={onGridTabClick}
+                        />
+                        <img
+                          onClick={onGridTabClick}
+                          className="hiddenButton"
+                          id="hiddenButton"
+                          style={{ opacity: "0" }}
+                          src={hiddenButton}
+                        />
+                        <img
+                          onClick={onGridTabClick}
+                          className="classicButton"
+                          id="classicButton"
+                          style={{ opacity: "0" }}
+                          src={classicButton}
+                        />
+                      </>
+                    )}
+                    {activeButton === 1 && (
+                      <>
+                        <img
+                          onClick={onGridTabClick}
+                          className="allButton"
+                          id="allButton"
+                          style={{ opacity: "0" }}
+                          src={allButton}
+                        />
+                        <img
+                          className="hiddenButton smidgeDown"
+                          id="hiddenButton"
+                          src={hiddenButton}
+                        />
+                        <img
+                          onClick={onGridTabClick}
+                          className="classicButton"
+                          id="classicButton"
+                          style={{ opacity: "0" }}
+                          src={classicButton}
+                        />
+                      </>
+                    )}
+                    {activeButton === 2 && (
+                      <>
+                        <img
+                          onClick={onGridTabClick}
+                          className="allButton"
+                          id="allButton"
+                          style={{ opacity: "0" }}
+                          src={allButton}
+                        />
+                        <img
+                          onClick={onGridTabClick}
+                          className="hiddenButton"
+                          id="hiddenButton"
+                          style={{ opacity: "0" }}
+                          src={hiddenButton}
+                        />
+                        <img
+                          className="classicButton smidgeDown"
+                          id="classicButton"
+                          src={classicButton}
+                        />
+                      </>
+                    )}
+                  </div>
+                  <div className="listItems">
+                    <div id="assetGrid" className="ag-theme-quartz-dark">
+                      <AgGridReact
+                        rowData={rowData}
+                        columnDefs={colDefs}
+                        defaultColDef={defaultColDef}
+                        rowSelection="single"
+                        ref={gridRef}
+                        onRowClicked={onRowClicked}
+                        enableSorting
+                        rowClass="row-borders"
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+              {mainTab === 1 && (
+                <>
+                  <div className="constructionDiv">
+                    <span className="centerText">
+                      <Ztext
+                        depth="60px"
+                        direction="both"
+                        event="pointer"
+                        eventRotation="30deg"
+                        eventDirection="default"
+                        fade={false}
+                        layers={8}
+                        perspective="1200px"
+                        style={{
+                          fontSize: "4.5rem",
+                        }}
+                      >
+                        <h1>
+                          <span>UNDER CONSTRUCTION</span>
+                        </h1>
+                      </Ztext>
+                    </span>
+                  </div>
+                </>
+              )}
+              {mainTab === 2 && (
+                <>
+                  <div className="constructionDiv">
+                    <span className="centerText">
+                      <Ztext
+                        depth="60px"
+                        direction="both"
+                        event="pointer"
+                        eventRotation="30deg"
+                        eventDirection="default"
+                        fade={false}
+                        layers={8}
+                        perspective="1200px"
+                        style={{
+                          fontSize: "4.5rem",
+                        }}
+                      >
+                        <h1>
+                          <span>UNDER CONSTRUCTION</span>
+                        </h1>
+                      </Ztext>
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="bottomBar flex flex-row items-baseline">

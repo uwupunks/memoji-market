@@ -309,7 +309,7 @@ function WinXP() {
 
   // Trader Mode, full screen trade
   useEffect(() => {
-    if (searchParams.get("trademode") || isMobile) {
+    if (searchParams.get("trademode") || isMobile || window.location.pathname?.includes('trade')) {
       dispatch({
         type: "ADD_APP",
         payload: { ...appSettings["Cracked"], maximized: true },

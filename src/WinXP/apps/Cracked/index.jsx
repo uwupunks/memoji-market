@@ -52,6 +52,7 @@ import SwapModal from "../../../components/SwapModal/index.jsx";
 import SendModal from "../../../components/SendModal/index.jsx";
 import AlertModal from "../../../components/AlertModal/index.jsx";
 import { useInterval } from "src/hooks/useInterval.js";
+import AirDrop from "../../../components/AirDrop";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   notation: "compact",
@@ -721,31 +722,7 @@ function Cracked({ onClose }) {
                   </div>
                 </>
               )}
-              {mainTab === 2 && (
-                <>
-                  <div className="constructionDiv">
-                    <span className="centerText">
-                      <Ztext
-                        depth="60px"
-                        direction="both"
-                        event="pointer"
-                        eventRotation="30deg"
-                        eventDirection="default"
-                        fade={false}
-                        layers={8}
-                        perspective="1200px"
-                        style={{
-                          fontSize: "4.5rem",
-                        }}
-                      >
-                        <h1>
-                          <span>UNDER CONSTRUCTION</span>
-                        </h1>
-                      </Ztext>
-                    </span>
-                  </div>
-                </>
-              )}
+              {mainTab === 2 && <AirDrop></AirDrop>}
             </div>
           </div>
           <div className="bottomBar flex flex-row items-baseline">

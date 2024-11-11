@@ -13,6 +13,10 @@ import { WalletSelect } from "components/WalletSelect";
 
 import { isMobile } from "react-device-detect";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
+
+
 const chain = {
   chain_name: "unicorn",
   chain_id: "unicorn-420",
@@ -63,9 +67,12 @@ const App = () => {
         },
       }}
     >
+      <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <WinXP />
       </BrowserRouter>
+
+      </QueryClientProvider>
     </ChainProvider>
   );
 };

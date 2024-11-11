@@ -1,0 +1,104 @@
+#airdrop {
+  height: 100%;
+  width: 100%;
+}
+
+#airdrop .grid {
+    float: left;
+  height: 100%;
+  width: 60%;
+}
+#airdrop .form {
+    float: right;
+  width: 40%;
+  background-color: #6699cc;
+}
+#airdrop .form label{
+    display: inline-block;
+    width: 45%;
+    margin: 2%;
+}
+#airdrop .form input{
+    display: inline-block;
+    width: 45%;
+    margin: 2%;
+}
+
+
+#airdropGrid.ag-theme-quartz-dark {
+  height: 100%;
+  width: 100%;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+  font-smoothing: none;
+
+  --ag-row-height: 20px;
+
+  --ag-font-family: arial;
+  --ag-font-size: 12px;
+  --ag-wrapper-border-radius: 0;
+
+  --ag-header-height: 24px;
+
+  --ag-background-color: rgb(34, 102, 187);
+
+  /* disable all borders */
+  --ag-borders: none;
+}
+
+.ag-header-viewport {
+  background-image: url(assets/img/bg-grid-header.png);
+}
+
+#airdropGrid {
+  border-bottom: 1px solid black;
+}
+#airdropGrid .ag-header-cell {
+  color: #224477;
+  font-weight: 500;
+  text-shadow: #74a4ec 0 0 3px;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+  font-smoothing: none;
+}
+#airdropGrid .ag-cell {
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  font-size: 8pt;
+  font-weight: 500;
+}
+#airdropGrid .ag-cell-focus {
+  border-right: 1px solid #003399;
+}
+#airdropGrid .row-borders {
+  border-left: 1px solid #6699cc;
+  border-top: 1px solid #6699cc;
+  border-bottom: 1px solid #003399;
+  border-right: 1px solid #003399;
+}
+#airdropGrid .ag-ltr .ag-cell {
+  border-right-width: 0px;
+  border-left-width: 0px;
+}
+#airdropGrid .partial-vertical-borders {
+  background: 
+    /* left border*/ linear-gradient(
+        to bottom,
+        transparent 10%,
+        #6699cc 10%,
+        #6699cc 80%,
+        transparent 80%
+      )
+      0 0 / 1px 100% no-repeat,
+    /*right border*/
+      linear-gradient(
+        to bottom,
+        transparent 10%,
+        #003399 10%,
+        #003399 80%,
+        transparent 80%
+      )
+      100% 0 / 1px 100% no-repeat;
+}

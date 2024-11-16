@@ -109,7 +109,8 @@ function Cracked({ onClose }) {
   let gridRef = useRef();
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
-  const FAKE_DIAMONDS = "factory/unicorn1pawhaxskmdkzvfgevs0dh4lxuctn4x8wt2sqyz95tgem9ne2nrwqjg6rvq/udiamond";
+  const FAKE_DIAMONDS =
+    "factory/unicorn1pawhaxskmdkzvfgevs0dh4lxuctn4x8wt2sqyz95tgem9ne2nrwqjg6rvq/udiamond";
 
   const fetchSupplyData = async () => {
     try {
@@ -118,7 +119,9 @@ function Cracked({ onClose }) {
 
       const supplyResponse = await fetch(ENDPOINTS.supply, { signal });
       const supplyJson = await supplyResponse.json();
-      const supplyData = supplyJson.supply.filter(s=>s.denom != FAKE_DIAMONDS)
+      const supplyData = supplyJson.supply.filter(
+        (s) => s.denom != FAKE_DIAMONDS
+      );
       const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
       const getPair = async (denom) => {
         const res = await fetch(
@@ -233,7 +236,10 @@ function Cracked({ onClose }) {
 
       if (isWalletConnected && rowData.length > 0) {
         const userBalances = await fetchBalancesAsync(address, signal);
-        const balances = userBalances?.map((ub) => ({
+        const userBalancesFiltered = userBalances.filter(
+          (b) => b.denom != FAKE_DIAMONDS
+        );
+        const balances = userBalancesFiltered?.map((ub) => ({
           name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
           denom: ub.denom,
           emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,

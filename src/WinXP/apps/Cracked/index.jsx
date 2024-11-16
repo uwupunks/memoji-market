@@ -109,6 +109,7 @@ function Cracked({ onClose }) {
   let gridRef = useRef();
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
+  const FAKE_DIAMONDS = "factory/unicorn1pawhaxskmdkzvfgevs0dh4lxuctn4x8wt2sqyz95tgem9ne2nrwqjg6rvq/udiamond";
 
   const fetchSupplyData = async () => {
     try {
@@ -116,7 +117,8 @@ function Cracked({ onClose }) {
       const signal = controller.signal;
 
       const supplyResponse = await fetch(ENDPOINTS.supply, { signal });
-      const supplyData = await supplyResponse.json();
+      const supplyJson = await supplyResponse.json();
+      const supplyData = supplyJson.supply.filter(s=>s.denom != FAKE_DIAMONDS)
       const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
       const getPair = async (denom) => {
         const res = await fetch(
@@ -194,7 +196,7 @@ function Cracked({ onClose }) {
         }
       };
 
-      const infos = await Promise.all(supplyData.supply.map(getInfo));
+      const infos = await Promise.all(supplyData.map(getInfo));
       const rowData = infos.map((info) => ({
         emoji: String(info.emoji),
         denom: String(info.denom),

@@ -1,5 +1,6 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WinXP from "./WinXP";
+import Trading from "./components/Trading";
 import { ChainProvider } from "@cosmos-kit/react";
 import { wallets as keplr } from "@cosmos-kit/keplr";
 import { wallets as leap } from "@cosmos-kit/leap";
@@ -14,11 +15,11 @@ import { WalletSelect } from "components/WalletSelect";
 import { isMobile } from "react-device-detect";
 
 const chain = {
-  chain_name: "unicorn",
-  chain_id: "unicorn-420",
+  chain_name: "osmosis",
+  chain_id: "osmosis-1",
 };
 const chainAssets = {
-  chain_name: "unicorn",
+  chain_name: "osmosis",
   assets: [],
 };
 
@@ -29,9 +30,13 @@ const signerOptions = {
   },
   signingCosmwasm: (chain) => {
     switch (chain.chain_name) {
-      case "unicorn":
+      case "osmosis":
         return {
-          gasPrice: GasPrice.fromString("0.001uwunicorn"),
+          gasPrice: GasPrice.fromString("0.025uosmo"),
+        };
+      default:
+        return {
+          gasPrice: GasPrice.fromString("0.025uosmo"),
         };
     }
   },
@@ -56,15 +61,43 @@ const App = () => {
       signerOptions={signerOptions}
       endpointOptions={{
         endpoints: {
-          unicorn: {
-            rpc: ["https://rpc.unicorn.meme"],
-            rest: ["https://rest.unicorn.meme"],
+          osmosis: {
+            rpc: ["https://rpc.osmosis.zone"],
+            rest: ["https://lcd.osmosis.zone"],
           },
         },
       }}
     >
       <BrowserRouter>
-        <WinXP />
+        <Routes>
+          <Route 
+            path="/trading" 
+            element={
+              isMobile ? (
+                <div className="mobile-warning">
+                  <h1>Mobile devices are not supported yet.</h1>
+                  <p>Please use a desktop browser to access the trading interface.</p>
+                </div>
+              ) : (
+                <Trading />
+              )
+            } 
+          />
+          <Route 
+            path="/" 
+            element={
+              isMobile ? (
+                <div className="mobile-warning">
+                  <h1>Mobile devices are not supported yet.</h1>
+                  <p>Please use a desktop browser to access the application.</p>
+                </div>
+              ) : (
+                <WinXP />
+              )
+            } 
+          />
+        </Routes>
+        <WalletSelect />
       </BrowserRouter>
     </ChainProvider>
   );

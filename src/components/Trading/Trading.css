@@ -1,0 +1,144 @@
+.trading-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.wallet-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wallet-info p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background-color: #fff;
+  color: #4a5568;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #f7fafc;
+  border-color: #cbd5e0;
+}
+
+.ag-theme-quartz {
+  --ag-foreground-color: #2d3748;
+  --ag-background-color: #ffffff;
+  --ag-header-foreground-color: #1a202c;
+  --ag-header-background-color: #f7fafc;
+  --ag-odd-row-background-color: #f8f9fa;
+  --ag-row-hover-color: #edf2f7;
+  --ag-selected-row-background-color: #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.ag-header-cell {
+  font-weight: 600;
+}
+
+.balances-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.balances-section h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.balances-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.balance-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.balance-item span:first-child {
+  font-size: 1.5rem;
+}
+
+.balance-item span:nth-child(2) {
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.balance-item span:last-child {
+  margin-left: auto;
+  color: #4a5568;
+  font-family: monospace;
+}
+
+/* Loading state */
+.trading-container.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .trading-container {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .wallet-info {
+    flex-direction: column;
+  }
+
+  .balances-grid {
+    grid-template-columns: 1fr;
+  }
+}

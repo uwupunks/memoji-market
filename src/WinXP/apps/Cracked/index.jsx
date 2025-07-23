@@ -86,7 +86,7 @@ const displayDenom = (denom) => {
 
 function Cracked({ onClose }) {
   const { username, connect, disconnect, address, isWalletConnected } =
-    useChain("unicorn");
+    useChain("osmosis");
 
   const { status: globalStatus, mainWallet } = useWallet(); // status here is the global wallet status for all activated chains (chain is activated when call useChain)
 
@@ -110,7 +110,7 @@ function Cracked({ onClose }) {
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
   const FAKE_DIAMONDS =
-    "factory/unicorn1pawhaxskmdkzvfgevs0dh4lxuctn4x8wt2sqyz95tgem9ne2nrwqjg6rvq/udiamond";
+    "factory/osmo1pawhaxskmdkzvfgevs0dh4lxuctn4x8wt2sqyz95tgem9ne2nrwqjg6rvq/udiamond";
 
   const fetchSupplyData = async () => {
     try {

@@ -307,41 +307,33 @@ function WinXP() {
     dispatch({ type: CANCEL_POWER_OFF });
   }
 
-  // Trader Mode, full screen trade
   useEffect(() => {
-    if (searchParams.get("trademode") || isMobile || window.location.pathname?.includes('trade')) {
-      dispatch({
-        type: "ADD_APP",
-        payload: { ...appSettings["Cracked"], maximized: true },
-      });
-    } else if (localStorage.getItem("cracked")) {
-      let desktop = document.getElementsByClassName("winxp")?.[0];
-      if (desktop) {
-        desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
-        desktop.style.backgroundSize = 'cover';
-      }
-      dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
-      dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
-      dispatch({
-        type: "ADD_ICONS",
-        payload: [
-          {
-            id: 2,
-            icon: crackedIcon,
-            title: "[Cracked] Unicorn Memoji Market",
-            component: Cracked,
-            isFocus: false,
-          },
-          {
-            id: 3,
-            icon: winamp,
-            title: "Winamp",
-            component: Winamp,
-            isFocus: false,
-          },
-        ],
-      });
+    let desktop = document.getElementsByClassName("winxp")?.[0];
+    if (desktop) {
+      desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
+      desktop.style.backgroundSize = "cover";
     }
+    dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
+    dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
+    dispatch({
+      type: "ADD_ICONS",
+      payload: [
+        {
+          id: 2,
+          icon: crackedIcon,
+          title: "[Cracked] Unicorn Memoji Market",
+          component: Cracked,
+          isFocus: false,
+        },
+        {
+          id: 3,
+          icon: winamp,
+          title: "Winamp",
+          component: Winamp,
+          isFocus: false,
+        },
+      ],
+    });
   }, []);
 
   return (

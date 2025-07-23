@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import Ztext from 'react-ztext';
+import Ztext from "react-ztext";
 import connectButton from "assets/img/connectwallet.png";
 import exitButton from "assets/img/exit.png";
 import hoverButton from "assets/img/hover.png";
@@ -85,7 +85,7 @@ const displayDenom = (denom) => {
 
 function Cracked({ onClose }) {
   const { username, connect, disconnect, address, isWalletConnected } =
-    useChain("unicorn");
+    useChain("osmosis");
 
   const { status: globalStatus, mainWallet } = useWallet(); // status here is the global wallet status for all activated chains (chain is activated when call useChain)
 
@@ -545,150 +545,201 @@ function Cracked({ onClose }) {
         <div className="flex flex-col flex-grow">
           <div className="memeMarketSection h-full p-2.5">
             <div id="memeMarket">
-              {mainTab === 0 && (<><div className="memeSection">
-                <img id="bridgeButton" src={mainTabButton} onClick={() => setMainTab(1)} style={{transform: 'translate(130.5px, 10px)'}}/>
-                <img id="airdropButton" src={mainTabButton} onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
-              </div></>)}
-              {mainTab === 1 && (<><div className="bridgeSection">
-                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
-                <img id="airdropButton" src={mainTabButton}  onClick={() => setMainTab(2)} style={{transform: 'translate(130.5px, 10px)'}} />
-              </div></>)}
-              {mainTab === 2 && (<><div className="airdropSection">
-                <img id="memesButton" src={mainTabButton}  onClick={() => setMainTab(0)} style={{transform: 'translate(0px, 10px)'}} />
-                <img id="bridgeButton" src={mainTabButton}  onClick={() => setMainTab(1)} style={{transform: 'translate(0px, 10px)'}} />
-              </div></>)}
-             {mainTab === 0 && (<> <div className="buttonSection">
-                {activeButton === 0 && (
-                  <>
+              {mainTab === 0 && (
+                <>
+                  <div className="memeSection">
                     <img
-                      className="allButton smidgeDown"
-                      id="allButton"
-                      src={allButton}
-                      onClick={onGridTabClick}
+                      id="bridgeButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(1)}
+                      style={{ transform: "translate(130.5px, 10px)" }}
                     />
                     <img
-                      onClick={onGridTabClick}
-                      className="hiddenButton"
-                      id="hiddenButton"
-                      style={{ opacity: "0" }}
-                      src={hiddenButton}
+                      id="airdropButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(2)}
+                      style={{ transform: "translate(130.5px, 10px)" }}
+                    />
+                  </div>
+                </>
+              )}
+              {mainTab === 1 && (
+                <>
+                  <div className="bridgeSection">
+                    <img
+                      id="memesButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(0)}
+                      style={{ transform: "translate(0px, 10px)" }}
                     />
                     <img
-                      onClick={onGridTabClick}
-                      className="classicButton"
-                      id="classicButton"
-                      style={{ opacity: "0" }}
-                      src={classicButton}
+                      id="airdropButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(2)}
+                      style={{ transform: "translate(130.5px, 10px)" }}
                     />
-                  </>
-                )}
-                {activeButton === 1 && (
-                  <>
+                  </div>
+                </>
+              )}
+              {mainTab === 2 && (
+                <>
+                  <div className="airdropSection">
                     <img
-                      onClick={onGridTabClick}
-                      className="allButton"
-                      id="allButton"
-                      style={{ opacity: "0" }}
-                      src={allButton}
-                    />
-                    <img
-                      className="hiddenButton smidgeDown"
-                      id="hiddenButton"
-                      src={hiddenButton}
+                      id="memesButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(0)}
+                      style={{ transform: "translate(0px, 10px)" }}
                     />
                     <img
-                      onClick={onGridTabClick}
-                      className="classicButton"
-                      id="classicButton"
-                      style={{ opacity: "0" }}
-                      src={classicButton}
+                      id="bridgeButton"
+                      src={mainTabButton}
+                      onClick={() => setMainTab(1)}
+                      style={{ transform: "translate(0px, 10px)" }}
                     />
-                  </>
-                )}
-                {activeButton === 2 && (
-                  <>
-                    <img
-                      onClick={onGridTabClick}
-                      className="allButton"
-                      id="allButton"
-                      style={{ opacity: "0" }}
-                      src={allButton}
-                    />
-                    <img
-                      onClick={onGridTabClick}
-                      className="hiddenButton"
-                      id="hiddenButton"
-                      style={{ opacity: "0" }}
-                      src={hiddenButton}
-                    />
-                    <img
-                      className="classicButton smidgeDown"
-                      id="classicButton"
-                      src={classicButton}
-                    />
-                  </>
-                )}
-              </div>
-              <div className="listItems">
-                <div id="assetGrid" className="ag-theme-quartz-dark">
-                  <AgGridReact
-                    rowData={rowData}
-                    columnDefs={colDefs}
-                    defaultColDef={defaultColDef}
-                    rowSelection="single"
-                    ref={gridRef}
-                    onRowClicked={onRowClicked}
-                    enableSorting
-                    rowClass="row-borders"
-                  />
-                </div>
-              </div></>)}
-            {mainTab === 1 && (<>
-              <div className="constructionDiv">
-              <span className="centerText">
-              <Ztext
-                  depth='60px'
-                  direction='both'
-                  event='pointer'
-                  eventRotation='30deg'
-                  eventDirection='default'
-                  fade={false}
-                  layers={8}
-                  perspective='1200px'
-                  style={{
-                    fontSize: '4.5rem'
-                  }}
-                  >
-                   <h1>
-   <span>UNDER CONSTRUCTION</span>
-</h1>
-                </Ztext>
-                </span>
-                </div>
-            </>)}
-                 {mainTab === 2 && (<>
-              <div className="constructionDiv">
-              <span className="centerText">
-               <Ztext
-                  depth='60px'
-                  direction='both'
-                  event='pointer'
-                  eventRotation='30deg'
-                  eventDirection='default'
-                  fade={false}
-                  layers={8}
-                  perspective='1200px'
-                  style={{
-                    fontSize: '4.5rem'
-                  }}
-                  >
-                   <h1>
-   <span>UNDER CONSTRUCTION</span>
-</h1>
-                </Ztext>
-                </span>
-                </div>
-            </>)}
+                  </div>
+                </>
+              )}
+              {mainTab === 0 && (
+                <>
+                  {" "}
+                  <div className="buttonSection">
+                    {activeButton === 0 && (
+                      <>
+                        <img
+                          className="allButton smidgeDown"
+                          id="allButton"
+                          src={allButton}
+                          onClick={onGridTabClick}
+                        />
+                        <img
+                          onClick={onGridTabClick}
+                          className="hiddenButton"
+                          id="hiddenButton"
+                          style={{ opacity: "0" }}
+                          src={hiddenButton}
+                        />
+                        <img
+                          onClick={onGridTabClick}
+                          className="classicButton"
+                          id="classicButton"
+                          style={{ opacity: "0" }}
+                          src={classicButton}
+                        />
+                      </>
+                    )}
+                    {activeButton === 1 && (
+                      <>
+                        <img
+                          onClick={onGridTabClick}
+                          className="allButton"
+                          id="allButton"
+                          style={{ opacity: "0" }}
+                          src={allButton}
+                        />
+                        <img
+                          className="hiddenButton smidgeDown"
+                          id="hiddenButton"
+                          src={hiddenButton}
+                        />
+                        <img
+                          onClick={onGridTabClick}
+                          className="classicButton"
+                          id="classicButton"
+                          style={{ opacity: "0" }}
+                          src={classicButton}
+                        />
+                      </>
+                    )}
+                    {activeButton === 2 && (
+                      <>
+                        <img
+                          onClick={onGridTabClick}
+                          className="allButton"
+                          id="allButton"
+                          style={{ opacity: "0" }}
+                          src={allButton}
+                        />
+                        <img
+                          onClick={onGridTabClick}
+                          className="hiddenButton"
+                          id="hiddenButton"
+                          style={{ opacity: "0" }}
+                          src={hiddenButton}
+                        />
+                        <img
+                          className="classicButton smidgeDown"
+                          id="classicButton"
+                          src={classicButton}
+                        />
+                      </>
+                    )}
+                  </div>
+                  <div className="listItems">
+                    <div id="assetGrid" className="ag-theme-quartz-dark">
+                      <AgGridReact
+                        rowData={rowData}
+                        columnDefs={colDefs}
+                        defaultColDef={defaultColDef}
+                        rowSelection="single"
+                        ref={gridRef}
+                        onRowClicked={onRowClicked}
+                        enableSorting
+                        rowClass="row-borders"
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+              {mainTab === 1 && (
+                <>
+                  <div className="constructionDiv">
+                    <span className="centerText">
+                      <Ztext
+                        depth="60px"
+                        direction="both"
+                        event="pointer"
+                        eventRotation="30deg"
+                        eventDirection="default"
+                        fade={false}
+                        layers={8}
+                        perspective="1200px"
+                        style={{
+                          fontSize: "4.5rem",
+                        }}
+                      >
+                        <h1>
+                          <span>UNDER CONSTRUCTION</span>
+                        </h1>
+                      </Ztext>
+                    </span>
+                  </div>
+                </>
+              )}
+              {mainTab === 2 && (
+                <>
+                  <div className="constructionDiv">
+                    <span className="centerText">
+                      <Ztext
+                        depth="60px"
+                        direction="both"
+                        event="pointer"
+                        eventRotation="30deg"
+                        eventDirection="default"
+                        fade={false}
+                        layers={8}
+                        perspective="1200px"
+                        style={{
+                          fontSize: "4.5rem",
+                        }}
+                      >
+                        <h1>
+                          <span>UNDER CONSTRUCTION</span>
+                        </h1>
+                      </Ztext>
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="bottomBar flex flex-row items-baseline">

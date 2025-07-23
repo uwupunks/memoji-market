@@ -11,48 +11,48 @@ import "./index.css";
 
 const suggest = async () => {
   const chainInfo = {
-    chainId: "unicorn-420",
-    chainName: "unicorn",
-    rest: "https://rest.unicorn.meme",
-    rpc: "https://rpc.unicorn.meme",
+    chainId: "osmosis-1",
+    chainName: "Osmosis",
+    rest: "https://lcd.osmosis.zone",
+    rpc: "https://rpc.osmosis.zone",
     bip44: {
       coinType: 118,
     },
     bech32Config: {
-      bech32PrefixAccAddr: "unicorn",
-      bech32PrefixAccPub: "unicorn" + "pub",
-      bech32PrefixValAddr: "unicorn" + "valoper",
-      bech32PrefixValPub: "unicorn" + "valoperpub",
-      bech32PrefixConsAddr: "unicorn" + "valcons",
-      bech32PrefixConsPub: "unicorn" + "valconspub",
+      bech32PrefixAccAddr: "osmo",
+      bech32PrefixAccPub: "osmopub",
+      bech32PrefixValAddr: "osmovaloper",
+      bech32PrefixValPub: "osmovaloperpub",
+      bech32PrefixConsAddr: "osmovalcons",
+      bech32PrefixConsPub: "osmovalconspub",
     },
     currencies: [
       {
-        coinDenom: "UWU",
-        coinMinimalDenom: "uwunicorn",
+        coinDenom: "OSMO",
+        coinMinimalDenom: "uosmo",
         coinDecimals: 6,
-        coinImageUrl:
-          "https://bafkreid2zugjmwborka6qt4mxlb3vepnnxj344dtyaf4gmdsogzd2dh2a4.ipfs.w3s.link",
+        coinGeckoId: "osmosis",
+        coinImageUrl: "https://assets.coingecko.com/coins/images/16724/small/osmo.png",
       },
     ],
     feeCurrencies: [
       {
-        coinDenom: "🦄",
-        coinMinimalDenom: "uwunicorn",
+        coinDenom: "OSMO",
+        coinMinimalDenom: "uosmo",
         coinDecimals: 6,
         gasPriceStep: {
-          low: 0.01,
+          low: 0.0025,
           average: 0.025,
           high: 0.04,
         },
       },
     ],
     stakeCurrency: {
-      coinDenom: "🦄",
-      coinMinimalDenom: "uwunicorn",
+      coinDenom: "OSMO",
+      coinMinimalDenom: "uosmo",
       coinDecimals: 6,
     },
-    features: ["cosmwasm"],
+    features: ["ibc-transfer", "ibc-go", "cosmwasm"],
   };
 
   if (window.keplr) {

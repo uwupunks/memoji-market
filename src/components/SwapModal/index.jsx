@@ -34,7 +34,7 @@ function SwapModal({
   const overSound = new Audio(overMp3);
   const errorSound = new Audio(errorWav);
   const { address, isWalletConnected, getSigningCosmWasmClient } =
-    useChain("unicorn");
+    useChain("osmosis");
 
   // state
   const [leftAsset, setLeftAsset] = useState(left);

@@ -26,7 +26,7 @@ function SendModal({ isActive, balances, onSend }) {
   const overSound = new Audio(overMp3);
   const errorSound = new Audio(errorWav);
   const { address, isWalletConnected, getSigningStargateClient } =
-    useChain("unicorn");
+    useChain("osmosis");
 
   // state
   const [isLoading, setIsLoading] = useState(false);
@@ -70,20 +70,24 @@ function SendModal({ isActive, balances, onSend }) {
         if (res.code === 0) {
           setIsLoading(false);
           successSound.play();
-          onSend("Success!", `https://uwu.direct/Unicorn/tx/${res.transactionHash}`, 'View TXN');
+          onSend(
+            "Success!",
+            `https://uwu.direct/Unicorn/tx/${res.transactionHash}`,
+            "View TXN"
+          );
         } else {
           throw new Error(res.rawLog);
         }
       } catch (err) {
         setIsLoading(false);
         errorSound.play();
-        onSend(`send failed with error: ${err}`)
+        onSend(`send failed with error: ${err}`);
         return null;
       } finally {
         setIsLoading(false);
       }
     } else {
-      onSend("Validation Error or wallet not connected.")
+      onSend("Validation Error or wallet not connected.");
     }
   };
 
@@ -154,7 +158,10 @@ function SendModal({ isActive, balances, onSend }) {
             <img className="loading" src={sonicspin}></img>
           ) : (
             <>
-              <button className="cancelButton" onClick={() => onSend(null)}></button>
+              <button
+                className="cancelButton"
+                onClick={() => onSend(null)}
+              ></button>
               <button
                 disabled={
                   !toAddress || !sendAmount || !sendDenom || !addressResolved

@@ -25,5 +25,5 @@ export default defineConfig({
       src: "/src",
     },
   },
-  assetsInclude: ["**/*.vox"],
+  assetsInclude: ["**/*.vox", "**/*.wsz"],
 });

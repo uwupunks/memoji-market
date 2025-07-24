@@ -2,7 +2,16 @@
   display: none;
 }
 #webamp {
-    position: absolute;
-    top: 318px;
-    left: 33px;
+  position: absolute;
+  top: 20vh;
+  left: 60vw;
+}
+#winamp-container {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  pointer-events: none;
+}
+#winamp-container > div {
+  pointer-events: auto;
 }

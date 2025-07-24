@@ -1,3 +1,7 @@
+
+// Auto-generated imports for all music files
+import Moonflight from "assets/music/moonflight.mp3";
+import EastofHenesys from "assets/music/maple/EastofHenesys.mp3";
 import Ellinia from "assets/music/maple/Ellinia.mp3";
 import Henesys from "assets/music/maple/Henesys.mp3";
 import HenesysMarket from "assets/music/maple/HenesysMarket.mp3";
@@ -9,6 +13,10 @@ import Subway from "assets/music/maple/Subway.mp3";
 import ToEllinia from "assets/music/maple/ToEllinia.mp3";
 import TreeDungeon from "assets/music/maple/TreeDungeon.mp3";
 import WestofHenesys from "assets/music/maple/WestofHenesys.mp3";
+import NightcoreEverytimeWeTouch from "assets/music/uwu/Nightcore Everytime We Touch - SuperstarElf - SoundLoadMate.com.mp3";
+import PlatinumDisco from "assets/music/uwu/Platinum Disco _ Eurobeat Remix - Turbo - SoundLoadMate.com.mp3";
+import SchnuffelHaschenparty from "assets/music/uwu/schnuffel - häschenparty _ bunny party _sped up_ - лимон - SoundLoadMate.com.mp3";
+import DuvetBoa from "assets/music/uwu/𝗗𝘂𝘃𝗲𝘁 𝗕𝗼𝗮 - 𝗦𝗽𝗲𝗱 𝘂𝗽 - gore poop - SoundLoadMate.com.mp3";
 
 
 function shuffleArray(array) {
@@ -23,157 +31,159 @@ function shuffleArray(array) {
 }
 
 export const initialTracks = shuffleArray([
+  // All local music files
   {
-    url: ToEllinia,
-    duration: 158,
+    url: Moonflight,
+    duration: null,
     metaData: {
-      title: "To Ellinia",
-      artist: "Wizet",
+      title: "moonflight",
+      artist: "Unknown",
+      album: "Unknown",
+    },
+  },
+  {
+    url: EastofHenesys,
+    duration: null,
+    metaData: {
+      title: "East of Henesys",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: Ellinia,
-    duration: 187,
+    duration: null,
     metaData: {
       title: "Ellinia",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: Henesys,
-    duration: 137,
+    duration: null,
     metaData: {
       title: "Henesys",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: HenesysMarket,
-    duration: 72,
+    duration: null,
     metaData: {
       title: "Henesys Market",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: LithHarbor,
-    duration: 271,
+    duration: null,
     metaData: {
       title: "Lith Harbor",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: Shanghai,
-    duration: 146,
+    duration: null,
     metaData: {
       title: "Shanghai",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: ShowaTown,
-    duration: 157,
+    duration: null,
     metaData: {
       title: "Showa Town",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: Sleepywood,
-    duration: 166,
+    duration: null,
     metaData: {
       title: "Sleepywood",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: Subway,
-    duration: 198,
+    duration: null,
     metaData: {
       title: "Subway",
-      artist: "Wizet",
+      artist: "Unknown",
+      album: "Maplestory",
+    },
+  },
+  {
+    url: ToEllinia,
+    duration: null,
+    metaData: {
+      title: "To Ellinia",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: TreeDungeon,
-    duration: 146,
+    duration: null,
     metaData: {
       title: "Tree Dungeon",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
   {
     url: WestofHenesys,
-    duration: 128,
+    duration: null,
     metaData: {
       title: "West of Henesys",
-      artist: "Wizet",
+      artist: "Unknown",
       album: "Maplestory",
     },
   },
+  // uwu folder
   {
-    url: "https://oldschool.runescape.wiki/images/Autumn_Voyage.ogg",
-    duration: 138,
+    url: NightcoreEverytimeWeTouch,
+    duration: null,
     metaData: {
-      title: "Autumn Voyage",
-      artist: "Jagex",
-      album: "Runescape",
+      title: "Nightcore Everytime We Touch",
+      artist: "SuperstarElf",
+      album: "uwu",
     },
   },
   {
-    url: "https://oldschool.runescape.wiki/images/Background.ogg",
-    duration: 243,
+    url: PlatinumDisco,
+    duration: null,
     metaData: {
-      title: "Background",
-      artist: "Jagex",
-      album: "Runescape",
+      title: "Platinum Disco (Eurobeat Remix)",
+      artist: "Turbo",
+      album: "uwu",
     },
   },
   {
-    url: "https://oldschool.runescape.wiki/images/Dream.ogg",
-    duration: 153,
+    url: SchnuffelHaschenparty,
+    duration: null,
     metaData: {
-      title: "Dream",
-      artist: "Jagex",
-      album: "Runescape",
+      title: "Schnuffel Häschenparty (Bunny Party Sped Up)",
+      artist: "лимон",
+      album: "uwu",
     },
   },
   {
-    url: "https://oldschool.runescape.wiki/images/Home_Sweet_Home.ogg",
-    duration: 321,
+    url: DuvetBoa,
+    duration: null,
     metaData: {
-      title: "Home Sweet Home",
-      artist: "Jagex",
-      album: "Runescape",
-    },
-  },
-  {
-    url: "https://oldschool.runescape.wiki/images/Spirit.ogg",
-    duration: 234,
-    metaData: {
-      title: "Spirit",
-      artist: "Jagex",
-      album: "Runescape",
-    },
-  },
-  {
-    url: "https://oldschool.runescape.wiki/images/Waterfall.ogg",
-    duration: 207.072653,
-    metaData: {
-      title: "Waterfall",
-      artist: "Jagex",
-      album: "Runescape",
+      title: "Duvet Boa (Sped Up)",
+      artist: "gore poop",
+      album: "uwu",
     },
   },
 ]);

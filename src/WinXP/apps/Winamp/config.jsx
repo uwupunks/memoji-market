@@ -1,19 +1,14 @@
-// Auto-generated imports for all music files
-import Moonflight from "assets/music/moonflight.mp3";
-import EastofHenesys from "assets/music/maple/EastofHenesys.mp3";
-import Ellinia from "assets/music/maple/Ellinia.mp3";
-import Henesys from "assets/music/maple/Henesys.mp3";
-import HenesysMarket from "assets/music/maple/HenesysMarket.mp3";
-import LithHarbor from "assets/music/maple/LithHarbor.mp3";
-import Shanghai from "assets/music/maple/Shanghai.mp3";
-import ShowaTown from "assets/music/maple/ShowaTown.mp3";
-import Sleepywood from "assets/music/maple/Sleepywood.mp3";
-import Subway from "assets/music/maple/Subway.mp3";
-import ToEllinia from "assets/music/maple/ToEllinia.mp3";
-import TreeDungeon from "assets/music/maple/TreeDungeon.mp3";
-import WestofHenesys from "assets/music/maple/WestofHenesys.mp3";
+// Auto-generated imports for all uwu music files
+import FriedNoodles from "assets/music/uwu/02 Fried Noodles _DVNZXL Remix_ - Pink Season Extras - SoundLoadMate.com.mp3";
+import AlinaBasshunter from "assets/music/uwu/Alina _ Basshunter - When You Leave _M.P.E. Remix_ _FREE DOWNLOAD_ - M.P.E. - SoundLoadMate.com.mp3";
+import BakemonogatariSutekiMeppou from "assets/music/uwu/Bakemonogatari Suteki Meppou - RosesAreRed - SoundLoadMate.com.mp3";
+import BarreBaby from "assets/music/uwu/Barre Baby _feat. Ronnetta Spencer_ - Big Moe - SoundLoadMate.com.mp3";
+import GangnamStyleNightcore from "assets/music/uwu/Gangnam Style Nightcore. - IDoNightcore - SoundLoadMate.com.mp3";
+import Instasamka from "assets/music/uwu/INSTASAMKA _ Пампим нефть _ speed up _ - shwtyhub - SoundLoadMate.com.mp3";
 import NightcoreEverytimeWeTouch from "assets/music/uwu/Nightcore Everytime We Touch - SuperstarElf - SoundLoadMate.com.mp3";
+import NoRules from "assets/music/uwu/No Rules_ - Windows95Man - SoundLoadMate.com.mp3";
 import PlatinumDisco from "assets/music/uwu/Platinum Disco _ Eurobeat Remix - Turbo - SoundLoadMate.com.mp3";
+import PursuingMyTrueSelf from "assets/music/uwu/Pursuing My True Self - xayusu - SoundLoadMate.com.mp3";
 import SchnuffelHaschenparty from "assets/music/uwu/schnuffel - häschenparty _ bunny party _sped up_ - лимон - SoundLoadMate.com.mp3";
 import DuvetBoa from "assets/music/uwu/𝗗𝘂𝘃𝗲𝘁 𝗕𝗼𝗮 - 𝗦𝗽𝗲𝗱 𝘂𝗽 - gore poop - SoundLoadMate.com.mp3";
 
@@ -32,125 +27,60 @@ function shuffleArray(array) {
 }
 
 export const initialTracks = shuffleArray([
-  // All local music files
   {
-    url: Moonflight,
+    url: FriedNoodles,
     duration: null,
     metaData: {
-      title: "moonflight",
-      artist: "Unknown",
-      album: "Unknown",
+      title: "Fried Noodles (DVNZXL Remix)",
+      artist: "Pink Season Extras",
+      album: "uwu",
     },
   },
   {
-    url: EastofHenesys,
+    url: AlinaBasshunter,
     duration: null,
     metaData: {
-      title: "East of Henesys",
-      artist: "Unknown",
-      album: "Maplestory",
+      title: "Alina / Basshunter - When You Leave (M.P.E. Remix)",
+      artist: "M.P.E.",
+      album: "uwu",
     },
   },
   {
-    url: Ellinia,
+    url: BakemonogatariSutekiMeppou,
     duration: null,
     metaData: {
-      title: "Ellinia",
-      artist: "Unknown",
-      album: "Maplestory",
+      title: "Bakemonogatari Suteki Meppou",
+      artist: "RosesAreRed",
+      album: "uwu",
     },
   },
   {
-    url: Henesys,
+    url: BarreBaby,
     duration: null,
     metaData: {
-      title: "Henesys",
-      artist: "Unknown",
-      album: "Maplestory",
+      title: "Barre Baby (feat. Ronnetta Spencer)",
+      artist: "Big Moe",
+      album: "uwu",
     },
   },
   {
-    url: HenesysMarket,
+    url: GangnamStyleNightcore,
     duration: null,
     metaData: {
-      title: "Henesys Market",
-      artist: "Unknown",
-      album: "Maplestory",
+      title: "Gangnam Style Nightcore",
+      artist: "IDoNightcore",
+      album: "uwu",
     },
   },
   {
-    url: LithHarbor,
+    url: Instasamka,
     duration: null,
     metaData: {
-      title: "Lith Harbor",
-      artist: "Unknown",
-      album: "Maplestory",
+      title: "INSTASAMKA (Пампим нефть speed up)",
+      artist: "shwtyhub",
+      album: "uwu",
     },
   },
-  {
-    url: Shanghai,
-    duration: null,
-    metaData: {
-      title: "Shanghai",
-      artist: "Unknown",
-      album: "Maplestory",
-    },
-  },
-  {
-    url: ShowaTown,
-    duration: null,
-    metaData: {
-      title: "Showa Town",
-      artist: "Unknown",
-      album: "Maplestory",
-    },
-  },
-  {
-    url: Sleepywood,
-    duration: null,
-    metaData: {
-      title: "Sleepywood",
-      artist: "Unknown",
-      album: "Maplestory",
-    },
-  },
-  {
-    url: Subway,
-    duration: null,
-    metaData: {
-      title: "Subway",
-      artist: "Unknown",
-      album: "Maplestory",
-    },
-  },
-  {
-    url: ToEllinia,
-    duration: null,
-    metaData: {
-      title: "To Ellinia",
-      artist: "Unknown",
-      album: "Maplestory",
-    },
-  },
-  {
-    url: TreeDungeon,
-    duration: null,
-    metaData: {
-      title: "Tree Dungeon",
-      artist: "Unknown",
-      album: "Maplestory",
-    },
-  },
-  {
-    url: WestofHenesys,
-    duration: null,
-    metaData: {
-      title: "West of Henesys",
-      artist: "Unknown",
-      album: "Maplestory",
-    },
-  },
-  // uwu folder
   {
     url: NightcoreEverytimeWeTouch,
     duration: null,
@@ -161,11 +91,29 @@ export const initialTracks = shuffleArray([
     },
   },
   {
+    url: NoRules,
+    duration: null,
+    metaData: {
+      title: "No Rules",
+      artist: "Windows95Man",
+      album: "uwu",
+    },
+  },
+  {
     url: PlatinumDisco,
     duration: null,
     metaData: {
       title: "Platinum Disco (Eurobeat Remix)",
       artist: "Turbo",
+      album: "uwu",
+    },
+  },
+  {
+    url: PursuingMyTrueSelf,
+    duration: null,
+    metaData: {
+      title: "Pursuing My True Self",
+      artist: "xayusu",
       album: "uwu",
     },
   },

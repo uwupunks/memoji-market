@@ -1,4 +1,3 @@
-
 // Auto-generated imports for all music files
 import Moonflight from "assets/music/moonflight.mp3";
 import EastofHenesys from "assets/music/maple/EastofHenesys.mp3";
@@ -18,14 +17,16 @@ import PlatinumDisco from "assets/music/uwu/Platinum Disco _ Eurobeat Remix - Tu
 import SchnuffelHaschenparty from "assets/music/uwu/schnuffel - häschenparty _ bunny party _sped up_ - лимон - SoundLoadMate.com.mp3";
 import DuvetBoa from "assets/music/uwu/𝗗𝘂𝘃𝗲𝘁 𝗕𝗼𝗮 - 𝗦𝗽𝗲𝗱 𝘂𝗽 - gore poop - SoundLoadMate.com.mp3";
 
-
 function shuffleArray(array) {
-  let currentIndex = array.length, randomIndex;
+  let currentIndex = array.length,
+    randomIndex;
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
     [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
+      array[randomIndex],
+      array[currentIndex],
+    ];
   }
   return array;
 }
@@ -187,4 +188,3 @@ export const initialTracks = shuffleArray([
     },
   },
 ]);
-

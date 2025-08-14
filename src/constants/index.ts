@@ -1,7 +1,7 @@
-const SERVER = "https://lcd.osmosis.zone";
+const SERVER = "https://lcd.osmotest5.osmosis.zone";
 
 export const CONTRACTS = {
-  factory: "osmo1yvgh8xeju5dyr0zxlkvq09htvhjj20fncp5g58np4u25g8rkpgjslkfelc",
+  factory: "osmo1memed6l3t9gxrlcdxa2s8as3r28ezyu4shmkx3",
   lp: "osmo1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty",
   swap: "osmo16jzpxp0e8550c9aht6q9svcux30vtyyyyxv5w2l2djjra46580wsl825uf",
 };

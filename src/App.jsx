@@ -59,8 +59,8 @@ const App = () => {
       endpointOptions={{
         endpoints: {
           osmosis: {
-            rpc: ["https://rpc.osmosis.zone"],
-            rest: ["https://lcd.osmosis.zone"],
+            rpc: ["https://rpc.osmotest5.osmosis.zone"],
+            rest: ["https://lcd.osmotest5.osmosis.zone"],
           },
         },
       }}

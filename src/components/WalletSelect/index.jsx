@@ -8,31 +8,35 @@ import overMp3 from "assets/sounds/btmouseover.mp3";
 import { isMobile } from "react-device-detect";
 
 import "./index.css";
-
 const suggest = async () => {
   const chainInfo = {
-    chainId: "osmosis-1",
-    chainName: "Osmosis",
-    rest: "https://lcd.osmosis.zone",
-    rpc: "https://rpc.osmosis.zone",
+    features: ["cosmwasm", "osmosis-txfees"],
+    chainId: "osmo-test-5",
+    chainName: "Osmosis (osmo-test-5)",
+    rpc: "https://rpc.osmotest5.osmosis.zone",
+    rest: "https://lcd.osmotest5.osmosis.zone",
     bip44: {
       coinType: 118,
     },
     bech32Config: {
       bech32PrefixAccAddr: "osmo",
-      bech32PrefixAccPub: "osmopub",
-      bech32PrefixValAddr: "osmovaloper",
-      bech32PrefixValPub: "osmovaloperpub",
-      bech32PrefixConsAddr: "osmovalcons",
-      bech32PrefixConsPub: "osmovalconspub",
+      bech32PrefixAccPub: "osmo" + "pub",
+      bech32PrefixValAddr: "osmo" + "valoper",
+      bech32PrefixValPub: "osmo" + "valoperpub",
+      bech32PrefixConsAddr: "osmo" + "valcons",
+      bech32PrefixConsPub: "osmo" + "valconspub",
     },
     currencies: [
       {
         coinDenom: "OSMO",
         coinMinimalDenom: "uosmo",
         coinDecimals: 6,
-        coinGeckoId: "osmosis",
-        coinImageUrl: "https://assets.coingecko.com/coins/images/16724/small/osmo.png",
+        // coinGeckoId: "aura",
+      },
+      {
+        coinDenom: "ION",
+        coinMinimalDenom: "uion",
+        coinDecimals: 6,
       },
     ],
     feeCurrencies: [
@@ -40,11 +44,6 @@ const suggest = async () => {
         coinDenom: "OSMO",
         coinMinimalDenom: "uosmo",
         coinDecimals: 6,
-        gasPriceStep: {
-          low: 0.0025,
-          average: 0.025,
-          high: 0.04,
-        },
       },
     ],
     stakeCurrency: {
@@ -52,7 +51,12 @@ const suggest = async () => {
       coinMinimalDenom: "uosmo",
       coinDecimals: 6,
     },
-    features: ["ibc-transfer", "ibc-go", "cosmwasm"],
+    coinType: 118,
+    gasPriceStep: {
+      low: 0.0025,
+      average: 0.025,
+      high: 0.04,
+    },
   };
 
   if (window.keplr) {

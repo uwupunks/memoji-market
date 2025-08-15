@@ -1,13 +1,13 @@
-const SERVER = "https://lcd.osmotest5.osmosis.zone";
+const SERVER = "https://lcd.testnet.osmosis.zone";
 
 export const CONTRACTS = {
-  factory: "osmo1memed6l3t9gxrlcdxa2s8as3r28ezyu4shmkx3",
-  lp: "osmo1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty",
-  swap: "osmo16jzpxp0e8550c9aht6q9svcux30vtyyyyxv5w2l2djjra46580wsl825uf",
+  creator: "osmo1d5gkvaryvmmumdgjpz90zn987yualaqgg7685z",
+ // lp: "osmo1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty",
+  // swap: "osmo16jzpxp0e8550c9aht6q9svcux30vtyyyyxv5w2l2djjra46580wsl825uf",
 };
 export const ENDPOINTS = {
-  supply: `${SERVER}/cosmos/bank/v1beta1/supply?pagination.limit=100`,
-  factory: `${SERVER}/cosmwasm/wasm/v1/contract/${CONTRACTS.factory}/smart`,
+  denoms: `${SERVER}/osmosis/tokenfactory/v1beta1/denoms_from_creator/${CONTRACTS.creator}`,
+  supplyByDenom: `${SERVER}/cosmos/bank/v1beta1/supply/by_denom?denom=`,
   balances: `${SERVER}/cosmos/bank/v1beta1/balances`,
 };
 

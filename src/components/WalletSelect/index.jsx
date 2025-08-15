@@ -14,7 +14,7 @@ const suggest = async () => {
     chainId: "osmo-test-5",
     chainName: "Osmosis (osmo-test-5)",
     rpc: "https://rpc.osmotest5.osmosis.zone",
-    rest: "https://lcd.osmotest5.osmosis.zone",
+    rest: "https://lcd.testnet.osmosis.zone",
     bip44: {
       coinType: 118,
     },

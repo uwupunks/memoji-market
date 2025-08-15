@@ -75,8 +75,8 @@ const displayDenom = (denom) => {
   if (denom === "usa") {
     return "USA";
   }
-  if (denom === "uosmo") {
-    return "OSMO";
+  if (denom === "owonicorn") {
+    return "UWU";
   }
   return denom?.charAt(1).toUpperCase() + denom?.slice(2);
 };
@@ -106,19 +106,33 @@ function Trading({ onClose }) {
   let gridRef = useRef();
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
-  const FAKE_DIAMONDS =
-    "factory/unicorn1pawhaxskmdkzvfgevs0dh4lxuctn4x8wt2sqyz95tgem9ne2nrwqjg6rvq/udiamond";
 
   const fetchSupplyData = async () => {
     try {
       const controller = new AbortController();
       const signal = controller.signal;
 
-      const supplyResponse = await fetch(ENDPOINTS.supply, { signal });
-      const supplyJson = await supplyResponse.json();
-      const supplyData = supplyJson.supply.filter(
-        (s) => s.denom != FAKE_DIAMONDS
-      );
+      const denoms = await fetch(ENDPOINTS.denoms, { signal });
+      const supplyJson = await denoms.json();
+      const supplyMap = supplyJson.denoms.map(async (d) => {
+        const supply = await fetch(`${ENDPOINTS.supplyByDenom}${d}`).then(
+          (res) => res.json()
+        );
+
+        if (!supply.amount || !supply.amount.denom || !supply.amount.amount) {
+          return {
+            denom: d,
+            amount: "0",
+          };
+        } else {
+          return {
+            denom: d,
+            amount: supply.amount.amount,
+          };
+        }
+      });
+      const supplyData = await Promise.all(supplyData);
+
       const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
       const getPair = async (denom) => {
         const res = await fetch(
@@ -141,7 +155,7 @@ function Trading({ onClose }) {
       const getPriceAndTvl = async (denom) => {
         const pair = await getPair(denom);
         const balances = await fetchBalancesAsync(pair, signal);
-        const ubal = findBalance(balances, "uosmo");
+        const ubal = findBalance(balances, "owonicorn");
         const dbal = findBalance(balances, denom);
         return { price: ubal / dbal, tvl: ubal };
       };
@@ -153,11 +167,11 @@ function Trading({ onClose }) {
         const lpBalance = findBalance(lpBalances, denom);
         const circ = supply - lpBalance;
 
-        if (denom === "uosmo") {
+        if (denom === "owonicorn") {
           return {
-            denom: "uosmo",
-            denomShorthand: "uosmo",
-            emoji: MEMOJI.find((x) => x.name === "uosmo")?.emoji,
+            denom: "owonicorn",
+            denomShorthand: "owonicorn",
+            emoji: MEMOJI.find((x) => x.name === "owonicorn")?.emoji,
             supply: supply,
             circ,
             mcap: supply,
@@ -434,7 +448,7 @@ function Trading({ onClose }) {
   const onInventoryClick = (asset) => {
     const foundAsset = rowData.find((r) => r.denom.endsWith(asset.name));
 
-    if (!foundAsset || foundAsset.denom === "uosmo") {
+    if (!foundAsset || foundAsset.denom === "owonicorn") {
       return null;
     }
 
@@ -446,8 +460,8 @@ function Trading({ onClose }) {
       amount: "1",
     });
     setRightAsset({
-      name: "uosmo",
-      denom: "uosmo",
+      name: "owonicorn",
+      denom: "owonicorn",
       amount: (1 * foundAsset.price).toFixed(4),
     });
 

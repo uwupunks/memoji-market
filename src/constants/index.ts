@@ -80,7 +80,7 @@ const memoji = [
   { name: "utest", emoji: "test", listed: true },
   { name: "uwatermelon", emoji: "🍉", listed: true },
   { name: "uwuxd", emoji: "😆", listed: true },
-  { name: "uwunicorn", emoji: "🦄", listed: true },
+  { name: "owonicorn", emoji: "🦄", listed: true },
 ];
 
 const loadMemojiModules = async () => {

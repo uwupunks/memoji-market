@@ -67,8 +67,8 @@ const App = () => {
     >
       <BrowserRouter>
         <Routes>
-          <Route path="/winxp" Component={WinXP} />
-          <Route path="/" Component={Trading} />
+          <Route path="/" Component={WinXP} />
+          <Route path="/trading" Component={Trading} />
         </Routes>
         <WalletSelect />
       </BrowserRouter>

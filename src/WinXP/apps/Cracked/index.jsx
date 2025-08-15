@@ -506,10 +506,12 @@ function Cracked({ onClose }) {
               <img className="userWindow" src={userWindow} />
             </div>
             <div className="walletName">
+              
               {isWalletConnected ? (
                 <>
                   <p>{addressDisplay}</p>
-                  <p>{username}</p>
+                  <p style={{ color: "purple" }}> TESTNET </p>
+                  {/* <p>{username}</p> */}
                 </>
               ) : null}
             </div>

@@ -43,7 +43,7 @@ import tCharacter from "assets/img/tCharacter.png";
 import lessThanCharacter from "assets/img/lessThanCharacter.png";
 import btSend2 from "assets/img/btsend/2.png";
 import memeInv from "assets/img/memeInv.png";
-import { CONTRACTS, ENDPOINTS, MEMOJI } from "../../constants";
+import { CONTRACTS, ENDPOINTS, MEMOJI, supplyData } from "../../constants";
 import { fetchBalancesAsync, findBalance } from "../../hooks/balanceUtils.jsx";
 import SwapModal from "../SwapModal/index.jsx";
 import SendModal from "../SendModal/index.jsx";
@@ -112,26 +112,27 @@ function Trading({ onClose }) {
       const controller = new AbortController();
       const signal = controller.signal;
 
-      const denoms = await fetch(ENDPOINTS.denoms, { signal });
-      const supplyJson = await denoms.json();
-      const supplyMap = supplyJson.denoms.map(async (d) => {
-        const supply = await fetch(`${ENDPOINTS.supplyByDenom}${d}`).then(
-          (res) => res.json()
-        );
+      // const denoms = await fetch(ENDPOINTS.denoms, { signal });
+      // const supplyJson = await denoms.json();
+      // const supplyMap = supplyJson.denoms.map(async (d) => {
+      //   const supply = await fetch(`${ENDPOINTS.supplyByDenom}${d}`).then(
+      //     (res) => res.json()
+      //   );
 
-        if (!supply.amount || !supply.amount.denom || !supply.amount.amount) {
-          return {
-            denom: d,
-            amount: "0",
-          };
-        } else {
-          return {
-            denom: d,
-            amount: supply.amount.amount,
-          };
-        }
-      });
-      const supplyData = await Promise.all(supplyData);
+      //   if (!supply.amount || !supply.amount.denom || !supply.amount.amount) {
+      //     return {
+      //       denom: d,
+      //       amount: "0",
+      //     };
+      //   } else {
+      //     return {
+      //       denom: d,
+      //       amount: supply.amount.amount,
+      //     };
+      //   }
+      // });
+      // const supplyData = await Promise.all(supplyData);
+
 
       const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
       const getPair = async (denom) => {
@@ -153,6 +154,9 @@ function Trading({ onClose }) {
       };
 
       const getPriceAndTvl = async (denom) => {
+        // todo: implement
+        return { price: 0, tvl: 0 };
+
         const pair = await getPair(denom);
         const balances = await fetchBalancesAsync(pair, signal);
         const ubal = findBalance(balances, "owonicorn");
@@ -210,7 +214,16 @@ function Trading({ onClose }) {
         }
       };
 
-      const infos = await Promise.all(supplyData.map(getInfo));
+      const infos = (await Promise.allSettled(supplyData.map(getInfo))).map(
+        (result) => {
+          if (result.status === "fulfilled") {
+            return result.value || {};
+          } else {
+            console.error("Error fetching supply data: ", result.reason);
+            return {};
+          }
+        }
+      );
       const rowData = infos.map((info) => ({
         emoji: String(info.emoji),
         denom: String(info.denom),
@@ -247,11 +260,8 @@ function Trading({ onClose }) {
 
       if (isWalletConnected && rowData.length > 0) {
         const userBalances = await fetchBalancesAsync(address, signal);
-        const userBalancesFiltered = userBalances.filter(
-          (b) => b.denom != FAKE_DIAMONDS
-        );
-        const balances = userBalancesFiltered?.map((ub) => ({
-          name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
+        const balances = userBalances?.map((ub) => ({
+          name: rowData.find((r) => ub.denom.endsWith(r.denomDisplay))?.denomDisplay,
           denom: ub.denom,
           emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
           amount: displayNumber(Number(ub.amount) / 1000000),

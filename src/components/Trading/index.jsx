@@ -49,6 +49,7 @@ import SwapModal from "../SwapModal/index.jsx";
 import SendModal from "../SendModal/index.jsx";
 import AlertModal from "../AlertModal/index.jsx";
 import { useInterval } from "src/hooks/useInterval.js";
+import { color } from "three/tsl";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   notation: "compact",
@@ -132,7 +133,6 @@ function Trading({ onClose }) {
       //   }
       // });
       // const supplyData = await Promise.all(supplyData);
-
 
       const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
       const getPair = async (denom) => {
@@ -261,7 +261,8 @@ function Trading({ onClose }) {
       if (isWalletConnected && rowData.length > 0) {
         const userBalances = await fetchBalancesAsync(address, signal);
         const balances = userBalances?.map((ub) => ({
-          name: rowData.find((r) => ub.denom.endsWith(r.denomDisplay))?.denomDisplay,
+          name: rowData.find((r) => ub.denom.endsWith(r.denomDisplay))
+            ?.denomDisplay,
           denom: ub.denom,
           emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
           amount: displayNumber(Number(ub.amount) / 1000000),
@@ -530,7 +531,8 @@ function Trading({ onClose }) {
               {isWalletConnected ? (
                 <>
                   <p>{addressDisplay}</p>
-                  <p>{username}</p>
+                  <p style={{ color: "purple", fontWeight: "bold" }}>TESTNET</p>
+                  {/* <p>{username}</p> */}
                 </>
               ) : null}
             </div>
@@ -824,9 +826,11 @@ function Trading({ onClose }) {
                   src={connectButton}
                 />
               )}
+              <p style={{ color: "purple", fontWeight: "bold" }}>TESTNET</p>
             </div>
 
             <div className="exitWrapper mt-auto mb-5 mr-2.5 h-full">
+              
               <img
                 onMouseEnter={() => overSound.play()}
                 className="exit"
@@ -834,7 +838,7 @@ function Trading({ onClose }) {
                 src={exitButton}
               />
             </div>
-
+            
             <div className="mt-auto">
               <img
                 className="mascot"

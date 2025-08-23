@@ -55,16 +55,7 @@ function SendModal({ isActive, balances, onSend }) {
           fromAddress: address,
         });
 
-        const fee = {
-          amount: [
-            {
-              denom: "uowo",
-              amount: "2891",
-            },
-          ],
-          gas: "115632",
-        };
-        const res = await client.signAndBroadcast(address, [msg], fee);
+        const res = await client.signAndBroadcast(address, [msg]);
 
         /** Error code. The transaction succeeded if and only if code is 0. */
         if (res.code === 0) {

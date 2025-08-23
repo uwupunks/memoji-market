@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 import { cosmos } from "juno-network";
 
-import { MEMOJI } from "src/constants";
+import { MEMOJI, EXPLORER_PATH } from "src/constants";
 import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
 import successMp3 from "assets/sounds/success.mp3";
@@ -58,7 +58,7 @@ function SendModal({ isActive, balances, onSend }) {
         const fee = {
           amount: [
             {
-              denom: "uwunicorn",
+              denom: "uowo",
               amount: "2891",
             },
           ],
@@ -72,7 +72,7 @@ function SendModal({ isActive, balances, onSend }) {
           successSound.play();
           onSend(
             "Success!",
-            `https://uwu.direct/Unicorn/tx/${res.transactionHash}`,
+            `${EXPLORER_PATH}/tx/${res.transactionHash}`,
             "View TXN"
           );
         } else {
@@ -135,7 +135,7 @@ function SendModal({ isActive, balances, onSend }) {
               src={
                 sendDenom &&
                 MEMOJI.find(
-                  (m) => (sendDenom.split("/")?.[2] || "uwunicorn") === m.name
+                  (m) => (sendDenom.split("/")?.[2] || "uowo") === m.name
                 )?.image
               }
             ></img>

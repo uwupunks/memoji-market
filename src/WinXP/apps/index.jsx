@@ -24,7 +24,7 @@ export const defaultIconState = [
   {
     id: 1,
     icon: keygenIcon,
-    title: "[RAD] uwunicorn keygen V0.5.exe",
+    title: "[RAD] uowo keygen V0.5.exe",
     component: Keygen,
     isFocus: false,
   },

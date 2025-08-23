@@ -43,7 +43,7 @@ import tCharacter from "assets/img/tCharacter.png";
 import lessThanCharacter from "assets/img/lessThanCharacter.png";
 import btSend2 from "assets/img/btsend/2.png";
 import memeInv from "assets/img/memeInv.png";
-import { CONTRACTS, ENDPOINTS, MEMOJI, supplyData } from "../../constants";
+import { CONTRACTS, ENDPOINTS, MEMOJI } from "../../constants";
 import { fetchBalancesAsync, findBalance } from "../../hooks/balanceUtils.jsx";
 import SwapModal from "../SwapModal/index.jsx";
 import SendModal from "../SendModal/index.jsx";
@@ -76,7 +76,7 @@ const displayDenom = (denom) => {
   if (denom === "usa") {
     return "USA";
   }
-  if (denom === "owonicorn") {
+  if (denom === "uowo") {
     return "UWU";
   }
   return denom?.charAt(1).toUpperCase() + denom?.slice(2);
@@ -159,23 +159,21 @@ function Trading({ onClose }) {
 
         const pair = await getPair(denom);
         const balances = await fetchBalancesAsync(pair, signal);
-        const ubal = findBalance(balances, "owonicorn");
+        const ubal = findBalance(balances, "uowo");
         const dbal = findBalance(balances, denom);
         return { price: ubal / dbal, tvl: ubal };
       };
 
       const getInfo = async (sup) => {
-        const denom = sup.denom;
-        const denomShorthand = sup.denom.split("/")?.[2];
-        const supply = parseFloat(sup.amount) / 1000000;
-        const lpBalance = findBalance(lpBalances, denom);
+        const supply = parseFloat(sup.maxSupply) / 1000000;
+        const lpBalance = findBalance(lpBalances, sup?.denom);
         const circ = supply - lpBalance;
 
-        if (denom === "owonicorn") {
+        if (sup?.name === "uowo") {
           return {
-            denom: "owonicorn",
-            denomShorthand: "owonicorn",
-            emoji: MEMOJI.find((x) => x.name === "owonicorn")?.emoji,
+            denom: sup?.denom,
+            denomShorthand: sup?.name,
+            emoji: sup?.emoji,
             supply: supply,
             circ,
             mcap: supply,
@@ -189,42 +187,43 @@ function Trading({ onClose }) {
             listed: true,
           };
         } else {
-          const priceAndTvl = await getPriceAndTvl(denom);
-          const price = priceAndTvl.price;
-          const tvl = priceAndTvl.tvl;
+          const priceAndTvl = await getPriceAndTvl(sup?.denom);
+          const price = priceAndTvl.price || 0;
+          const tvl = priceAndTvl.tvl || 0;
           const info = {
-            denom: denom,
-            denomShorthand,
-            emoji: MEMOJI.find((x) => x.name === denomShorthand)?.emoji,
+            denom: sup?.denom,
+            denomShorthand: sup?.name,
+            emoji: sup?.emoji,
             supply: supply,
             circ,
-            mcap: price * circ,
-            fdv: price * supply,
+            mcap: price * circ || 0,
+            fdv: price * supply || 0,
             tvl,
-            liq: tvl / (price * circ),
+            liq: tvl / (price * circ) || 0,
             price,
             balance: lpBalance,
             share: lpBalance / circ,
             value: lpBalance * price,
-            listed: MEMOJI.find((x) => x.name === denomShorthand)?.listed
-              ? 1
-              : 0,
+            listed: sup?.listed ? 1 : 0,
           };
+          if (!sup?.emoji) {
+            console.warn("No emoji info for denom: ", sup);
+          }
           return info;
         }
       };
 
-      const infos = (await Promise.allSettled(supplyData.map(getInfo))).map(
-        (result) => {
-          if (result.status === "fulfilled") {
-            return result.value || {};
-          } else {
-            console.error("Error fetching supply data: ", result.reason);
-            return {};
-          }
+      const supplyDataMapped = (
+        await Promise.allSettled(MEMOJI.map(getInfo))
+      ).map((result) => {
+        if (result.status === "fulfilled") {
+          return result.value || {};
+        } else {
+          console.error("Error fetching supply data: ", result.reason);
+          return {};
         }
-      );
-      const rowData = infos.map((info) => ({
+      });
+      const rowData = supplyDataMapped.map((info) => ({
         emoji: String(info.emoji),
         denom: String(info.denom),
         denomDisplay: info.denomShorthand,
@@ -261,14 +260,13 @@ function Trading({ onClose }) {
       if (isWalletConnected && rowData.length > 0) {
         const userBalances = await fetchBalancesAsync(address, signal);
         const balances = userBalances?.map((ub) => ({
-          name: rowData.find((r) => ub.denom.endsWith(r.denomDisplay))
-            ?.denomDisplay,
+          name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
           denom: ub.denom,
           emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
           amount: displayNumber(Number(ub.amount) / 1000000),
           amountRaw: Number(ub.amount) / 1000000,
         }));
-        setBalances(balances);
+        setBalances(balances.filter((b) => b.name));
       }
       return () => {
         // cancel rest requests before component unmounts
@@ -437,8 +435,8 @@ function Trading({ onClose }) {
     setSwapPrice(selectedAsset.price);
 
     setLeftAsset({
-      name: "uwunicorn",
-      denom: "uwunicorn",
+      name: "uowo",
+      denom: "uowo",
       amount: "1",
     });
     setRightAsset({
@@ -457,9 +455,14 @@ function Trading({ onClose }) {
   };
 
   const onInventoryClick = (asset) => {
-    const foundAsset = rowData.find((r) => r.denom.endsWith(asset.name));
+    const foundAsset = rowData.find((r) => r.denom === asset.denom);
 
-    if (!foundAsset || foundAsset.denom === "owonicorn") {
+    if (!foundAsset) {
+      console.error("No asset found for denom: ", asset.name);
+      return null;
+    }
+
+    if (foundAsset.denomDisplay === "uowo") {
       return null;
     }
 
@@ -471,8 +474,8 @@ function Trading({ onClose }) {
       amount: "1",
     });
     setRightAsset({
-      name: "owonicorn",
-      denom: "owonicorn",
+      name: "uowo",
+      denom: "uowo",
       amount: (1 * foundAsset.price).toFixed(4),
     });
 
@@ -561,7 +564,7 @@ function Trading({ onClose }) {
                 {balances?.map((asset) => {
                   return (
                     <div
-                      key={asset.name}
+                      key={asset.denom}
                       className="assetWrapper"
                       onClick={() => onInventoryClick(asset)}
                     >
@@ -830,7 +833,6 @@ function Trading({ onClose }) {
             </div>
 
             <div className="exitWrapper mt-auto mb-5 mr-2.5 h-full">
-              
               <img
                 onMouseEnter={() => overSound.play()}
                 className="exit"
@@ -838,7 +840,7 @@ function Trading({ onClose }) {
                 src={exitButton}
               />
             </div>
-            
+
             <div className="mt-auto">
               <img
                 className="mascot"

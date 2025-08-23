@@ -75,7 +75,7 @@ function SwapModal({
     setRightAsset((prev) => ({
       ...prev,
       amount:
-        rightAsset.denom === "uwunicorn"
+        rightAsset.denom === "uowo"
           ? (e.target.value * price).toFixed(4)
           : (e.target.value / price).toFixed(4),
     }));
@@ -165,7 +165,7 @@ function SwapModal({
 
     // calc expected amount
     tempLeft.amount =
-      tempLeft.denom === "uwunicorn"
+      tempLeft.denom === "uowo"
         ? (leftAsset.amount * price).toFixed(4)
         : (leftAsset.amount / price).toFixed(4);
 

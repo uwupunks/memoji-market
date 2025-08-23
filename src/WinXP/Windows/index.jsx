@@ -46,7 +46,7 @@ function Windows({
 const Window = memo(function ({
   injectProps,
   id,
-  key={id},
+  key = { id },
   onMouseDown,
   onMouseUpClose,
   onMouseUpMinimize,
@@ -82,11 +82,7 @@ const Window = memo(function ({
   const [patched, setPatched] = useState(0);
   const ref = useRef(null);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const {
-    offset,
-    size,
-    handleDraggable,
-  } = useElementResize(ref, {
+  const { offset, size, handleDraggable } = useElementResize(ref, {
     dragRef,
     defaultOffset,
     defaultSize,
@@ -113,58 +109,58 @@ const Window = memo(function ({
   }
 
   return (
-      <div
-        patched={patched}
-        className={className}
-        id={header.title}
-        key={id}
-        onMouseDown={(e) => {
-          _onMouseDown(e);
-          handleDraggable(e);
-        }}
-        style={{
-          transform: `translate(${x}px,${y}px)`,
-          width: width ? `${width}px` : "auto",
-          height: height ? `${height}px` : "auto",
-          zIndex,
-        }}
+    <div
+      patched={patched}
+      className={className}
+      id={header.title}
+      key={id}
+      onMouseDown={(e) => {
+        _onMouseDown(e);
+        handleDraggable(e);
+      }}
+      style={{
+        transform: `translate(${x}px,${y}px)`,
+        width: width ? `${width}px` : "auto",
+        height: height ? `${height}px` : "auto",
+        zIndex,
+      }}
+    >
+      <div className="header__bg" />
+      <header
+        ref={dragRef}
+        className="app__header"
+        onDoubleClick={onDoubleClickHeader}
       >
-        <div className="header__bg" />
-        <header
-          ref={dragRef}
-          className="app__header"
-          onDoubleClick={onDoubleClickHeader}
-        >
-          <img
-            onDoubleClick={_onMouseUpClose}
-            src={header.icon}
-            alt={header.title}
-            className="app__header__icon"
-            draggable={false}
-          />
-          <div className="app__header__title">{header.title}</div>
-          <HeaderButtons
-            buttons={header.buttons}
-            onMaximize={_onMouseUpMaximize}
-            onMinimize={_onMouseUpMinimize}
-            onClose={_onMouseUpClose}
-            maximized={maximized}
-            resizable={resizable}
-            isFocus={isFocus}
-          />
-        </header>
-        <div className="app__content" ref={ref}>
-          {component({
-            onClose: _onMouseUpClose,
-            onMinimize: _onMouseUpMinimize,
-            onMaximize: _onMouseUpMaximize,
-            isFocus,
-            ...injectProps,
-            dispatch,
-            id,
-          })}
-        </div>
+        <img
+          onDoubleClick={_onMouseUpClose}
+          src={header.icon}
+          alt={header.title}
+          className="app__header__icon"
+          draggable={false}
+        />
+        <div className="app__header__title">{header.title}</div>
+        <HeaderButtons
+          buttons={header.buttons}
+          onMaximize={_onMouseUpMaximize}
+          onMinimize={_onMouseUpMinimize}
+          onClose={_onMouseUpClose}
+          maximized={maximized}
+          resizable={resizable}
+          isFocus={isFocus}
+        />
+      </header>
+      <div className="app__content" ref={ref}>
+        {component({
+          onClose: _onMouseUpClose,
+          onMinimize: _onMouseUpMinimize,
+          onMaximize: _onMouseUpMaximize,
+          isFocus,
+          ...injectProps,
+          dispatch,
+          id,
+        })}
       </div>
+    </div>
   );
 });
 

@@ -5,7 +5,6 @@ import genMin from "assets/img/minipress.png";
 import genMin2 from "assets/img/minipress2.png";
 import keygenVideo from "assets/video/keygen-video.mp4";
 import keygenPoster from "assets/video/keygen-poster.png";
-import winxpStormy from "assets/img/bg-winxp-stormy.jpeg";
 import song from "assets/music/moonflight.mp3";
 import { appSettings } from "src/WinXP/apps";
 import "./index.css";
@@ -43,11 +42,6 @@ function Keygen({ onClose, onMinimize, dispatch, id }) {
   }, []);
 
   const swapWindows = () => {
-    let desktop = document.getElementsByClassName("winxp")?.[0];
-    if (desktop) {
-      desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
-    }
-
     // Stop music
     audio.pause();
     audio.currentTime = 0;

@@ -326,7 +326,9 @@ function Trading({ onClose }) {
       }
     };
     if (address) {
-      setAddressDisplay(`${address.slice(0, 11)}...${address.slice(37, ADDRESS_LENGTH)}`);
+      setAddressDisplay(
+        `${address.slice(0, 11)}...${address.slice(37, ADDRESS_LENGTH)}`
+      );
       fn();
     }
   }, [address]);

@@ -33,7 +33,6 @@ import Icons from "./Icons";
 import { DashedBox } from "../components";
 import Winamp from "./apps/Winamp";
 import Cracked from "./apps/Cracked";
-import winxpStormy from "assets/img/bg-winxp-stormy.jpeg";
 import crackedIcon from "assets/windowsIcons/cracked.png";
 import winamp from "assets/windowsIcons/winamp.png";
 import "./index.css";
@@ -308,11 +307,6 @@ function WinXP() {
   }
 
   useEffect(() => {
-    let desktop = document.getElementsByClassName("winxp")?.[0];
-    if (desktop) {
-      desktop.style.background = `url(${winxpStormy}) no-repeat center center fixed`;
-      desktop.style.backgroundSize = "cover";
-    }
     dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
     dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
     dispatch({

@@ -1,5 +1,3 @@
 .winxp {
-  background: url(assets/img/bg-winxp.jpg) no-repeat center center fixed;
-  background-size: cover; /* Ensures the background image fills the screen */
+  background: url(assets/img/bg.webp) repeat center center fixed;
 }
-

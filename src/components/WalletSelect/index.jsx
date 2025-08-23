@@ -12,7 +12,7 @@ const suggest = async () => {
   const chainInfo = {
     features: ["cosmwasm", "osmosis-txfees"],
     chainId: "osmo-test-5",
-    chainName: "Osmosis (osmo-test-5)",
+    chainName: "osmosis",
     rpc: "https://rpc.osmotest5.osmosis.zone",
     rest: "https://lcd.testnet.osmosis.zone",
     bip44: {
@@ -31,7 +31,6 @@ const suggest = async () => {
         coinDenom: "OSMO",
         coinMinimalDenom: "uosmo",
         coinDecimals: 6,
-        // coinGeckoId: "aura",
       },
       {
         coinDenom: "ION",
@@ -44,18 +43,17 @@ const suggest = async () => {
         coinDenom: "OSMO",
         coinMinimalDenom: "uosmo",
         coinDecimals: 6,
+        gasPriceStep: {
+          low: 0.0025,
+          average: 0.025,
+          high: 0.04,
+        },
       },
     ],
     stakeCurrency: {
       coinDenom: "OSMO",
       coinMinimalDenom: "uosmo",
       coinDecimals: 6,
-    },
-    coinType: 118,
-    gasPriceStep: {
-      low: 0.0025,
-      average: 0.025,
-      high: 0.04,
     },
   };
 

@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 
 import VoxLoader from "components/VoxLoader";
-import { CONTRACTS } from "src/constants";
+import { CONTRACTS, EXPLORER_PATH } from "src/constants";
 
 import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
@@ -134,7 +134,7 @@ function SwapModal({
         successSound.onended = () =>
           onSwap(
             "Success!",
-            `https://uwu.direct/Unicorn/tx/${res.transactionHash}`,
+            `${EXPLORER_PATH}/tx/${res.transactionHash}`,
             "View TXN"
           );
         await successSound.play();

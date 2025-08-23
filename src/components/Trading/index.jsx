@@ -43,7 +43,7 @@ import tCharacter from "assets/img/tCharacter.png";
 import lessThanCharacter from "assets/img/lessThanCharacter.png";
 import btSend2 from "assets/img/btsend/2.png";
 import memeInv from "assets/img/memeInv.png";
-import { CONTRACTS, ENDPOINTS, MEMOJI } from "../../constants";
+import { CONTRACTS, ENDPOINTS, MEMOJI, ADDRESS_LENGTH } from "../../constants";
 import { fetchBalancesAsync, findBalance } from "../../hooks/balanceUtils.jsx";
 import SwapModal from "../SwapModal/index.jsx";
 import SendModal from "../SendModal/index.jsx";
@@ -326,7 +326,7 @@ function Trading({ onClose }) {
       }
     };
     if (address) {
-      setAddressDisplay(`${address.slice(0, 11)}...${address.slice(40, 46)}`);
+      setAddressDisplay(`${address.slice(0, 11)}...${address.slice(37, ADDRESS_LENGTH)}`);
       fn();
     }
   }, [address]);

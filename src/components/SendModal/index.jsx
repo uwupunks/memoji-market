@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 import { cosmos } from "juno-network";
 
-import { MEMOJI, EXPLORER_PATH } from "src/constants";
+import { MEMOJI, EXPLORER_PATH, ADDRESS_LENGTH } from "src/constants";
 import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
 import successMp3 from "assets/sounds/success.mp3";
@@ -102,7 +102,7 @@ function SendModal({ isActive, balances, onSend }) {
               }}
             >
               {toAddress.slice(0, 11)}....
-              {toAddress.slice(40, 46)}
+              {toAddress.slice(37, ADDRESS_LENGTH)}
             </span>
           ) : (
             <input
@@ -116,7 +116,7 @@ function SendModal({ isActive, balances, onSend }) {
               }}
               onChange={(e) => {
                 setToAddress(e.target.value);
-                setAddressResolved(e.target.value.length === 46);
+                setAddressResolved(e.target.value.length === ADDRESS_LENGTH);
               }}
             ></input>
           )}

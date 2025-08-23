@@ -1,7 +1,7 @@
 const SERVER = "https://lcd.testnet.osmosis.zone";
 export const EXPLORER_PATH = "https://www.mintscan.io/osmosis";
 const FACTORY_DEPLOYER = "osmo1uwuvxxx979k3wgvwegz044c6thnmsj23v7ucc8";
-
+export const ADDRESS_LENGTH = 43;
 export const CONTRACTS = {
   creator: FACTORY_DEPLOYER,
   // lp: "osmo1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty",

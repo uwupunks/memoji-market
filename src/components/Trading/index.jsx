@@ -14,6 +14,7 @@ import classicButton from "assets/img/classic.png";
 import mainTabButton from "assets/img/mainTabButton.png";
 import userWindow from "assets/img/user.gif";
 import { getCNSAsync } from "hooks/cns";
+import { FACTORY_DEPLOYER } from "src/constants";
 
 import { useChain, useWallet } from "@cosmos-kit/react";
 import { AgGridReact } from "@ag-grid-community/react"; // React Data Grid Component
@@ -185,6 +186,7 @@ function Trading({ onClose }) {
             share: lpBalance / circ,
             value: lpBalance,
             listed: true,
+            poolId: sup?.poolId || null
           };
         } else {
           const priceAndTvl = await getPriceAndTvl(sup?.denom);
@@ -205,6 +207,7 @@ function Trading({ onClose }) {
             share: lpBalance / circ,
             value: lpBalance * price,
             listed: sup?.listed ? 1 : 0,
+            poolId: sup?.poolId || null
           };
           if (!sup?.emoji) {
             console.warn("No emoji info for denom: ", sup);
@@ -228,6 +231,7 @@ function Trading({ onClose }) {
         denom: String(info.denom),
         denomDisplay: info.denomShorthand,
         price: Number(info.price),
+        poolId: info.poolId,
         priceDisplay: numberFormatter.format(info.price) + " 🦄",
         mcap: info.mcap,
         mcapDisplay: numberFormatter.format(info.mcap),
@@ -265,7 +269,9 @@ function Trading({ onClose }) {
           emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
           amount: displayNumber(Number(ub.amount) / 1000000),
           amountRaw: Number(ub.amount) / 1000000,
+          poolId: rowData.find((r) => r.denom === ub.denom)?.poolId,
         }));
+
         setBalances(balances.filter((b) => b.name));
       }
       return () => {
@@ -437,8 +443,8 @@ function Trading({ onClose }) {
     setSwapPrice(selectedAsset.price);
 
     setLeftAsset({
-      name: "uowo",
-      denom: "uowo",
+      name: "UWU",
+      denom: `factory/${FACTORY_DEPLOYER}/uowo`,
       amount: "1",
     });
     setRightAsset({
@@ -476,8 +482,8 @@ function Trading({ onClose }) {
       amount: "1",
     });
     setRightAsset({
-      name: "uowo",
-      denom: "uowo",
+      name: "UWU",
+      denom: `factory/${FACTORY_DEPLOYER}/uowo`,
       amount: (1 * foundAsset.price).toFixed(4),
     });
 

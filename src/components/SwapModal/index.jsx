@@ -31,7 +31,6 @@ function SwapModal({
   const promptSound = new Audio(promptMp3);
   const clickSound = new Audio(clickMp3);
   const successSound = new Audio(successMp3);
-  const overSound = new Audio(overMp3);
   const errorSound = new Audio(errorWav);
   const { address, isWalletConnected, getSigningCosmWasmClient } =
     useChain("osmosis");
@@ -75,7 +74,7 @@ function SwapModal({
     setRightAsset((prev) => ({
       ...prev,
       amount:
-        rightAsset.denom === "uowo"
+        rightAsset.denom.endsWith("uowo")
           ? (e.target.value * price).toFixed(4)
           : (e.target.value / price).toFixed(4),
     }));
@@ -83,7 +82,7 @@ function SwapModal({
 
   const handleMax = () => {
     const maxAmount =
-      balances?.find((b) => b.denom === leftAsset.denom)?.amountRaw || "";
+      balances?.find((b) => b.name === leftAsset.name)?.amountRaw || "";
     setLeftAsset((prev) => ({
       ...prev,
       amount: maxAmount,
@@ -94,43 +93,50 @@ function SwapModal({
     setIsLoading(false);
     onClose();
   };
+  function buildSwapMessage(
+    senderAddress,
+    poolId,
+    inputAmount,
+    inputDenom,
+    outputDenom,
+    minOutputAmount
+  ) {
+    const swapMessage = {
+      fromAddress: senderAddress,
+      toAddress: senderAddress, // Assuming you want to send it back to yourself
+      routes: [
+        {
+          poolId: poolId,
+          tokenIn: {
+            amount: inputAmount.toString(),
+            denom: inputDenom,
+          },
+          tokenOut: {
+            denom: outputDenom,
+          },
+        },
+      ],
+      minAmountOut: minOutputAmount.toString(),
+    };
+    return swapMessage;
+  }
   const swapAssets = async () => {
     if (isWalletConnected && leftAsset.denom && rightAsset.denom) {
       setIsLoading(true);
       const client = await getSigningCosmWasmClient();
 
-      let msg = {
-        execute_swap_operations: {
-          max_spread: "0.5",
-          minimum_receive: "1",
-          operations: [
-            {
-              astro_swap: {
-                offer_asset_info: {
-                  native_token: { denom: String(leftAsset.denom) },
-                },
-                ask_asset_info: {
-                  native_token: { denom: String(rightAsset.denom) },
-                },
-              },
-            },
-          ],
-        },
-      };
+      let swapMessage = buildSwapMessage(
+        address,
+        balances?.find((b) => b.name === leftAsset.name)?.poolId,
+        leftAsset.amount * Math.pow(10, 6),
+        leftAsset.denom,
+        rightAsset.denom,
+        // Set minimum output amount to 95% of expected to account for slippage
+        (rightAsset.amount * 0.95 * Math.pow(10, 6)).toFixed(0)
+      );
+
       try {
-        const res = await client.execute(
-          address,
-          CONTRACTS.swap,
-          msg,
-          "auto",
-          "",
-          [
-            {
-              denom: String(leftAsset.denom),
-              amount: String(leftAsset.amount * Math.pow(10, 6)),
-            },
-          ]
-        );
+        const res = await client.execute(address, 'osmosis.gamm.v1beta1.SwapExactAmountIn', swapMessage);
         successSound.onended = () =>
           onSwap(
             "Success!",
@@ -165,7 +171,7 @@ function SwapModal({
 
     // calc expected amount
     tempLeft.amount =
-      tempLeft.denom === "uowo"
+      tempLeft.denom.endsWith("uowo")
         ? (leftAsset.amount * price).toFixed(4)
         : (leftAsset.amount / price).toFixed(4);
 
@@ -175,7 +181,7 @@ function SwapModal({
     setRightFilePath(tempLeftFilePath);
   };
 
-  return isActive && price ? (
+  return isActive ? (
     <Draggable onMouseDown={() => clickSound.play()}>
       <div className="swapWindow">
         {isLoading ? (

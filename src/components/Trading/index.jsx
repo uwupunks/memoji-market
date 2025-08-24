@@ -98,7 +98,6 @@ function Trading({ onClose }) {
   const [alertLinkText, setAlertLinkText] = useState();
   const [leftAsset, setLeftAsset] = useState();
   const [rightAsset, setRightAsset] = useState();
-  const [swapPrice, setSwapPrice] = useState();
   const [addressDisplay, setAddressDisplay] = useState();
   const [mainTab, setMainTab] = useState(0);
   const [balances, setBalances] = useState([]);
@@ -439,8 +438,6 @@ function Trading({ onClose }) {
     const rowNode = event.node;
     const selectedAsset = rowNode.data;
 
-    setSwapPrice(selectedAsset.price);
-
     setLeftAsset({
       name: "UWU",
       denom: `factory/${FACTORY_DEPLOYER}/uowo`,
@@ -472,8 +469,6 @@ function Trading({ onClose }) {
     if (foundAsset.denomDisplay === "uowo") {
       return null;
     }
-
-    setSwapPrice(foundAsset.price);
 
     setLeftAsset({
       name: foundAsset.denomDisplay,
@@ -862,7 +857,6 @@ function Trading({ onClose }) {
       <SwapModal
         left={leftAsset}
         right={rightAsset}
-        price={swapPrice}
         isActive={swapActive}
         balances={balances}
         onClose={() => setSwapActive(false)}

@@ -50,7 +50,6 @@ const signerOptions = {
         };
     }
   },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   preferredSignType: (_chain) => {
     return "amino";
   },

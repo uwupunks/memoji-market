@@ -3,7 +3,10 @@ import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 
 import VoxLoader from "components/VoxLoader";
-import { CHAIN_ID, EXPLORER_PATH } from "src/constants";
+import { SERVER, EXPLORER_PATH, RPC } from "src/constants";
+import { osmosis, getSigningOsmosisClient } from "osmojs";
+import { coin } from "@cosmjs/amino";
+import axios from "axios";
 
 import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
@@ -12,41 +15,92 @@ import errorWav from "assets/sounds/error.wav";
 
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import sonicspin from "assets/img/sonicspin.png";
+import { CHAIN_ID } from "../../constants";
 
-//force module load
-console.log(SigningCosmWasmClient);
+const { swapExactAmountIn } = osmosis.gamm.v1beta1.MessageComposer.withTypeUrl;
+const playSound = async (sound) => {
+  try {
+    await sound.play();
+  } catch (err) {
+    console.warn("Audio playback failed:", err);
+  }
+};
 
-function SwapModal({
-  left,
-  right,
-  price,
-  isActive,
-  onClose,
-  onSwap,
-  balances,
-}) {
+function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
   //hooks
   const promptSound = new Audio(promptMp3);
   const clickSound = new Audio(clickMp3);
   const successSound = new Audio(successMp3);
   const errorSound = new Audio(errorWav);
-  const { address, isWalletConnected, getSigningCosmWasmClient } =
-    useChain("osmosis");
+  const { address, isWalletConnected, getOfflineSigner } = useChain("osmosis");
 
   // state
   const [leftAsset, setLeftAsset] = useState(left);
   const [rightAsset, setRightAsset] = useState(right);
   const [leftFilePath, setLeftFilePath] = useState();
   const [rightFilePath, setRightFilePath] = useState();
+  const [price, setPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   // effects
+
+  useEffect(() => {
+    const fetchPoolPrice = async () => {
+      if (!leftAsset.denom || !rightAsset.denom || !balances) return;
+      try {
+        const poolId = balances.find(
+          (b) => b.denom === leftAsset.denom
+        )?.poolId;
+        if (!poolId) {
+          console.warn("Pool ID not found");
+          setPrice(0);
+          return;
+        }
+
+        // Query Osmosis LCD for pool data
+        const response = await axios.get(
+          `${SERVER}/osmosis/gamm/v1beta1/pools/${poolId}`
+        );
+        const pool = response.data.pool;
+
+        // Extract token reserves
+        const token0 = pool.pool_assets[0].token;
+        const token1 = pool.pool_assets[1].token;
+        const isForward = leftAsset.denom === token0.denom;
+        const reserveIn = isForward ? token0.amount : token1.amount;
+        const reserveOut = isForward ? token1.amount : token0.amount;
+
+        // Calculate spot price (reserveOut / reserveIn)
+        const spotPrice = parseFloat(reserveOut) / parseFloat(reserveIn);
+
+        // Adjust for swap fee (e.g., 0.3% = 0.003)
+        const swapFee = parseFloat(pool.pool_params.swap_fee) / 1e18 || 0.003;
+        const effectivePrice = spotPrice * (1 - swapFee);
+        const leftAmount = leftAsset?.amount;
+        if (isNaN(leftAmount) || leftAmount < 0) return; // Ignore invalid inputs
+
+        setPrice(effectivePrice);
+        setRightAsset((prev) => ({
+          ...prev,
+          amount: rightAsset.denom.endsWith("uowo")
+            ? (leftAmount * effectivePrice).toFixed(4)
+            : (leftAmount / effectivePrice).toFixed(4),
+        }));
+        console.log("Fetched price:", effectivePrice);
+      } catch (err) {
+        console.error("Failed to fetch pool price:", err);
+        setPrice(0);
+      }
+    };
+
+    fetchPoolPrice();
+  }, [leftAsset?.denom, rightAsset?.denom, balances]);
+
   useEffect(() => {
     setLeftAsset(left);
     setRightAsset(right);
-  }, [left, right]);
+  }, [left, right, price]);
   useEffect(() => {
     const resolveVoxPaths = async () => {
       const left = (await import(`../../assets/vox/${leftAsset?.name}.vox`))
@@ -60,23 +114,29 @@ function SwapModal({
 
   useEffect(() => {
     const resolveVoxPaths = async () => {
-      const right = (await import(`../../assets/vox/${rightAsset?.name}.vox`))
-        .default;
-      setRightFilePath(right);
+      try {
+        const left = (await import(`../../assets/vox/${leftAsset?.name}.vox`))
+          .default;
+        setLeftFilePath(left);
+      } catch {
+        setLeftFilePath(null);
+        console.warn(`Failed to load .vox file for ${leftAsset?.name}`);
+      }
     };
-    resolveVoxPaths().catch(() => {
-      setRightFilePath(null);
-    });
-  }, [rightAsset]);
+    if (leftAsset?.name) {
+      resolveVoxPaths();
+    }
+  }, [leftAsset?.name]);
 
   const handleLeftInputChange = (e) => {
-    setLeftAsset((prev) => ({ ...prev, amount: e.target.value }));
+    const value = e.target.value;
+    if (isNaN(value) || value < 0) return; // Ignore invalid inputs
+    setLeftAsset((prev) => ({ ...prev, amount: value }));
     setRightAsset((prev) => ({
       ...prev,
-      amount:
-        rightAsset.denom.endsWith("uowo")
-          ? (e.target.value * price).toFixed(4)
-          : (e.target.value / price).toFixed(4),
+      amount: rightAsset.denom.endsWith("uowo")
+        ? (value * price).toFixed(4)
+        : (value / price).toFixed(4),
     }));
   };
 
@@ -93,73 +153,77 @@ function SwapModal({
     setIsLoading(false);
     onClose();
   };
-  function buildSwapMessage(
-    senderAddress,
-    poolId,
-    inputAmount,
-    inputDenom,
-    outputDenom,
-    minOutputAmount
-  ) {
-    const swapMessage = {
-      fromAddress: senderAddress,
-      toAddress: senderAddress, // Assuming you want to send it back to yourself
-      routes: [
-        {
-          poolId: poolId,
-          tokenIn: {
-            amount: inputAmount.toString(),
-            denom: inputDenom,
-          },
-          tokenOut: {
-            denom: outputDenom,
-          },
-        },
-      ],
-      minAmountOut: minOutputAmount.toString(),
-    };
-    return swapMessage;
-  }
+
   const swapAssets = async () => {
-    if (isWalletConnected && leftAsset.denom && rightAsset.denom) {
-      setIsLoading(true);
-      const client = await getSigningCosmWasmClient({chainId: CHAIN_ID});
-
-      let swapMessage = buildSwapMessage(
-        address,
-        balances?.find((b) => b.name === leftAsset.name)?.poolId,
-        leftAsset.amount * Math.pow(10, 6),
-        leftAsset.denom,
-        rightAsset.denom,
-        // Set minimum output amount to 95% of expected to account for slippage
-        (rightAsset.amount * 0.95 * Math.pow(10, 6)).toFixed(0)
-      );
-
-      try {
-        const res = await client.execute(address, 'osmosis.gamm.v1beta1.SwapExactAmountIn', swapMessage, "auto");
-        successSound.onended = () =>
-          onSwap(
-            "Success!",
-            `${EXPLORER_PATH}/tx/${res.transactionHash}`,
-            "View TXN"
-          );
-        await successSound.play();
-
-        onClose();
-      } catch (err) {
-        errorSound.onended = () => onSwap(`swap failed with error: ${err}`);
-        await errorSound.play();
-        onClose();
-        return null;
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      onSwap("Please connect a wallet");
+    if (
+      !isWalletConnected ||
+      !address ||
+      !leftAsset.denom ||
+      !rightAsset.denom
+    ) {
+      playSound(errorSound);
+      onSwap("Please connect a wallet and select valid assets");
       onClose();
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const client = await getSigningOsmosisClient({
+        rpcEndpoint: RPC,
+        signer: getOfflineSigner({ chainId: CHAIN_ID }),
+      });
+      const poolId = balances?.find((b) => b.name === leftAsset.name)?.poolId;
+      if (!poolId) {
+        playSound(errorSound);
+        onSwap("Invalid pool ID for the selected asset pair");
+        setIsLoading(false);
+        return;
+      }
+
+      const amount = (leftAsset.amount * Math.pow(10, 6)).toString();
+
+      const msg = swapExactAmountIn({
+        sender: address,
+        routes: [
+          {
+            poolId,
+            tokenOutDenom: rightAsset.denom,
+          },
+        ],
+        tokenIn: coin(amount, leftAsset.denom),
+        tokenOutMinAmount: (rightAsset.amount * 0.95 * Math.pow(10, 6))
+          .toFixed(0)
+          .toString(),
+      });
+      const fee = {
+        amount: [coin("0", "uosmo")],
+        gas: "250000",
+      };
+      debugger;
+
+      const res = await client.signAndBroadcast(address, [msg], fee);
+
+      if (res.code === 0) {
+        playSound(successSound);
+        onSwap(
+          "Success!",
+          `${EXPLORER_PATH}/tx/${res.transactionHash}`,
+          "View TXN"
+        );
+      } else {
+        throw new Error(res.rawLog || "Transaction failed");
+      }
+      onClose();
+    } catch (err) {
+      console.error("Swap failed:", err);
+      await playSound(errorSound);
+      onSwap(`Swap failed: ${err.message}`);
+      onClose();
+    } finally {
+      setIsLoading(false);
     }
   };
-
   const switchSwapPlace = () => {
     const tempLeft = leftAsset;
     const tempRight = rightAsset;
@@ -170,10 +234,9 @@ function SwapModal({
     tempRight.amount = leftAsset.amount;
 
     // calc expected amount
-    tempLeft.amount =
-      tempLeft.denom.endsWith("uowo")
-        ? (leftAsset.amount * price).toFixed(4)
-        : (leftAsset.amount / price).toFixed(4);
+    tempLeft.amount = tempLeft.denom.endsWith("uowo")
+      ? (leftAsset.amount * price).toFixed(4)
+      : (leftAsset.amount / price).toFixed(4);
 
     setLeftAsset(tempRight);
     setRightAsset(tempLeft);

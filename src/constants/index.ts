@@ -26,7 +26,7 @@ const DENOMS = [
     maxSupply: "510000000000",
     emoji: "👽",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ubear`,
@@ -34,7 +34,7 @@ const DENOMS = [
     maxSupply: "400000000000000",
     emoji: "🐻",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ubearhearth`,
@@ -42,7 +42,7 @@ const DENOMS = [
     maxSupply: "100000000000",
     emoji: "🐻❤️",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ubitjaks`,
@@ -50,7 +50,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🏳️‍⚧️",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ublackflag`,
@@ -58,7 +58,7 @@ const DENOMS = [
     maxSupply: "69000000000000000",
     emoji: "🏴",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ublissful`,
@@ -66,7 +66,7 @@ const DENOMS = [
     maxSupply: "60000000000000",
     emoji: "(｡◕‿‿◕｡)",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ublowfish`,
@@ -74,7 +74,7 @@ const DENOMS = [
     maxSupply: "210000000000000",
     emoji: "🐡",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ubrainlet`,
@@ -82,7 +82,7 @@ const DENOMS = [
     maxSupply: "55085999999982604000",
     emoji: "🧠🤏",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ubugjuice`,
@@ -90,7 +90,7 @@ const DENOMS = [
     maxSupply: "8525352329742000",
     emoji: "🪲🧃",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ucash`,
@@ -98,7 +98,7 @@ const DENOMS = [
     maxSupply: "2330000000000000000",
     emoji: "💸",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ucat`,
@@ -106,7 +106,7 @@ const DENOMS = [
     maxSupply: "390000000000000000",
     emoji: "🐱",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uchains`,
@@ -114,7 +114,7 @@ const DENOMS = [
     maxSupply: "100000000000000",
     emoji: "🙍⛓️",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uchick`,
@@ -122,7 +122,7 @@ const DENOMS = [
     maxSupply: "10000000000000",
     emoji: "🐤",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uchina`,
@@ -130,7 +130,7 @@ const DENOMS = [
     maxSupply: "1412000000000000",
     emoji: "🇨🇳",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uchurchcrown`,
@@ -138,7 +138,7 @@ const DENOMS = [
     maxSupply: "2002000000",
     emoji: "👑",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uclown`,
@@ -146,7 +146,7 @@ const DENOMS = [
     maxSupply: "420000000000000",
     emoji: "🤡",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ucoconutdoggy`,
@@ -154,7 +154,7 @@ const DENOMS = [
     maxSupply: "316040021801000000",
     emoji: "🥥🐶",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ucorn`,
@@ -162,7 +162,7 @@ const DENOMS = [
     maxSupply: "21000000000000",
     emoji: "🌽",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ucrown`,
@@ -170,7 +170,7 @@ const DENOMS = [
     maxSupply: "1000000",
     emoji: "👑",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ucrystalball`,
@@ -178,7 +178,7 @@ const DENOMS = [
     maxSupply: "100000000000000000",
     emoji: "🔮",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/udiamond`,
@@ -186,7 +186,7 @@ const DENOMS = [
     maxSupply: "1000000000",
     emoji: "💎",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/udice`,
@@ -194,7 +194,7 @@ const DENOMS = [
     maxSupply: "7777777777777",
     emoji: "🎲",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/udog`,
@@ -202,7 +202,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🐶",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/udogwifgun`,
@@ -210,7 +210,7 @@ const DENOMS = [
     maxSupply: "77088999999499000",
     emoji: "🐶🔫",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ueggplant`,
@@ -218,7 +218,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🍆",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ueightball`,
@@ -226,7 +226,7 @@ const DENOMS = [
     maxSupply: "888888888888888",
     emoji: "🎱",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uenvelop`,
@@ -234,7 +234,7 @@ const DENOMS = [
     maxSupply: "777777777777777",
     emoji: "✉️",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ufahrenheit`,
@@ -242,7 +242,7 @@ const DENOMS = [
     maxSupply: "451000000000000000",
     emoji: "🔥",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ufoose`,
@@ -250,7 +250,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🐸🙂",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ufrog`,
@@ -258,7 +258,7 @@ const DENOMS = [
     maxSupply: "69000000000000000",
     emoji: "🐸",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ugirl`,
@@ -266,7 +266,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🎀",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ugobber`,
@@ -274,7 +274,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🍬",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ugun`,
@@ -282,7 +282,7 @@ const DENOMS = [
     maxSupply: "1337000000000000",
     emoji: "🔫♡",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uhammer`,
@@ -290,7 +290,7 @@ const DENOMS = [
     maxSupply: "168554000000",
     emoji: "🔨",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uharambe`,
@@ -298,7 +298,7 @@ const DENOMS = [
     maxSupply: "28052016000000",
     emoji: "🦍🍌",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uheart`,
@@ -306,7 +306,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "❤️❤️❤️❤️❤️",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uinternet`,
@@ -314,7 +314,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🛜",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ujeet`,
@@ -322,7 +322,7 @@ const DENOMS = [
     maxSupply: "650459156998150000",
     emoji: "🪯",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ujewnicorn`,
@@ -330,7 +330,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🇮🇱🐴",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uknightcore`,
@@ -338,7 +338,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "⚔️",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ulain`,
@@ -346,7 +346,7 @@ const DENOMS = [
     maxSupply: "69000000000000",
     emoji: "",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ulawb`,
@@ -354,7 +354,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🦞",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/umeat`,
@@ -362,7 +362,7 @@ const DENOMS = [
     maxSupply: "100000000000000",
     emoji: "🥩",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/umog`,
@@ -370,7 +370,7 @@ const DENOMS = [
     maxSupply: "420690000000000000000",
     emoji: "😹",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/umondo`,
@@ -378,7 +378,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/umoon`,
@@ -386,7 +386,7 @@ const DENOMS = [
     maxSupply: "384400000000",
     emoji: "🌕",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uorwell`,
@@ -394,7 +394,7 @@ const DENOMS = [
     maxSupply: "1984000000000000",
     emoji: "🐷",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uowo`,
@@ -402,7 +402,7 @@ const DENOMS = [
     maxSupply: "69000000000000000",
     emoji: "🦄",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upaper`,
@@ -410,7 +410,7 @@ const DENOMS = [
     maxSupply: "1000000000000",
     emoji: "📄",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upeace`,
@@ -418,7 +418,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "☮️",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upeach`,
@@ -426,7 +426,7 @@ const DENOMS = [
     maxSupply: "80085000000",
     emoji: "🍑",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upi`,
@@ -434,7 +434,7 @@ const DENOMS = [
     maxSupply: "314159265358979",
     emoji: "🥧",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uplaceholder`,
@@ -442,7 +442,7 @@ const DENOMS = [
     maxSupply: "100000000000000",
     emoji: "placeholder",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upoo`,
@@ -450,7 +450,7 @@ const DENOMS = [
     maxSupply: "7000000000000000",
     emoji: "💩",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upretzel`,
@@ -458,7 +458,7 @@ const DENOMS = [
     maxSupply: "30000000000000",
     emoji: "🥨",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upurpdildo`,
@@ -466,7 +466,7 @@ const DENOMS = [
     maxSupply: "1000000000",
     emoji: "🟣🍆",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upurplephat`,
@@ -474,7 +474,7 @@ const DENOMS = [
     maxSupply: "1000000000",
     emoji: "💜🎉",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/upurplepill`,
@@ -482,7 +482,7 @@ const DENOMS = [
     maxSupply: "150000000000",
     emoji: "💜💊",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uretard`,
@@ -490,7 +490,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "🫵🤡",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/urock`,
@@ -498,7 +498,7 @@ const DENOMS = [
     maxSupply: "1000000000000",
     emoji: "🪨",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/urocket`,
@@ -506,7 +506,7 @@ const DENOMS = [
     maxSupply: "420000000000000000",
     emoji: "🚀",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/usa`,
@@ -514,7 +514,7 @@ const DENOMS = [
     maxSupply: "333333333333333",
     emoji: "🇺🇸",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uscisors`,
@@ -522,7 +522,7 @@ const DENOMS = [
     maxSupply: "1000000000000",
     emoji: "✂️",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ushot`,
@@ -530,7 +530,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "💉🧬",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/ushrimp`,
@@ -538,7 +538,7 @@ const DENOMS = [
     maxSupply: "210000000000000000",
     emoji: "🦐",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uskull`,
@@ -546,7 +546,7 @@ const DENOMS = [
     maxSupply: "10000000000000",
     emoji: "💀",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/usparkle`,
@@ -554,7 +554,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "✨",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uspx`,
@@ -562,7 +562,7 @@ const DENOMS = [
     maxSupply: "69000000000000",
     emoji: "📈",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/usushi`,
@@ -570,7 +570,7 @@ const DENOMS = [
     maxSupply: "50000000000000",
     emoji: "🍣",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/usyrupcity`,
@@ -578,7 +578,7 @@ const DENOMS = [
     maxSupply: "42069000000000",
     emoji: "🍇🥤",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/utaco`,
@@ -586,7 +586,7 @@ const DENOMS = [
     maxSupply: "300000000000000",
     emoji: "🌮",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/utaiwan`,
@@ -594,7 +594,7 @@ const DENOMS = [
     maxSupply: "23570000000000",
     emoji: "🇹🇼",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/utang`,
@@ -602,7 +602,7 @@ const DENOMS = [
     maxSupply: "420000000000",
     emoji: "🍊",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/utest`,
@@ -610,7 +610,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "test",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uvril`,
@@ -618,7 +618,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uwatermelon`,
@@ -626,7 +626,7 @@ const DENOMS = [
     maxSupply: "3000000000000000",
     emoji: "🍉",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uwuxd`,
@@ -634,7 +634,7 @@ const DENOMS = [
     maxSupply: "1000000000000000",
     emoji: "😆",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   },
   {
     denom: `factory/${FACTORY_DEPLOYER}/uzirconia`,
@@ -642,7 +642,7 @@ const DENOMS = [
     maxSupply: "1000000000",
     emoji: "◈",
     listed: true,
-    poolId: "gamm/pool/1153"
+    poolId: "1153"
   }
 ];
 

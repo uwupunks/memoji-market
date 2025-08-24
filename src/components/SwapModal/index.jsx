@@ -16,7 +16,7 @@ import errorWav from "assets/sounds/error.wav";
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
 import sonicspin from "assets/img/sonicspin.png";
-import { CHAIN_ID } from "../../constants";
+import { CHAIN_ID, DENOMS } from "../../constants";
 
 const { swapExactAmountIn } = osmosis.gamm.v1beta1.MessageComposer.withTypeUrl;
 const playSound = async (sound) => {
@@ -170,7 +170,7 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
         rpcEndpoint: RPC,
         signer: getOfflineSigner({ chainId: CHAIN_ID }),
       });
-      const poolId = balances?.find((b) => b.denom === leftAsset.denom || b.denom === rightAsset.denom)?.poolId;
+      const poolId = DENOMS?.find((d) => (d.denom === leftAsset.denom || d.denom === rightAsset.denom) && d.poolId)?.poolId
       if (!poolId) {
         playSound(errorSound);
         onSwap("Invalid pool ID for the selected asset pair");

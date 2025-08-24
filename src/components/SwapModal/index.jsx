@@ -49,9 +49,7 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
     const fetchPoolPrice = async () => {
       if (!leftAsset?.denom || !rightAsset?.denom || !balances) return;
       try {
-        const poolId = balances.find(
-          (b) => b.denom === leftAsset.denom || b.denom === rightAsset.denom
-        )?.poolId;
+        const poolId = DENOMS?.find((d) => (d.denom === leftAsset.denom || d.denom === rightAsset.denom) && d.poolId)?.poolId
         if (!poolId) {
           console.warn("Pool ID not found");
           setPrice(0);

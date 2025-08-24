@@ -50,7 +50,7 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
       if (!leftAsset?.denom || !rightAsset?.denom || !balances) return;
       try {
         const poolId = balances.find(
-          (b) => b.denom === leftAsset.denom
+          (b) => b.denom === leftAsset.denom || b.denom === rightAsset.denom
         )?.poolId;
         if (!poolId) {
           console.warn("Pool ID not found");
@@ -64,15 +64,15 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
         );
         const pool = response.data.pool;
 
-        // Extract token reserves
-        const token0 = pool.pool_assets[0].token;
-        const token1 = pool.pool_assets[1].token;
-        const isForward = leftAsset.denom === token0.denom;
-        const reserveIn = isForward ? token0.amount : token1.amount;
-        const reserveOut = isForward ? token1.amount : token0.amount;
+        const uwuAmount = pool.pool_assets.find((a) =>
+          a.token.denom.endsWith("owo")
+        )?.token.amount;
+        const otherAmount = pool.pool_assets.find(
+          (a) => !a.token.denom.endsWith("owo")
+        )?.token.amount;
 
-        // Calculate spot price (reserveOut / reserveIn)
-        const spotPrice = parseFloat(reserveOut) / parseFloat(reserveIn);
+        // Calculate spot price
+        const spotPrice = parseFloat(uwuAmount) / parseFloat(otherAmount);
 
         // Adjust for swap fee (e.g., 0.3% = 0.003)
         const swapFee = parseFloat(pool.pool_params.swap_fee) / 1e18 || 0.003;
@@ -139,7 +139,7 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
 
   const handleMax = () => {
     const maxAmount =
-      balances?.find((b) => b.name === leftAsset.name)?.amountRaw || "";
+      balances?.find((b) => b.denom === leftAsset.denom)?.amountRaw || "";
     setLeftAsset((prev) => ({
       ...prev,
       amount: maxAmount,
@@ -170,7 +170,7 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
         rpcEndpoint: RPC,
         signer: getOfflineSigner({ chainId: CHAIN_ID }),
       });
-      const poolId = balances?.find((b) => b.name === leftAsset.name)?.poolId;
+      const poolId = balances?.find((b) => b.denom === leftAsset.denom || b.denom === rightAsset.denom)?.poolId;
       if (!poolId) {
         playSound(errorSound);
         onSwap("Invalid pool ID for the selected asset pair");

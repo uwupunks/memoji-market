@@ -5,6 +5,7 @@ import Trading from "components/Trading";
 import { ChainProvider } from "@cosmos-kit/react";
 import { wallets as keplr } from "@cosmos-kit/keplr";
 import { wallets as leap } from "@cosmos-kit/leap";
+import { CHAIN_ID, RPC, SERVER } from "src/constants";
 
 import { GasPrice } from "@cosmjs/stargate";
 import "@interchain-ui/react/styles";
@@ -17,7 +18,19 @@ import { isMobile } from "react-device-detect";
 
 const chain = {
   chain_name: "osmosis",
-  chain_id: "osmosis-1",
+  chain_id: CHAIN_ID,
+  feeCurrencies: [
+    {
+      coinDenom: "OSMO",
+      coinMinimalDenom: "uosmo",
+      coinDecimals: 6,
+      gasPriceStep: {
+        low: 0.0025,
+        average: 0.025,
+        high: 0.04,
+      },
+    },
+  ],
 };
 const chainAssets = {
   chain_name: "osmosis",
@@ -59,8 +72,8 @@ const App = () => {
       endpointOptions={{
         endpoints: {
           osmosis: {
-            rpc: ["https://rpc.testnet.osmosis.zone"],
-            rest: ["https://lcd.testnet.osmosis.zone"],
+            rpc: [RPC],
+            rest: [SERVER],
           },
         },
       }}

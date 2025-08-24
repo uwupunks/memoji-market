@@ -2,6 +2,7 @@ import clickMp3 from "assets/sounds/btclick.mp3";
 import promptMp3 from "assets/sounds/prompt.mp3";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
+import { CHAIN_ID, RPC, SERVER } from "src/constants";
 
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
@@ -11,10 +12,10 @@ import "./index.css";
 const suggest = async () => {
   const chainInfo = {
     features: ["cosmwasm", "osmosis-txfees"],
-    chainId: "osmo-test-5",
+    chainId: CHAIN_ID,
     chainName: "osmosis",
-    rpc: "https://rpc.osmotest5.osmosis.zone",
-    rest: "https://lcd.testnet.osmosis.zone",
+    rpc: RPC,
+    rest: SERVER,
     bip44: {
       coinType: 118,
     },

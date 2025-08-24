@@ -1,13 +1,12 @@
-const SERVER = "https://lcd.testnet.osmosis.zone";
+export const CHAIN_ID = "osmo-test-5";
+export const RPC = "https://rpc.osmotest5.osmosis.zone";
+export const SERVER = "https://lcd.testnet.osmosis.zone";
 export const EXPLORER_PATH = "https://www.mintscan.io/osmosis";
 export const FACTORY_DEPLOYER = "osmo1uwuvxxx979k3wgvwegz044c6thnmsj23v7ucc8";
 export const ADDRESS_LENGTH = 43;
 export const CONTRACTS = {
   creator: FACTORY_DEPLOYER,
-  // lp: "osmo1rn9f6ack3u8t3ed04pfaqpmh5zfp2m2ll4mkty",
-  // swap: "osmo16jzpxp0e8550c9aht6q9svcux30vtyyyyxv5w2l2djjra46580wsl825uf",
 };
-
 
 export const ENDPOINTS = {
   denoms: `${SERVER}/osmosis/tokenfactory/v1beta1/denoms_from_creator/${CONTRACTS.creator}`,

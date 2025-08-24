@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 
 import VoxLoader from "components/VoxLoader";
-import { CONTRACTS, EXPLORER_PATH } from "src/constants";
+import { CHAIN_ID, EXPLORER_PATH } from "src/constants";
 
 import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
@@ -123,7 +123,7 @@ function SwapModal({
   const swapAssets = async () => {
     if (isWalletConnected && leftAsset.denom && rightAsset.denom) {
       setIsLoading(true);
-      const client = await getSigningCosmWasmClient();
+      const client = await getSigningCosmWasmClient({chainId: CHAIN_ID});
 
       let swapMessage = buildSwapMessage(
         address,
@@ -136,7 +136,7 @@ function SwapModal({
       );
 
       try {
-        const res = await client.execute(address, 'osmosis.gamm.v1beta1.SwapExactAmountIn', swapMessage);
+        const res = await client.execute(address, 'osmosis.gamm.v1beta1.SwapExactAmountIn', swapMessage, "auto");
         successSound.onended = () =>
           onSwap(
             "Success!",

@@ -2,24 +2,20 @@ import { useState } from "react";
 import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 import { cosmos } from "juno-network";
+import { bech32 } from "bech32";
 
 import { MEMOJI, EXPLORER_PATH, ADDRESS_LENGTH } from "src/constants";
+import { CHAIN_ID } from "src/constants";
 import promptMp3 from "assets/sounds/prompt.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
 import successMp3 from "assets/sounds/success.mp3";
 import errorWav from "assets/sounds/error.wav";
-
 import overMp3 from "assets/sounds/btmouseover.mp3";
-
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import sonicspin from "assets/img/sonicspin.png";
 import "./index.css";
 
-//force module load
-console.log(SigningCosmWasmClient);
-
 function SendModal({ isActive, balances, onSend }) {
-  //hooks
+  // Hooks
   const promptSound = new Audio(promptMp3);
   const clickSound = new Audio(clickMp3);
   const successSound = new Audio(successMp3);
@@ -28,62 +24,95 @@ function SendModal({ isActive, balances, onSend }) {
   const { address, isWalletConnected, getSigningStargateClient } =
     useChain("osmosis");
 
-  // state
+  // State
   const [isLoading, setIsLoading] = useState(false);
   const [sendAmount, setSendAmount] = useState("");
   const [toAddress, setToAddress] = useState("");
   const [sendDenom, setSendDenom] = useState("");
   const [addressResolved, setAddressResolved] = useState(false);
 
-  const sendAsset = async () => {
-    if (isWalletConnected && addressResolved && sendAmount && sendDenom) {
-      promptSound.play();
-      setIsLoading(true);
-      const client = await getSigningStargateClient();
+  const playSound = (audio) => {
+    if (!audio.paused) audio.currentTime = 0;
+    audio.play().catch((err) => console.error("Sound playback failed:", err));
+  };
 
-      const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
-
-      try {
-        const msg = send({
-          amount: [
-            {
-              denom: sendDenom,
-              amount: String(sendAmount * Math.pow(10, 6)),
-            },
-          ],
-          toAddress: toAddress,
-          fromAddress: address,
-        });
-
-        const res = await client.signAndBroadcast(address, [msg]);
-
-        /** Error code. The transaction succeeded if and only if code is 0. */
-        if (res.code === 0) {
-          setIsLoading(false);
-          successSound.play();
-          onSend(
-            "Success!",
-            `${EXPLORER_PATH}/tx/${res.transactionHash}`,
-            "View TXN"
-          );
-        } else {
-          throw new Error(res.rawLog);
-        }
-      } catch (err) {
-        setIsLoading(false);
-        errorSound.play();
-        onSend(`send failed with error: ${err}`);
-        return null;
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      onSend("Validation Error or wallet not connected.");
+  const isValidAddress = (address) => {
+    try {
+      const { prefix } = bech32.decode(address);
+      return prefix === "osmo" && address.length === ADDRESS_LENGTH;
+    } catch {
+      return false;
     }
   };
 
+  const sendAsset = async () => {
+    if (!isWalletConnected || !addressResolved || !sendAmount || !sendDenom) {
+      playSound(errorSound);
+      onSend("Validation error or wallet not connected.");
+      return;
+    }
+
+    playSound(promptSound);
+    setIsLoading(true);
+
+    try {
+      const client = await getSigningStargateClient({ chainId: CHAIN_ID });
+      if (!client) throw new Error("Failed to initialize client");
+
+      const decimals = 6; // Adjust based on token metadata if needed
+      const amount = [
+        {
+          denom: sendDenom,
+          amount: String(Math.floor(sendAmount * Math.pow(10, decimals))),
+        },
+      ];
+
+      const selectedBalance =
+        balances?.find((b) => b.denom === sendDenom)?.amount || 0;
+      if (sendAmount * Math.pow(10, decimals) > selectedBalance) {
+        throw new Error("Insufficient balance");
+      }
+
+      const fee = {
+        amount: [{ denom: "uosmo", amount: "5000" }],
+        gas: "200000",
+      };
+
+      const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
+      const msg = send({
+        amount,
+        toAddress,
+        fromAddress: address,
+      });
+
+      const res = await client.signAndBroadcast(address, [msg], fee);
+      if (res.code === 0) {
+        playSound(successSound);
+        onSend(
+          "Success!",
+          `${EXPLORER_PATH}/tx/${res.transactionHash}`,
+          "View TXN"
+        );
+      } else {
+        throw new Error(res.rawLog || "Transaction failed");
+      }
+    } catch (err) {
+      playSound(errorSound);
+      onSend(`Send failed: ${err.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getMemojiImage = () => {
+    const denom = sendDenom.includes("factory/")
+      ? sendDenom.split("/")[2]
+      : sendDenom;
+    return MEMOJI.find((m) => m.name === denom)?.image || null;
+  };
+
   return isActive ? (
-    <Draggable onMouseDown={() => clickSound.play()}>
+    <Draggable onMouseDown={() => playSound(clickSound)}>
       <div className="sendModal">
         <div className="form">
           {addressResolved ? (
@@ -92,8 +121,7 @@ function SendModal({ isActive, balances, onSend }) {
                 setAddressResolved(false);
               }}
             >
-              {toAddress.slice(0, 11)}....
-              {toAddress.slice(37, ADDRESS_LENGTH)}
+              {toAddress.slice(0, 11)}....{toAddress.slice(37, ADDRESS_LENGTH)}
             </span>
           ) : (
             <input
@@ -106,10 +134,11 @@ function SendModal({ isActive, balances, onSend }) {
                 e.target.setSelectionRange(0, e.target.value.length);
               }}
               onChange={(e) => {
-                setToAddress(e.target.value);
-                setAddressResolved(e.target.value.length === ADDRESS_LENGTH);
+                const value = e.target.value;
+                setToAddress(value);
+                setAddressResolved(isValidAddress(value));
               }}
-            ></input>
+            />
           )}
           <input
             className="quantity"
@@ -120,16 +149,9 @@ function SendModal({ isActive, balances, onSend }) {
             onChange={(e) => {
               setSendAmount(e.target.value);
             }}
-          ></input>
+          />
           <div className="memoji">
-            <img
-              src={
-                sendDenom &&
-                MEMOJI.find(
-                  (m) => (sendDenom.split("/")?.[2] || "uowo") === m.name
-                )?.image
-              }
-            ></img>
+            {sendDenom && <img src={getMemojiImage()} alt="Memoji" />}
           </div>
           <select
             placeholder="Memoji"
@@ -140,13 +162,13 @@ function SendModal({ isActive, balances, onSend }) {
           >
             <option value="">Select...</option>
             {balances?.map((b) => (
-              <option key={b.name} value={b.denom}>
+              <option key={b.denom} value={b.denom}>
                 {b.name}
               </option>
             ))}
           </select>
           {isLoading ? (
-            <img className="loading" src={sonicspin}></img>
+            <img className="loading" src={sonicspin} alt="Loading" />
           ) : (
             <>
               <button

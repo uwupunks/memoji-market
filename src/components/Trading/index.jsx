@@ -84,10 +84,9 @@ const displayDenom = (denom) => {
 };
 
 function Trading({ onClose }) {
+  const { status: globalStatus, mainWallet } = useWallet(); // status here is the global wallet status for all activated chains (chain is activated when call useChain)
   const { username, connect, disconnect, address, isWalletConnected } =
     useChain("osmosis");
-
-  const { status: globalStatus, mainWallet } = useWallet(); // status here is the global wallet status for all activated chains (chain is activated when call useChain)
 
   const [activeButton, setActiveButton] = useState(0);
 

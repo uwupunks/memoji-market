@@ -44,13 +44,16 @@ import tCharacter from "assets/img/tCharacter.png";
 import lessThanCharacter from "assets/img/lessThanCharacter.png";
 import btSend2 from "assets/img/btsend/2.png";
 import memeInv from "assets/img/memeInv.png";
-import { CONTRACTS, ENDPOINTS, MEMOJI, ADDRESS_LENGTH } from "../../constants";
-import { fetchBalancesAsync, findBalance } from "../../hooks/balanceUtils.jsx";
+import { MEMOJI, ADDRESS_LENGTH } from "../../constants";
+import {
+  fetchBalancesAsync,
+  fetchAllPools,
+  fetchPoolPrice,
+} from "../../hooks/balanceUtils.jsx";
 import SwapModal from "../SwapModal/index.jsx";
 import SendModal from "../SendModal/index.jsx";
 import AlertModal from "../AlertModal/index.jsx";
 import { useInterval } from "src/hooks/useInterval.js";
-import { color } from "three/tsl";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   notation: "compact",
@@ -111,62 +114,15 @@ function Trading({ onClose }) {
     try {
       const controller = new AbortController();
       const signal = controller.signal;
+      const allPools = await fetchAllPools();
 
-      // const denoms = await fetch(ENDPOINTS.denoms, { signal });
-      // const supplyJson = await denoms.json();
-      // const supplyMap = supplyJson.denoms.map(async (d) => {
-      //   const supply = await fetch(`${ENDPOINTS.supplyByDenom}${d}`).then(
-      //     (res) => res.json()
-      //   );
-
-      //   if (!supply.amount || !supply.amount.denom || !supply.amount.amount) {
-      //     return {
-      //       denom: d,
-      //       amount: "0",
-      //     };
-      //   } else {
-      //     return {
-      //       denom: d,
-      //       amount: supply.amount.amount,
-      //     };
-      //   }
-      // });
-      // const supplyData = await Promise.all(supplyData);
-
-      const lpBalances = await fetchBalancesAsync(CONTRACTS.lp, signal);
-      const getPair = async (denom) => {
-        const res = await fetch(
-          `${ENDPOINTS.factory}/${btoa(
-            JSON.stringify({
-              pair: {
-                asset_infos: [
-                  { native_token: { denom: denom } },
-                  { native_token: { denom: "uosmo" } },
-                ],
-              },
-            })
-          )}`,
-          { signal }
-        );
-        const data = await res.json();
-        return data.data.contract_addr;
-      };
-
-      const getPriceAndTvl = async (denom) => {
-        // todo: implement
-        return { price: 0, tvl: 0 };
-
-        const pair = await getPair(denom);
-        const balances = await fetchBalancesAsync(pair, signal);
-        const ubal = findBalance(balances, "uowo");
-        const dbal = findBalance(balances, denom);
-        return { price: ubal / dbal, tvl: ubal };
+      const getPriceAndTvl = async (poolId, maxSupply) => {
+        const poolInfo = await fetchPoolPrice(allPools, poolId);
+        return { price: poolInfo.price, liq: poolInfo.liq, mc: poolInfo.price * (parseFloat(maxSupply) / 1000000) };
       };
 
       const getInfo = async (sup) => {
         const supply = parseFloat(sup.maxSupply) / 1000000;
-        const lpBalance = findBalance(lpBalances, sup?.denom);
-        const circ = supply - lpBalance;
 
         if (sup?.name === "uowo") {
           return {
@@ -174,38 +130,29 @@ function Trading({ onClose }) {
             denomShorthand: sup?.name,
             emoji: sup?.emoji,
             supply: supply,
-            circ,
             mcap: supply,
-            fdv: supply,
             tvl: 0,
             liq: 0,
             price: 1,
-            balance: lpBalance,
-            share: lpBalance / circ,
-            value: lpBalance,
             listed: true,
-            poolId: sup?.poolId || null
+            poolId: sup?.poolId || null,
           };
         } else {
-          const priceAndTvl = await getPriceAndTvl(sup?.denom);
+          const priceAndTvl = await getPriceAndTvl(sup?.poolId, sup?.maxSupply);
           const price = priceAndTvl.price || 0;
-          const tvl = priceAndTvl.tvl || 0;
+          const liq = priceAndTvl.liq || 0;
+          const mc = priceAndTvl.mc || 0;
           const info = {
             denom: sup?.denom,
             denomShorthand: sup?.name,
             emoji: sup?.emoji,
             supply: supply,
-            circ,
-            mcap: price * circ || 0,
-            fdv: price * supply || 0,
-            tvl,
-            liq: tvl / (price * circ) || 0,
+            mcap: mc,
+            tvl: liq,
+            liq: liq / mc || 0,
             price,
-            balance: lpBalance,
-            share: lpBalance / circ,
-            value: lpBalance * price,
             listed: sup?.listed ? 1 : 0,
-            poolId: sup?.poolId || null
+            poolId: sup?.poolId || null,
           };
           if (!sup?.emoji) {
             console.warn("No emoji info for denom: ", sup);

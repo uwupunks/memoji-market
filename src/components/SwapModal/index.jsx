@@ -47,7 +47,7 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
 
   useEffect(() => {
     const fetchPoolPrice = async () => {
-      if (!leftAsset.denom || !rightAsset.denom || !balances) return;
+      if (!leftAsset?.denom || !rightAsset?.denom || !balances) return;
       try {
         const poolId = balances.find(
           (b) => b.denom === leftAsset.denom
@@ -100,20 +100,18 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
   useEffect(() => {
     setLeftAsset(left);
     setRightAsset(right);
-  }, [left, right, price]);
-  useEffect(() => {
-    const resolveVoxPaths = async () => {
-      const left = (await import(`../../assets/vox/${leftAsset?.name}.vox`))
-        .default;
-      setLeftFilePath(left);
-    };
-    resolveVoxPaths().catch(() => {
-      setLeftFilePath(null);
-    });
-  }, [leftAsset]);
+  }, [left, right]);
 
   useEffect(() => {
     const resolveVoxPaths = async () => {
+      try {
+        const right = (await import(`../../assets/vox/${rightAsset?.name}.vox`))
+          .default;
+        setRightFilePath(right);
+      } catch {
+        setRightFilePath(null);
+        console.warn(`Failed to load .vox file for ${rightAsset?.name}`);
+      }
       try {
         const left = (await import(`../../assets/vox/${leftAsset?.name}.vox`))
           .default;
@@ -123,14 +121,13 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
         console.warn(`Failed to load .vox file for ${leftAsset?.name}`);
       }
     };
-    if (leftAsset?.name) {
-      resolveVoxPaths();
-    }
-  }, [leftAsset?.name]);
+    resolveVoxPaths();
+  }, [rightAsset?.denom, price]);
 
   const handleLeftInputChange = (e) => {
     const value = e.target.value;
     if (isNaN(value) || value < 0) return; // Ignore invalid inputs
+
     setLeftAsset((prev) => ({ ...prev, amount: value }));
     setRightAsset((prev) => ({
       ...prev,
@@ -200,7 +197,6 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
         amount: [coin("0", "uosmo")],
         gas: "250000",
       };
-      debugger;
 
       const res = await client.signAndBroadcast(address, [msg], fee);
 

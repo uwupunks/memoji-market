@@ -19,6 +19,9 @@ export const STARGAZE = {
   contract: "stars1fx74nkqkw2748av8j7ew7r3xt9cgjqduwn8m0ur5lhe49uhlsasszc5fhr",
 };
 
+// Pool IDs can be found by querying the Osmosis LCD API:
+// https://lcd.osmosis.zone/osmosis/gamm/v1beta1/pools?pagination.offset=0&pagination.limit=999999999'
+
 export const DENOMS = [
   {
     denom: `factory/${FACTORY_DEPLOYER}/ualien`,

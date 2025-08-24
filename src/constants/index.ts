@@ -1,7 +1,7 @@
 export const CHAIN_ID = "osmo-test-5";
 export const RPC = "https://rpc.osmotest5.osmosis.zone";
 export const SERVER = "https://lcd.testnet.osmosis.zone";
-export const EXPLORER_PATH = "https://www.mintscan.io/osmosis";
+export const EXPLORER_PATH = "https://www.mintscan.io/osmosis-testnet";
 export const FACTORY_DEPLOYER = "osmo1uwuvxxx979k3wgvwegz044c6thnmsj23v7ucc8";
 export const ADDRESS_LENGTH = 43;
 export const CONTRACTS = {

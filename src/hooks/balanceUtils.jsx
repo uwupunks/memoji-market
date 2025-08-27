@@ -44,7 +44,7 @@ const fetchBalancesAsync = async (address, signal) => {
     return null;
   }
 
-  const res = await fetch(`${ENDPOINTS.balances}/${address}`, signal);
+  const res = await fetch(`${ENDPOINTS.balances}/${address}?pagination.offset=0&pagination.limit=999999999`, signal);
   const data = await res.json();
   return data.balances;
 };

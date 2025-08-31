@@ -109,7 +109,7 @@ function Keygen({ onClose, onMinimize, dispatch, id }) {
         <div className="rainbow-box">
           <video loop muted autoPlay playsInline poster={keygenPoster}>
             <source src={keygenVideo} type="video/mp4" />
-            Unicorn Black Market
+            Unicorn Memoji Market
           </video>
         </div>
         <div className="genInputs">

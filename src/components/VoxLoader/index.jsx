@@ -1,34 +1,32 @@
-import React, { useEffect } from "react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
-
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { VOXLoader, VOXMesh } from "three/examples/jsm/loaders/VOXLoader";
 
-function VoxLoader({ filePath }) {
-  const voxAreaRef = useRef(null);
+function Scene({ filePath }) {
+  const sceneAreaRef = useRef(null);
+  const rendererRef = useRef(null);
+  const animationFrameIdRef = useRef(null);
+  const meshesRef = useRef([]);
 
   useEffect(() => {
     if (!filePath) {
-      if (voxAreaRef.current.childNodes.length > 0) {
-        voxAreaRef.current.removeChild(voxAreaRef.current.childNodes[0]);
+      if (sceneAreaRef.current && sceneAreaRef.current.childNodes.length > 0) {
+        sceneAreaRef.current.removeChild(sceneAreaRef.current.childNodes[0]);
       }
       return;
     }
-    let camera, controls, scene, renderer;
 
-    camera = new THREE.PerspectiveCamera(
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
       50,
-      window.innerWidth / window.innerHeight,
+      1, // Initial aspect ratio (updated in resize handler)
       0.01,
       10
     );
-    camera.position.set(0.175, 0.175, 0.175);
+    camera.position.set(0, 0.1, 0.3); // Fixed camera position
 
-    scene = new THREE.Scene();
-    scene.add(camera);
-
-    // light
+    // Lights
     const hemiLight = new THREE.HemisphereLight(0xcccccc, 0x444444, 3);
     scene.add(hemiLight);
 
@@ -40,58 +38,95 @@ function VoxLoader({ filePath }) {
     dirLight2.position.set(-1.5, -3, -2.5);
     scene.add(dirLight2);
 
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    rendererRef.current = renderer;
+    renderer.setPixelRatio(window.devicePixelRatio);
+    sceneAreaRef.current.appendChild(renderer.domElement);
+
+    // Load VOX file
     const loader = new VOXLoader();
-    loader.load(filePath, function (chunks) {
-      if (!chunks) {
-        console.error("vox: no chunks");
-        return null;
-      }
-      for (let i = 0; i < chunks.length; i++) {
-        const chunk = chunks[i];
-        const mesh = new VOXMesh(chunk);
-        mesh.geometry.computeBoundingBox();
-        const boundingBox = mesh.geometry.boundingBox;
-        const voxelSize = new THREE.Vector3();
-        boundingBox.getSize(voxelSize);
-        if (voxelSize.x > 30 || voxelSize.y > 30 || voxelSize.z > 30) {
-          mesh.scale.setScalar(0.00125);
-        } else {
-          mesh.scale.setScalar(0.0015);
+    loader.load(
+      filePath,
+      (chunks) => {
+        if (!chunks) {
+          console.error("VOX: No chunks loaded");
+          return;
         }
-        scene.add(mesh);
+        meshesRef.current = [];
+        for (let i = 0; i < chunks.length; i++) {
+          const chunk = chunks[i];
+          const mesh = new VOXMesh(chunk);
+          mesh.geometry.computeBoundingBox();
+          const boundingBox = mesh.geometry.boundingBox;
+          const voxelSize = new THREE.Vector3();
+          boundingBox.getSize(voxelSize);
+
+          // Dynamic scaling: Fit model within camera view
+          const maxDimension = Math.max(voxelSize.x, voxelSize.y, voxelSize.z);
+          const targetSize = 0.8;
+          const scale = maxDimension > 0 ? targetSize / maxDimension : 1;
+          mesh.scale.setScalar(scale);
+
+          // Center the mesh
+          boundingBox.getCenter(mesh.position);
+          mesh.position.multiplyScalar(-1);
+          scene.add(mesh);
+          meshesRef.current.push(mesh);
+        }
+      },
+      undefined,
+      (error) => {
+        console.error("VOX: Load error", error);
       }
-    });
+    );
 
-    // renderer
-    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
-    renderer.setViewport(-87, 20, 300, 150)
-    renderer.setAnimationLoop(() => {
-      const r = Date.now() * 0.0005;
-      camera.position.set(700 * Math.sin(r), 0, 700 * Math.cos(r));
+    // Animation loop
+    const clock = new THREE.Clock();
+    const animate = () => {
+      animationFrameIdRef.current = requestAnimationFrame(animate);
+      const deltaTime = clock.getDelta();
+      const rotationSpeed = 0.5;
 
-      controls.update();
+      // Rotate meshes
+      meshesRef.current.forEach((mesh) => {
+        mesh.rotation.y += rotationSpeed * deltaTime;
+      });
+
       renderer.render(scene, camera);
-    });
+    };
+    animate();
 
-    // controls
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.minDistance = 0.09;
-    controls.maxDistance = 0.095;
+    // Handle window resize
+    const handleResize = () => {
+      if (!sceneAreaRef.current) return;
+      const width = sceneAreaRef.current.clientWidth;
+      const height = sceneAreaRef.current.clientHeight;
+      camera.aspect = width / height || 1;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      renderer.domElement.style.width = `${width}px`;
+      renderer.domElement.style.height = `${height}px`;
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
 
-    camera.aspect = 2;
-    camera.updateProjectionMatrix();
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+        if (sceneAreaRef.current && sceneAreaRef.current.contains(renderer.domElement)) {
+          sceneAreaRef.current.removeChild(renderer.domElement);
+        }
+      }
+    };
+  }, [filePath]);
 
-    if (voxAreaRef.current.childNodes.length === 0) {
-      voxAreaRef.current.appendChild(renderer.domElement);
-    } else {
-      voxAreaRef.current.replaceChild(
-        renderer.domElement,
-        voxAreaRef.current.childNodes[0]
-      );
-    }
-  }, [filePath, window.innerWidth]);
-
-  return <div ref={voxAreaRef}></div>;
+  return <div ref={sceneAreaRef} style={{ width: "100%", height: "100%", overflow: "hidden" }} />;
 }
 
-export default VoxLoader;
+export default Scene;

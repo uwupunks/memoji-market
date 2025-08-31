@@ -1,10 +1,10 @@
-import { ENDPOINTS, SERVER } from "../constants";
+import { ENDPOINTS } from "../constants";
 import axios from "axios";
 
 export const fetchAllPools = async () => {
   try {
     const response = await axios.get(
-      `${SERVER}/osmosis/gamm/v1beta1/pools?pagination.offset=0&pagination.limit=999999999`
+      `${ENDPOINTS.pools}?pagination.offset=0&pagination.limit=999999999`
     );
     return response.data.pools;
   } catch (err) {
@@ -12,7 +12,6 @@ export const fetchAllPools = async () => {
     return [];
   }
 };
-
 
 export const fetchPoolPrice = async (allPools, poolId) => {
   try {
@@ -27,12 +26,19 @@ export const fetchPoolPrice = async (allPools, poolId) => {
       return null;
     }
     // Extract token reserves
-    const uwuAmount = pool.pool_assets.find(a=>a.token.denom.endsWith("owo"))?.token.amount
-    const otherAmount = pool.pool_assets.find(a=>!a.token.denom.endsWith("owo"))?.token.amount
+    const uwuAmount = pool.pool_assets.find((a) =>
+      a.token.denom.endsWith("owo")
+    )?.token.amount;
+    const otherAmount = pool.pool_assets.find(
+      (a) => !a.token.denom.endsWith("owo")
+    )?.token.amount;
 
     // Calculate spot price
     const spotPrice = parseFloat(uwuAmount) / parseFloat(otherAmount);
-    return {price: spotPrice, liq: spotPrice * (parseFloat(otherAmount) / 1000000)};
+    return {
+      price: spotPrice,
+      liq: spotPrice * (parseFloat(otherAmount) / 1000000),
+    };
   } catch (err) {
     console.error("Failed to fetch pool price:", err);
     return 0;
@@ -44,7 +50,10 @@ const fetchBalancesAsync = async (address, signal) => {
     return null;
   }
 
-  const res = await fetch(`${ENDPOINTS.balances}/${address}?pagination.offset=0&pagination.limit=999999999`, signal);
+  const res = await fetch(
+    `${ENDPOINTS.balances}/${address}?pagination.offset=0&pagination.limit=999999999`,
+    signal
+  );
   const data = await res.json();
   return data.balances;
 };

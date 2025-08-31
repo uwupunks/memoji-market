@@ -4,14 +4,14 @@ export const SERVER = "https://lcd.testnet.osmosis.zone";
 export const EXPLORER_PATH = "https://www.mintscan.io/osmosis-testnet";
 export const FACTORY_DEPLOYER = "osmo1f6zussydevqw8quygf0llyhsfq9sla5wcgjntq";
 export const ADDRESS_LENGTH = 43;
-export const CONTRACTS = {
-  creator: FACTORY_DEPLOYER,
-};
 
 export const ENDPOINTS = {
-  denoms: `${SERVER}/osmosis/tokenfactory/v1beta1/denoms_from_creator/${CONTRACTS.creator}`,
+  denoms: `${SERVER}/osmosis/tokenfactory/v1beta1/denoms_from_creator/${FACTORY_DEPLOYER}`,
   supplyByDenom: `${SERVER}/cosmos/bank/v1beta1/supply/by_denom?denom=`,
   balances: `${SERVER}/cosmos/bank/v1beta1/balances`,
+  latestBlock: `${SERVER}/cosmos/base/tendermint/v1beta1/blocks/latest`,
+  blocks: `${SERVER}/cosmos/base/tendermint/v1beta1/blocks`,
+  pools: `${SERVER}/osmosis/gamm/v1beta1/pools`
 };
 
 export const STARGAZE = {

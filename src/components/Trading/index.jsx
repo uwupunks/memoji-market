@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Ztext from "react-ztext";
 import connectButton from "assets/img/connectwallet.png";
 import exitButton from "assets/img/exit.png";
@@ -50,6 +50,7 @@ import {
   fetchAllPools,
   fetchPoolPrice,
 } from "../../hooks/balanceUtils.jsx";
+import { fetch24HourPriceChange } from "../../hooks/fetchChartData.js";
 import SwapModal from "../SwapModal/index.jsx";
 import SendModal from "../SendModal/index.jsx";
 import AlertModal from "../AlertModal/index.jsx";
@@ -118,7 +119,11 @@ function Trading({ onClose }) {
 
       const getPriceAndTvl = async (poolId, maxSupply) => {
         const poolInfo = await fetchPoolPrice(allPools, poolId);
-        return { price: poolInfo.price, liq: poolInfo.liq, mc: poolInfo.price * (parseFloat(maxSupply) / 1000000) };
+        return {
+          price: poolInfo.price,
+          liq: poolInfo.liq,
+          mc: poolInfo.price * (parseFloat(maxSupply) / 1000000),
+        };
       };
 
       const getInfo = async (sup) => {
@@ -366,6 +371,7 @@ function Trading({ onClose }) {
   // fetch supply data
   useEffect(() => {
     fetchSupplyData();
+    fetch24HourPriceChange();
   }, []);
 
   // fetch user balances

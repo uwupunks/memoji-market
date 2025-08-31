@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import { useChain } from "@cosmos-kit/react";
 
 import VoxLoader from "components/VoxLoader";
-import { SERVER, EXPLORER_PATH, RPC } from "src/constants";
+import { EXPLORER_PATH, RPC } from "src/constants";
 import { osmosis, getSigningOsmosisClient } from "osmojs";
 import { coin } from "@cosmjs/amino";
 import axios from "axios";
@@ -16,7 +16,7 @@ import errorWav from "assets/sounds/error.wav";
 import overMp3 from "assets/sounds/btmouseover.mp3";
 
 import sonicspin from "assets/img/sonicspin.png";
-import { CHAIN_ID, DENOMS } from "../../constants";
+import { CHAIN_ID, DENOMS, ENDPOINTS } from "../../constants";
 
 const { swapExactAmountIn } = osmosis.gamm.v1beta1.MessageComposer.withTypeUrl;
 const playSound = async (sound) => {
@@ -49,7 +49,11 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
     const fetchPoolPrice = async () => {
       if (!leftAsset?.denom || !rightAsset?.denom || !balances) return;
       try {
-        const poolId = DENOMS?.find((d) => (d.denom === leftAsset.denom || d.denom === rightAsset.denom) && d.poolId)?.poolId
+        const poolId = DENOMS?.find(
+          (d) =>
+            (d.denom === leftAsset.denom || d.denom === rightAsset.denom) &&
+            d.poolId
+        )?.poolId;
         if (!poolId) {
           console.warn("Pool ID not found");
           setPrice(0);
@@ -57,9 +61,7 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
         }
 
         // Query Osmosis LCD for pool data
-        const response = await axios.get(
-          `${SERVER}/osmosis/gamm/v1beta1/pools/${poolId}`
-        );
+        const response = await axios.get(`${ENDPOINTS.pools}/${poolId}`);
         const pool = response.data.pool;
 
         const uwuAmount = pool.pool_assets.find((a) =>
@@ -168,7 +170,11 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
         rpcEndpoint: RPC,
         signer: getOfflineSigner({ chainId: CHAIN_ID }),
       });
-      const poolId = DENOMS?.find((d) => (d.denom === leftAsset.denom || d.denom === rightAsset.denom) && d.poolId)?.poolId
+      const poolId = DENOMS?.find(
+        (d) =>
+          (d.denom === leftAsset.denom || d.denom === rightAsset.denom) &&
+          d.poolId
+      )?.poolId;
       if (!poolId) {
         playSound(errorSound);
         onSwap("Invalid pool ID for the selected asset pair");

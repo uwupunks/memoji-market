@@ -223,25 +223,19 @@ export async function fetch24HourPriceChange() {
         priceHistory.push({
           blockHeight: latestBlock,
           timestamp: latestTimestamp,
-          prices: latestPrices,
+          prices: latestPrices
         });
       } else {
         console.warn(`No valid price data for block ${latestBlock}`);
       }
     } else {
-      console.warn(
-        `Skipping block ${latestBlock} due to unavailable pool data`
-      );
+      console.warn(`Skipping block ${latestBlock} due to unavailable pool data`);
     }
 
     // Fetch data for the block ~24 hours ago
-    console.log(
-      `Fetching data for block ${blockHeight24hAgo} (~24 hours ago)...`
-    );
+    console.log(`Fetching data for block ${blockHeight24hAgo} (~24 hours ago)...`);
     const blockData24hAgo = await getBlockData(blockHeight24hAgo);
-    const timestamp24hAgo = blockData24hAgo
-      ? blockData24hAgo.header.time
-      : null;
+    const timestamp24hAgo = blockData24hAgo ? blockData24hAgo.header.time : null;
     const poolData24hAgo = await getPoolData(POOL_ID, blockHeight24hAgo);
 
     if (poolData24hAgo) {
@@ -250,15 +244,22 @@ export async function fetch24HourPriceChange() {
         priceHistory.push({
           blockHeight: blockHeight24hAgo,
           timestamp: timestamp24hAgo,
-          prices: prices24hAgo,
+          prices: prices24hAgo
         });
       } else {
         console.warn(`No valid price data for block ${blockHeight24hAgo}`);
       }
     } else {
-      console.warn(
-        `Skipping block ${blockHeight24hAgo} due to unavailable pool data`
-      );
+      console.warn(`Skipping block ${blockHeight24hAgo} due to unavailable pool data`);
+    }
+
+    // Verify time difference
+    let timeDifferenceHours = null;
+    if (latestTimestamp && timestamp24hAgo) {
+      const latestDate = new Date(latestTimestamp);
+      const pastDate = new Date(timestamp24hAgo);
+      timeDifferenceHours = (latestDate - pastDate) / (1000 * 60 * 60); // Convert ms to hours
+      console.log(`Time difference: ${timeDifferenceHours.toFixed(2)} hours`);
     }
 
     // Calculate 24-hour price change
@@ -270,56 +271,60 @@ export async function fetch24HourPriceChange() {
       const priceBinA24hAgo = priceHistory[1].prices.priceBinA;
 
       // Calculate percentage change: ((new - old) / old) * 100
-      const priceChangeAinB =
-        ((latestPriceAinB - priceAinB24hAgo) / priceAinB24hAgo) * 100;
-      const priceChangeBinA =
-        ((latestPriceBinA - priceBinA24hAgo) / priceBinA24hAgo) * 100;
+      const priceChangeAinB = ((latestPriceAinB - priceAinB24hAgo) / priceAinB24hAgo) * 100;
+      const priceChangeBinA = ((latestPriceBinA - priceBinA24hAgo) / priceBinA24hAgo) * 100;
 
       priceChange = {
         tokenADenom: priceHistory[0].prices.tokenADenom,
         tokenBDenom: priceHistory[0].prices.tokenBDenom,
-        priceChangeAinB: priceChangeAinB.toFixed(2), // Percentage, rounded to 2 decimals
-        priceChangeBinA: priceChangeBinA.toFixed(2), // Percentage, rounded to 2 decimals
+        priceChangeAinB: priceChangeAinB.toFixed(2),
+        priceChangeBinA: priceChangeBinA.toFixed(2),
         latestPriceAinB: latestPriceAinB.toFixed(6),
         latestPriceBinA: latestPriceBinA.toFixed(6),
         priceAinB24hAgo: priceAinB24hAgo.toFixed(6),
         priceBinA24hAgo: priceBinA24hAgo.toFixed(6),
+        latestAmountA: priceHistory[0].prices.amountA.toFixed(6),
+        latestAmountB: priceHistory[0].prices.amountB.toFixed(6),
+        amountA24hAgo: priceHistory[1].prices.amountA.toFixed(6),
+        amountB24hAgo: priceHistory[1].prices.amountB.toFixed(6),
+        timeDifferenceHours: timeDifferenceHours ? timeDifferenceHours.toFixed(2) : null
       };
     } else {
-      console.warn("Insufficient data to calculate 24-hour price change");
+      console.warn('Insufficient data to calculate 24-hour price change');
     }
 
     // Output the price history and change
-    console.log("\nPrice History for Pool", POOL_ID);
+    console.log('\nPrice History for Pool', POOL_ID);
     priceHistory.forEach((entry) => {
+      console.log(`Block ${entry.blockHeight} (Timestamp: ${entry.timestamp || 'N/A'}):`);
       console.log(
-        `Block ${entry.blockHeight} (Timestamp: ${entry.timestamp || "N/A"}):`
+        `  ${entry.prices.tokenADenom} in ${entry.prices.tokenBDenom}: ${entry.prices.priceAinB.toFixed(6)}`
       );
       console.log(
-        `  ${entry.prices.tokenADenom} in ${
-          entry.prices.tokenBDenom
-        }: ${entry.prices.priceAinB.toFixed(6)}`
+        `  ${entry.prices.tokenBDenom} in ${entry.prices.tokenADenom}: ${entry.prices.priceBinA.toFixed(6)}`
       );
       console.log(
-        `  ${entry.prices.tokenBDenom} in ${
-          entry.prices.tokenADenom
-        }: ${entry.prices.priceBinA.toFixed(6)}`
+        `  Amount ${entry.prices.tokenADenom}: ${entry.prices.amountA.toFixed(6)}`
+      );
+      console.log(
+        `  Amount ${entry.prices.tokenBDenom}: ${entry.prices.amountB.toFixed(6)}`
       );
     });
 
     if (priceChange) {
-      console.log("\n24-Hour Price Change:");
+      console.log('\n24-Hour Price Change:');
       console.log(
         `  ${priceChange.tokenADenom} in ${priceChange.tokenBDenom}: ${priceChange.priceChangeAinB}%`
       );
       console.log(
         `  ${priceChange.tokenBDenom} in ${priceChange.tokenADenom}: ${priceChange.priceChangeBinA}%`
       );
+      console.log(`  Time difference: ${priceChange.timeDifferenceHours} hours`);
     }
 
     return { priceHistory, priceChange };
   } catch (error) {
-    console.error("Error in fetch24HourPriceChange:", error.message);
+    console.error('Error in fetch24HourPriceChange:', error.message);
     throw error;
   }
 }

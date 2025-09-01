@@ -372,7 +372,7 @@ function Trading({ onClose }) {
   useEffect(() => {
     fetchSupplyData();
     fetch24HourPriceChange();
-  }, []);
+  }, [refreshBalances]);
 
   // fetch user balances
   useEffect(() => {

@@ -69,7 +69,7 @@ function SendModal({ isActive, balances, onSend }) {
 
       const selectedBalance =
         balances?.find((b) => b.denom === sendDenom)?.amount || 0;
-      if (sendAmount * Math.pow(10, decimals) > selectedBalance) {
+      if (sendAmount > selectedBalance) {
         throw new Error("Insufficient balance");
       }
 

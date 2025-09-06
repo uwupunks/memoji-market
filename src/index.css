@@ -274,7 +274,7 @@ input[type="number"] {
   background: url(assets/img/brushedsteel.png);
   background-position: bottom right;
   border-radius: 10px 10px 0 10px;
-  height: 384px;
+  height: 100vh;
   margin: 0 0 0 4px;
   padding: 5px 18px 0 18px;
   flex-grow: 1;

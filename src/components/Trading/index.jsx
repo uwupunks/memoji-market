@@ -481,58 +481,65 @@ function Trading({ onClose }) {
         onMouseDown={() => clickSound.play()}
       >
         <div className="leftSection w-full md:w-226px">
-          <div className="userSection p-1">
-            <div className="userWindowWrapper">
-              <img className="userWindow" src={userWindow} />
-            </div>
-            <div className="walletName">
-              {isWalletConnected ? (
-                <>
-                  <p>{addressDisplay}</p>
-                  <p style={{ color: "purple", fontWeight: "bold" }}>TESTNET</p>
-                  {/* <p>{username}</p> */}
-                </>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="walletItemsSection max-h-[150px] overflow-y-auto md:max-h-none md:overflow-visible">
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <img src={memeInv} />
-
-              <button
-                className="send"
-                onClick={async () => {
-                  if (!isWalletConnected) {
-                    await connect();
-                  }
-                  setSendActive(!sendActive);
-                }}
-                onMouseEnter={() => overSound.play()}
-                src={btSend2}
-                id="send"
-              />
+          {/* Mobile: combine userSection and walletItemsSection side by side, desktop: stack */}
+          <div className="flex flex-row md:flex-col">
+            <div className="userSection p-1 w-1/2 md:w-full">
+              <div className="userWindowWrapper">
+                <img className="userWindow" src={userWindow} />
+              </div>
+              <div className="walletName">
+                {isWalletConnected ? (
+                  <>
+                    <p>{addressDisplay}</p>
+                    <p style={{ color: "purple", fontWeight: "bold" }}>
+                      TESTNET
+                    </p>
+                    {/* <p>{username}</p> */}
+                  </>
+                ) : null}
+              </div>
             </div>
 
-            <div className="walletItemsBorder">
-              <div className="walletItems">
-                {balances?.map((asset) => {
-                  return (
-                    <div
-                      key={asset.denom}
-                      className="assetWrapper"
-                      onClick={() => onInventoryClick(asset)}
-                    >
-                      <div className="assetEmoji">
-                        <img
-                          src={MEMOJI.find((m) => m.name === asset.name)?.image}
-                        ></img>
+            <div className="walletItemsSection max-h-[200px] overflow-y-auto md:max-h-none md:overflow-visible w-1/2 md:w-full">
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img src={memeInv} />
+
+                <button
+                  className="send"
+                  onClick={async () => {
+                    if (!isWalletConnected) {
+                      await connect();
+                    }
+                    setSendActive(!sendActive);
+                  }}
+                  onMouseEnter={() => overSound.play()}
+                  src={btSend2}
+                  id="send"
+                />
+              </div>
+
+              <div className="walletItemsBorder">
+                <div className="walletItems">
+                  {balances?.map((asset) => {
+                    return (
+                      <div
+                        key={asset.denom}
+                        className="assetWrapper"
+                        onClick={() => onInventoryClick(asset)}
+                      >
+                        <div className="assetEmoji">
+                          <img
+                            src={
+                              MEMOJI.find((m) => m.name === asset.name)?.image
+                            }
+                          ></img>
+                        </div>
+                        {asImage(asset.amount)}
                       </div>
-                      {asImage(asset.amount)}
-                    </div>
-                  );
-                })}
-                {padInventory(balances)}
+                    );
+                  })}
+                  {padInventory(balances)}
+                </div>
               </div>
             </div>
           </div>

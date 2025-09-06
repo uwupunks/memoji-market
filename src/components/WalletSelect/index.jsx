@@ -61,6 +61,7 @@ const suggest = async () => {
   if (window.keplr) {
     await window.keplr.experimentalSuggestChain(chainInfo);
   } else if (isMobile) {
+    debugger
     const deepLink = `keplrwallet://wcV1?chainId=${
       chainInfo.chainId
     }&rpc=${encodeURIComponent(chainInfo.rpc)}&name=${encodeURIComponent(

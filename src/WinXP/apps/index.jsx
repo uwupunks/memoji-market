@@ -3,20 +3,10 @@ import Winamp from "./Winamp";
 import Keygen from "./Keygen";
 import Cracked from "./Cracked";
 import error from "../../assets/windowsIcons/897(16x16).png";
-import unicornIcon from "../../assets/windowsIcons/unicorn.png";
 import keygenIcon from "../../assets/windowsIcons/keygen.png";
 import crackedIcon from "../../assets/windowsIcons/cracked.png";
 import winamp from "../../assets/windowsIcons/winamp.png";
-
-const gen = () => {
-  let id = -1;
-  return () => {
-    id += 1;
-    return id;
-  };
-};
-const genId = gen();
-const genIndex = gen();
+import { isMobile } from "react-device-detect";
 
 export const defaultAppState = [];
 
@@ -78,8 +68,8 @@ export const appSettings = {
     },
     component: Cracked,
     defaultSize: {
-      width: 911,
-      height: 600,
+      width: 711,
+      height: 700,
     },
     defaultOffset: {
       x: 50,
@@ -87,7 +77,7 @@ export const appSettings = {
     },
     resizable: true,
     minimized: false,
-    maximized: false,
+    maximized: isMobile ? true : false,
     multiInstance: false,
   },
   Winamp: {

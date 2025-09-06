@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import styled, { keyframes } from "styled-components";
 import useMouse from "react-use/lib/useMouse";
-import { useSearchParams } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import {
   ADD_APP,
@@ -201,7 +200,6 @@ function WinXP() {
   const ref = useRef(null);
   const mouse = useMouse(ref);
   const focusedAppId = getFocusedAppId();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const onFocusApp = useCallback((id) => {
     dispatch({ type: FOCUS_APP, payload: id });
@@ -308,7 +306,9 @@ function WinXP() {
 
   useEffect(() => {
     dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
-    dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
+    if(!isMobile) {
+      dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
+    }
     dispatch({
       type: "ADD_ICONS",
       payload: [

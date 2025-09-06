@@ -477,10 +477,10 @@ function Trading({ onClose }) {
   return (
     <>
       <div
-        className="crackedWindow flex flex-row"
+        className="crackedWindow flex flex-col md:flex-row"
         onMouseDown={() => clickSound.play()}
       >
-        <div className="leftSection w-226px">
+        <div className="leftSection w-full md:w-226px">
           <div className="userSection p-1">
             <div className="userWindowWrapper">
               <img className="userWindow" src={userWindow} />
@@ -496,7 +496,7 @@ function Trading({ onClose }) {
             </div>
           </div>
 
-          <div className="walletItemsSection">
+          <div className="walletItemsSection max-h-[150px] overflow-y-auto md:max-h-none md:overflow-visible">
             <div style={{ display: "flex", alignItems: "center" }}>
               <img src={memeInv} />
 
@@ -538,7 +538,7 @@ function Trading({ onClose }) {
           </div>
         </div>
         <div className="flex flex-col flex-grow">
-          <div className="memeMarketSection h-full p-2.5">
+          <div className="memeMarketSection h-full p-2.5 max-h-[calc(100vh-260px)] overflow-y-auto md:max-h-none md:overflow-visible">
             <div id="memeMarket">
               {mainTab === 0 && (
                 <>

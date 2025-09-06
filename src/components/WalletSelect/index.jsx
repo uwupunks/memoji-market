@@ -60,6 +60,18 @@ const suggest = async () => {
 
   if (window.keplr) {
     await window.keplr.experimentalSuggestChain(chainInfo);
+  } else if (isMobile) {
+    const deepLink = `keplrwallet://wcV1?chainId=${
+      chainInfo.chainId
+    }&rpc=${encodeURIComponent(chainInfo.rpc)}&name=${encodeURIComponent(
+      chainInfo.chainName
+    )}`;
+    try {
+      window.location.href = deepLink;
+      console.log("Attempting to open Keplr mobile via deep link");
+    } catch (error) {
+      console.error("Deep link failed:", error);
+    }
   }
   if (window.leap) {
     await window.leap.experimentalSuggestChain(chainInfo);

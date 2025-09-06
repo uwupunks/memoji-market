@@ -1,13 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Ztext from "react-ztext";
-import connectButton from "assets/img/connectwallet.png";
-import exitButton from "assets/img/exit.png";
-import hoverButton from "assets/img/hover.png";
 import mascotButton from "assets/img/mascot.png";
-import pressedButton from "assets/img/pressed.png";
-import switchedHover from "assets/img/switchwallethover.png";
-import switchPressed from "assets/img/switchwalletpressed.png";
-import switchButton from "assets/img/switchwallet.png";
 import allButton from "assets/img/all.png";
 import hiddenButton from "assets/img/hidden.png";
 import classicButton from "assets/img/classic.png";
@@ -107,6 +100,8 @@ function Trading({ onClose }) {
   const [balances, setBalances] = useState([]);
   const [refreshBalances, setRefreshBalances] = useState(false);
   const [rowData, setRowData] = useState([]);
+  const [settingsActive, setSettingsActive] = useState(false);
+  const [slippage, setSlippage] = useState(5);
   let gridRef = useRef();
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
@@ -289,43 +284,6 @@ function Trading({ onClose }) {
     }
   }, [address]);
 
-  //wallet connected button
-  useEffect(() => {
-    let wallet = document.getElementById("wallet");
-    wallet.onmousedown = function () {
-      downFunction();
-    };
-    wallet.onmouseleave = function () {
-      leaveFunction();
-    };
-    wallet.onmouseenter = function () {
-      enterFunction();
-    };
-    function enterFunction() {
-      if (isWalletConnected) {
-        wallet.src = switchedHover;
-      } else {
-        wallet.src = hoverButton;
-      }
-    }
-
-    function downFunction() {
-      if (isWalletConnected) {
-        wallet.src = switchPressed;
-      } else {
-        wallet.src = pressedButton;
-      }
-    }
-
-    function leaveFunction() {
-      if (isWalletConnected) {
-        wallet.src = switchButton;
-      } else {
-        wallet.src = connectButton;
-      }
-    }
-  });
-
   const isLowLiq = (liq) => liq.replace("%", "") < 0.4;
   const alert = (message, link, linkText) => {
     setAlertMessage(message);
@@ -477,11 +435,29 @@ function Trading({ onClose }) {
   return (
     <>
       <div
-        className="crackedWindow flex flex-col md:flex-row"
+        className="crackedWindow flex flex-col md:flex-row relative"
         onMouseDown={() => clickSound.play()}
       >
+        {/* TESTNET Watermark overlay */}
+        <div
+          style={{
+            position: "absolute",
+            top: "15%",
+            left: "40%",
+            transform: "translate(-50%, -50%) rotate(-20deg)",
+            fontSize: "5rem",
+            color: "purple",
+            opacity: 0.45,
+            pointerEvents: "none",
+            fontWeight: "bold",
+            zIndex: 100,
+            userSelect: "none",
+            textShadow: "0 0 12px #800080, 0 0 2px #fff",
+          }}
+        >
+          TESTNET
+        </div>
         <div className="leftSection w-full md:w-226px">
-          {/* Mobile: combine userSection and walletItemsSection side by side, desktop: stack */}
           <div className="flex flex-row md:flex-col">
             <div className="userSection p-1 w-1/2 md:w-full">
               <div className="userWindowWrapper">
@@ -770,39 +746,35 @@ function Trading({ onClose }) {
             </div>
             <div className="w-2/3" id="bottomBarMiddle">
               {isWalletConnected ? (
-                <img
+                <button
                   onMouseEnter={() => overSound.play()}
-                  className="walletButton"
+                  className="walletButtonConnected"
                   id="wallet"
                   onClick={() => {
                     setBalances(null);
                     disconnect();
                   }}
-                  src={switchButton}
                 />
               ) : (
-                <img
+                <button
                   onMouseEnter={() => overSound.play()}
                   className="walletButton"
                   id="wallet"
                   onClick={async () => {
                     await connect();
                   }}
-                  src={connectButton}
                 />
               )}
-              <p style={{ color: "purple", fontWeight: "bold" }}>TESTNET</p>
             </div>
 
             <div className="exitWrapper mt-auto mb-5 mr-2.5 h-full">
-              <img
+              <button
                 onMouseEnter={() => overSound.play()}
-                className="exit"
-                onClick={() => onClose(onClose)}
-                src={exitButton}
-              />
+                className="settingsButton"
+                onClick={() => setSettingsActive(true)}
+                aria-label="Settings"
+              ></button>
             </div>
-
             <div className="mt-auto">
               <img
                 className="mascot"
@@ -819,6 +791,7 @@ function Trading({ onClose }) {
         right={rightAsset}
         isActive={swapActive}
         balances={balances}
+        slippage={slippage}
         onClose={() => setSwapActive(false)}
         onSwap={(message, link, linkText) => {
           if (message) {
@@ -827,6 +800,48 @@ function Trading({ onClose }) {
           setRefreshBalances(!refreshBalances);
         }}
       ></SwapModal>
+
+      {/* Settings Modal */}
+      {settingsActive && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div
+            className="rounded-lg shadow-lg p-6 min-w-[300px] relative"
+            style={{ background: "#e0ddd7" }}
+          >
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+              onClick={() => setSettingsActive(false)}
+              aria-label="Close"
+            >
+              ✖️
+            </button>
+            <h2 className="text-lg font-bold mb-4">Settings</h2>
+            <div className="mb-4">
+              <label
+                htmlFor="slippage"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Slippage:{" "}
+                <span className="font-bold text-purple-600">{slippage}%</span>
+              </label>
+              <input
+                id="slippage"
+                type="range"
+                min={0}
+                max={90}
+                step={1}
+                value={slippage}
+                onChange={(e) => setSlippage(Number(e.target.value))}
+                className="w-full accent-purple-600"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>0%</span>
+                <span>90%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <SendModal
         isActive={sendActive}

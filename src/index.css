@@ -247,6 +247,35 @@ input[type="number"] {
       transparent 80%
     )
     0 0 / 1px 100% no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settingsButton {
+  background: url(assets/img/green-gel-button.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  width: 52px;
+  height: 24px;
+  margin: auto;
+  display: block;
+}
+.settingsButton:hover {
+  background: url(assets/img/green-gel-button-over.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.settingsButton:active {
+  background: url(assets/img/green-gel-button-active.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 3px;
+  left: 3px;
 }
 
 .exit {
@@ -320,7 +349,7 @@ input[type="number"] {
 .assetWrapper .textImage {
   position: relative;
   bottom: 15px;
-    left: -2px;
+  left: -2px;
 }
 .assetWrapper .textImage img {
   display: inline;
@@ -396,14 +425,51 @@ input[type="number"] {
 }
 
 .walletButton {
-  width: 50px;
-  min-width: 50px;
-  height: 39px;
-  margin-top: 4%;
-  margin-left: 5%;
-  margin-right: auto;
+  background: url(assets/img/connectwallet.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  width: 52px;
+  height: 24px;
+  margin: auto;
+  display: block;
 }
 
+.walletButton:hover {
+  background: url(assets/img/connectwallet-over.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.walletButton:active {
+  background: url(assets/img/connectwallet-active.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 3px;
+  left: 3px;
+}
+
+.walletButtonConnected {
+  background: url(assets/img/disconnectwallet.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  width: 52px;
+  height: 24px;
+}
+.walletButtonConnected:hover {
+  background: url(assets/img/disconnectwallet-over.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.walletButtonConnected:active {
+  background: url(assets/img/disconnectwallet-active.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 3px;
+  left: 3px;
+}
 .assetList {
   margin-top: auto;
   height: 100%;
@@ -812,6 +878,9 @@ option:active {
         transparent 80%
       )
       100% 0 / 1px 100% no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #assetGrid .partial-vertical-borders:last-child {
   /* left border*/

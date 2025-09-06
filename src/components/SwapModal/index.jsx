@@ -27,7 +27,15 @@ const playSound = async (sound) => {
   }
 };
 
-function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
+function SwapModal({
+  left,
+  right,
+  isActive,
+  onClose,
+  onSwap,
+  balances,
+  slippage,
+}) {
   //hooks
   const promptSound = new Audio(promptMp3);
   const clickSound = new Audio(clickMp3);
@@ -184,6 +192,10 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
 
       const amount = (leftAsset.amount * Math.pow(10, 6)).toString();
 
+      // Use slippage prop if provided, default to 5%
+      const slippagePercent = typeof slippage === "number" ? slippage : 5;
+      const slippageDecimal = 1 - slippagePercent / 100;
+
       const msg = swapExactAmountIn({
         sender: address,
         routes: [
@@ -193,7 +205,11 @@ function SwapModal({ left, right, isActive, onClose, onSwap, balances }) {
           },
         ],
         tokenIn: coin(amount, leftAsset.denom),
-        tokenOutMinAmount: (rightAsset.amount * 0.95 * Math.pow(10, 6))
+        tokenOutMinAmount: (
+          rightAsset.amount *
+          slippageDecimal *
+          Math.pow(10, 6)
+        )
           .toFixed(0)
           .toString(),
       });

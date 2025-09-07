@@ -354,17 +354,19 @@ input[type="number"] {
   float: left;
   overflow: hidden;
 }
-.assetWrapper .textImage {
+.assetWrapper span {
+  display: block;
+  height: auto;
   position: relative;
-  bottom: 15px;
-  left: -2px;
+  top: -15px;
+  left: -3px;
+  color: beige;
+  text-shadow: 1px 1px 2px #000;
+  font-weight: bolder;
+  font-smoothing: none;
+  -webkit-font-smoothing: none;
 }
-.assetWrapper .textImage img {
-  display: inline;
-}
-.assetWrapper:last-child {
-  flex: initial;
-}
+
 .assetEmoji {
   width: 30px;
   height: 30px;
@@ -510,7 +512,7 @@ input[type="number"] {
 }
 .assetList .quantity {
   float: right;
-  color: #3a3a3a;
+  color: #00000099;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: none;
   font-smoothing: none;

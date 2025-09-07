@@ -519,7 +519,7 @@ function Trading({ onClose }) {
                             }
                           ></img>
                         </div>
-                        {asImage(asset.amount)}
+                        <span>{asset.amount}</span>
                       </div>
                     );
                   })}

@@ -258,7 +258,7 @@ input[type="number"] {
   background-size: cover;
   background-repeat: no-repeat;
   border: none;
-  width: 52px;
+  width: 60px;
   height: 24px;
   margin: auto;
   display: block;
@@ -310,21 +310,30 @@ input[type="number"] {
 
 .walletItemsSection .send {
   margin: 0 0 4px 17px;
-  background: url(assets/img/btsend/3.png);
-  height: 18px;
-  width: 52px;
+  background: url(assets/img/send.png);
+  width: 57px;
+  height: 24px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
 }
 
 .walletItemsSection .send:hover {
-  background: url(assets/img/btsend/2.png);
+  background: url(assets/img/send-over.png);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .walletItemsSection .send:active {
-  background: url(assets/img/btsend/4.png);
+  background: url(assets/img/send-active.png);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .walletItemsSection .send:disabled {
-  background: url(assets/img/btsend/1.png);
+  background: url(assets/img/send-disabled.png);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .walletItemsBorder {
@@ -428,7 +437,7 @@ input[type="number"] {
   background-size: cover;
   background-repeat: no-repeat;
   border: none;
-  width: 52px;
+  width: 55px;
   height: 24px;
   margin: auto;
   display: block;
@@ -453,7 +462,7 @@ input[type="number"] {
   background-size: cover;
   background-repeat: no-repeat;
   border: none;
-  width: 52px;
+  width: 55px;
   height: 24px;
 }
 .walletButtonConnected:hover {
@@ -772,9 +781,6 @@ option:active {
 #assetGrid.ag-theme-quartz-dark {
   height: 100%;
   width: 100%;
-  -webkit-font-smoothing: none;
-  -moz-osx-font-smoothing: none;
-  font-smoothing: none;
 
   --ag-row-height: 20px;
 
@@ -801,9 +807,6 @@ option:active {
   color: #224477;
   font-weight: 500;
   text-shadow: #74a4ec 0 0 3px;
-  -webkit-font-smoothing: none;
-  -moz-osx-font-smoothing: none;
-  font-smoothing: none;
 }
 #assetGrid .ag-cell {
   color: #fff;

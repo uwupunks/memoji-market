@@ -35,7 +35,6 @@ import mCharacter from "assets/img/mCharacter.png";
 import bCharacter from "assets/img/bCharacter.png";
 import tCharacter from "assets/img/tCharacter.png";
 import lessThanCharacter from "assets/img/lessThanCharacter.png";
-import btSend2 from "assets/img/btsend/2.png";
 import memeInv from "assets/img/memeInv.png";
 import { MEMOJI, ADDRESS_LENGTH } from "../../constants";
 import {
@@ -177,12 +176,10 @@ function Trading({ onClose }) {
         denomDisplay: info.denomShorthand,
         price: Number(info.price),
         poolId: info.poolId,
-        priceDisplay: numberFormatter.format(info.price) + " 🦄",
         mcap: info.mcap,
-        mcapDisplay: numberFormatter.format(info.mcap),
-        liq: percentFormatter.format(info.liq),
-        tvl: numberFormatter.format(info.tvl),
-        fdv: numberFormatter.format(info.fdv),
+        liq: info.liq,
+        tvl: info.tvl,
+        fdv: info.fdv,
         supply: info.supply,
         balance: info.balance,
         share: info.share,
@@ -403,23 +400,39 @@ function Trading({ onClose }) {
 
   const [colDefs, setColDefs] = useState([
     {
-      field: "Memoji",
-      valueGetter: (p) =>
-        `${p.data.emoji} ${displayDenom(p.data.denomDisplay)}`,
+      field: "emoji",
+      headerName: "Memoji",
+      width: 150,
+      valueFormatter: (p) => `${p.value} ${displayDenom(p.data.denomDisplay)}`,
     },
-    { field: "Price", valueGetter: (p) => p.data.priceDisplay },
     {
-      field: "McapRaw",
-      valueGetter: (p) => p.data.mcap,
+      field: "price",
+      headerName: "Price",
+      flex: 1,
+      valueFormatter: (p) => numberFormatter.format(p.value) + " 🦄",
+    },
+    {
+      field: "mcap",
+      headerName: "Mcap",
+      flex: 1,
+      valueFormatter: (p) => numberFormatter.format(p.value),
       sort: "desc",
-      hide: true,
     },
-    { field: "Mcap", valueGetter: (p) => p.data.mcapDisplay },
-    { field: "Liq", valueGetter: (p) => p.data.liq },
-    { field: "TVL", valueGetter: (p) => p.data.tvl },
     {
-      field: "Listed",
-      valueGetter: (p) => p.data.listed,
+      field: "liq",
+      headerName: "Liq",
+      flex: 1,
+      valueFormatter: (p) => percentFormatter.format(p.value),
+    },
+    {
+      field: "tvl",
+      headerName: "TVL",
+      flex: 1,
+      valueFormatter: (p) => numberFormatter.format(p.value),
+    },
+    {
+      field: "listed",
+      headerName: "Listed",
       flex: 1,
       filter: "agNumberColumnFilter",
       hide: true,
@@ -427,9 +440,8 @@ function Trading({ onClose }) {
   ]);
 
   const defaultColDef = {
-    sortable: true,
-    flex: 1,
     cellClass: "partial-vertical-borders",
+    sortable: true,
   };
 
   return (
@@ -479,6 +491,7 @@ function Trading({ onClose }) {
 
                 <button
                   className="send"
+                  disabled={!isWalletConnected || balances?.length === 0}
                   onClick={async () => {
                     if (!isWalletConnected) {
                       await connect();
@@ -486,7 +499,6 @@ function Trading({ onClose }) {
                     setSendActive(!sendActive);
                   }}
                   onMouseEnter={() => overSound.play()}
-                  src={btSend2}
                   id="send"
                 />
               </div>
@@ -658,7 +670,6 @@ function Trading({ onClose }) {
                         rowSelection="single"
                         ref={gridRef}
                         onRowClicked={onRowClicked}
-                        enableSorting
                         rowClass="row-borders"
                       />
                     </div>

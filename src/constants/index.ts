@@ -619,7 +619,7 @@ export const DENOMS = [
     denom: `factory/${FACTORY_DEPLOYER}/uvril`,
     name: "uvril",
     maxSupply: "1000000000000000",
-    emoji: "",
+    emoji: "ϟ",
     listed: true,
     poolId: "1233"
   },

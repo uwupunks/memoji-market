@@ -20,21 +20,6 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 import overMp3 from "assets/sounds/btmouseover.mp3";
 import clickMp3 from "assets/sounds/btclick.mp3";
 
-import zeroCharacter from "assets/img/zeroCharacter.png";
-import oneCharacter from "assets/img/oneCharacter.png";
-import twoCharacter from "assets/img/twoCharacter.png";
-import threeCharacter from "assets/img/threeCharacter.png";
-import fourCharacter from "assets/img/fourCharacter.png";
-import fiveCharacter from "assets/img/fiveCharacter.png";
-import sixCharacter from "assets/img/sixCharacter.png";
-import sevenCharacter from "assets/img/sevenCharacter.png";
-import eightCharacter from "assets/img/eightCharacter.png";
-import nineCharacter from "assets/img/nineCharacter.png";
-import kCharacter from "assets/img/kCharacter.png";
-import mCharacter from "assets/img/mCharacter.png";
-import bCharacter from "assets/img/bCharacter.png";
-import tCharacter from "assets/img/tCharacter.png";
-import lessThanCharacter from "assets/img/lessThanCharacter.png";
 import memeInv from "assets/img/memeInv.png";
 import { MEMOJI, ADDRESS_LENGTH } from "../../constants";
 import {
@@ -288,33 +273,6 @@ function Trading({ onClose }) {
     setAlertLinkText(linkText);
     setAlertActive(true);
   };
-  const sprites = {
-    0: zeroCharacter,
-    1: oneCharacter,
-    2: twoCharacter,
-    3: threeCharacter,
-    4: fourCharacter,
-    5: fiveCharacter,
-    6: sixCharacter,
-    7: sevenCharacter,
-    8: eightCharacter,
-    9: nineCharacter,
-    K: kCharacter,
-    M: mCharacter,
-    B: bCharacter,
-    T: tCharacter,
-    "<": lessThanCharacter,
-  };
-
-  function asImage(text) {
-    let textArray = [];
-    for (let i = 0; i < text.length; i++) {
-      if (sprites[text[i]]) {
-        textArray.push(<img src={sprites[text[i]]} />);
-      }
-    }
-    return <span className="textImage">{textArray}</span>;
-  }
 
   function displayNumber(num) {
     if (!num) return "";

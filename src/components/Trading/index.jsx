@@ -467,10 +467,7 @@ function Trading({ onClose }) {
                 {isWalletConnected ? (
                   <>
                     <p>{addressDisplay}</p>
-                    <p style={{ color: "purple", fontWeight: "bold" }}>
-                      TESTNET
-                    </p>
-                    {/* <p>{username}</p> */}
+                    <p>{username}</p>
                   </>
                 ) : null}
               </div>

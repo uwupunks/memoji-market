@@ -306,7 +306,7 @@ function WinXP() {
 
   useEffect(() => {
     dispatch({ type: "ADD_APP", payload: appSettings["Cracked"] });
-    if(!isMobile) {
+    if (!isMobile) {
       dispatch({ type: "ADD_APP", payload: appSettings["Winamp"] });
     }
     dispatch({
@@ -375,6 +375,11 @@ function WinXP() {
           mode={state.powerState}
         />
       )}
+      <div className="footer-dedication">
+        <span className="dedication-text">
+          This is dedicated to Unicornizcute
+        </span>
+      </div>
     </Container>
   );
 }

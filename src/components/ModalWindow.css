@@ -1,6 +1,7 @@
 .modal-window {
   font-family: "Press Start 2P", "VT323", monospace, sans-serif;
-  background: linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 40%, #f8f8ff 100%);
+  /* background: linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 40%, #f8f8ff 100%); */
+  background: url(/src/assets/img/brushedsteel.png);
   border: 6px double #c77dff;
   border-radius: 18px;
   box-shadow: 0 0 32px #800080, 0 0 8px #fff;
@@ -9,14 +10,6 @@
   max-width: 90vw;
   color: #2a0050;
   position: relative;
-  background-blend-mode: overlay;
-  background-image: repeating-linear-gradient(
-      135deg,
-      #e0e0e0 0px,
-      #b0b0b0 2px,
-      #f8f8ff 8px
-    ),
-    linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 40%, #f8f8ff 100%);
 }
 
 .modal-title {

@@ -1,5 +1,6 @@
 @import url("https://fonts.cdnfonts.com/css/nintendo-ds-bios");
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -1052,4 +1053,30 @@ option:active {
 }
 .sc-aXZVg:nth-child(12) h1 {
   animation-delay: 1.25s, 1.25s;
+}
+
+.footer-dedication {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  text-align: center;
+  z-index: 9999;
+  pointer-events: none;
+}
+.dedication-text {
+  color: #d99dff;
+  font-family: "Dancing Script", "Pacifico", cursive, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 33px;
+  text-shadow: 0 0 8px #a342ee, 0 0 2px #000000;
+}
+
+@media (max-width: 800px) {
+  .footer-dedication {
+    bottom: 0;
+  }
 }

@@ -1,0 +1,145 @@
+.balance-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(40, 0, 60, 0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Press Start 2P", "VT323", monospace, sans-serif;
+}
+
+.balance-modal-window {
+  background: linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 40%, #f8f8ff 100%);
+  border: 6px double #c77dff;
+  border-radius: 18px;
+  box-shadow: 0 0 32px #800080, 0 0 8px #fff;
+  padding: 2rem 2.5rem 2rem 2.5rem;
+  min-width: 400px;
+  max-width: 90vw;
+  color: #2a0050;
+  position: relative;
+  /* Brushed steel texture */
+  background-blend-mode: overlay;
+  background-image: repeating-linear-gradient(
+      135deg,
+      #e0e0e0 0px,
+      #b0b0b0 2px,
+      #f8f8ff 8px
+    ),
+    linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 40%, #f8f8ff 100%);
+}
+
+.balance-modal-window.modal-window {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+  .balance-modal-window.modal-window {
+    min-width: 95vw;
+    max-width: 98vw;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+.balance-modal-title {
+  font-size: 1.5rem;
+  color: #800080;
+  text-shadow: 2px 2px 0 #c77dff, 0 0 8px #fff;
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+
+.balance-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: #c77dff;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  box-shadow: 0 0 8px #800080;
+}
+
+.balance-modal-table-wrapper {
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.balance-modal-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(230, 230, 255, 0.7);
+  font-size: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.balance-modal-table th {
+  background: linear-gradient(90deg, #c77dff 0%, #800080 100%);
+  color: #fff;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 0 #800080;
+}
+
+.balance-modal-table td {
+  background: rgba(255, 255, 255, 0.5);
+  color: #2a0050;
+}
+
+.balance-modal-table th,
+.balance-modal-table td {
+  border: 2px solid #c77dff;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.balance-modal-table tr:nth-child(even) {
+  background: rgba(160, 132, 232, 0.12);
+}
+
+.balance-modal-action {
+  font-family: inherit;
+  font-size: 0.9rem;
+  margin: 0 0.25rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
+  border: 2px solid #c77dff;
+  cursor: pointer;
+  box-shadow: 0 0 6px #800080;
+  transition: background 0.2s;
+}
+
+.balance-modal-action.add {
+  background: linear-gradient(90deg, #4f8cff 0%, #c77dff 100%);
+  color: #fff;
+  border-color: #4f8cff;
+}
+
+.balance-modal-action.remove {
+  background: linear-gradient(90deg, #ff4f8c 0%, #c77dff 100%);
+  color: #fff;
+  border-color: #ff4f8c;
+}
+
+.balance-modal-action:hover {
+  background: #c77dff;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .balance-modal-title.modal-title {
+    font-size: 1.1rem;
+  }
+  .balance-modal-table th,
+  .balance-modal-table td {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,43 @@
+.modal-window {
+  font-family: "Press Start 2P", "VT323", monospace, sans-serif;
+  background: linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 40%, #f8f8ff 100%);
+  border: 6px double #c77dff;
+  border-radius: 18px;
+  box-shadow: 0 0 32px #800080, 0 0 8px #fff;
+  padding: 2rem 2.5rem 2rem 2.5rem;
+  min-width: 400px;
+  max-width: 90vw;
+  color: #2a0050;
+  position: relative;
+  background-blend-mode: overlay;
+  background-image: repeating-linear-gradient(
+      135deg,
+      #e0e0e0 0px,
+      #b0b0b0 2px,
+      #f8f8ff 8px
+    ),
+    linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 40%, #f8f8ff 100%);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  color: #800080;
+  text-shadow: 2px 2px 0 #c77dff, 0 0 8px #fff;
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: #c77dff;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  box-shadow: 0 0 8px #800080;
+}

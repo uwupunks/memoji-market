@@ -32,6 +32,7 @@ import SwapModal from "../SwapModal/index.jsx";
 import SendModal from "../SendModal/index.jsx";
 import AlertModal from "../AlertModal/index.jsx";
 import { useInterval } from "src/hooks/useInterval.js";
+import BalanceModal from "../BalanceModal/index.jsx";
 
 const numberFormatter = new Intl.NumberFormat(navigator.language, {
   notation: "compact",
@@ -82,10 +83,12 @@ function Trading({ onClose }) {
   const [addressDisplay, setAddressDisplay] = useState();
   const [mainTab, setMainTab] = useState(0);
   const [balances, setBalances] = useState([]);
+  const [lpBalances, setLpBalances] = useState([]);
   const [refreshBalances, setRefreshBalances] = useState(false);
   const [rowData, setRowData] = useState([]);
   const [settingsActive, setSettingsActive] = useState(false);
   const [slippage, setSlippage] = useState(5);
+  const [balanceModalActive, setBalanceModalActive] = useState(false);
   let gridRef = useRef();
   const clickSound = new Audio(clickMp3);
   const overSound = new Audio(overMp3);
@@ -190,7 +193,7 @@ function Trading({ onClose }) {
 
       if (isWalletConnected && rowData.length > 0) {
         const userBalances = await fetchBalancesAsync(address, signal);
-        const balances = userBalances?.map((ub) => ({
+        const tokens = userBalances?.map((ub) => ({
           name: rowData.find((r) => r.denom === ub.denom)?.denomDisplay,
           denom: ub.denom,
           emoji: rowData.find((r) => r.denom === ub.denom)?.emoji,
@@ -199,7 +202,25 @@ function Trading({ onClose }) {
           poolId: rowData.find((r) => r.denom === ub.denom)?.poolId,
         }));
 
-        setBalances(balances.filter((b) => b.name));
+        const lpTokens =
+          tokens
+            .filter((b) => b.denom?.startsWith("gamm/pool"))
+            .map((lp) => {
+              const mojiInfo = MEMOJI.find(
+                (m) => m.poolId === lp.denom.split("/")?.[2]
+              );
+              return {
+                ...lp,
+                name: mojiInfo ? mojiInfo.name : "Unknown LP",
+                denom: mojiInfo ? mojiInfo.denom : lp.denom,
+                emoji: mojiInfo ? mojiInfo.emoji : "❓",
+                image: mojiInfo ? mojiInfo.image : null,
+                poolId: mojiInfo ? mojiInfo.poolId : null,
+              };
+            }) || [];
+
+        setBalances(tokens.filter((t) => t.name));
+        setLpBalances(lpTokens.filter((t) => t.poolId));
       }
       return () => {
         // cancel rest requests before component unmounts
@@ -364,29 +385,23 @@ function Trading({ onClose }) {
       valueFormatter: (p) => `${p.value} ${displayDenom(p.data.denomDisplay)}`,
     },
     {
-      field: "price",
-      headerName: "Price",
-      flex: 1,
-      valueFormatter: (p) => numberFormatter.format(p.value) + " 🦄",
-    },
-    {
       field: "mcap",
-      headerName: "Mcap",
+      headerName: "MC",
       flex: 1,
       valueFormatter: (p) => numberFormatter.format(p.value),
       sort: "desc",
     },
     {
       field: "liq",
-      headerName: "Liq",
+      headerName: "LIQ",
       flex: 1,
       valueFormatter: (p) => percentFormatter.format(p.value),
     },
     {
-      field: "tvl",
-      headerName: "TVL",
+      field: "price",
+      headerName: "Price",
       flex: 1,
-      valueFormatter: (p) => numberFormatter.format(p.value),
+      valueFormatter: (p) => numberFormatter.format(p.value) + " 🦄",
     },
     {
       field: "listed",
@@ -443,22 +458,28 @@ function Trading({ onClose }) {
               </div>
             </div>
 
-            <div className="walletItemsSection max-h-[200px] overflow-y-auto md:max-h-none md:overflow-visible w-1/2 md:w-full">
-              <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              id="walletItemsSection"
+              className="max-h-[200px] overflow-y-auto md:max-h-none md:overflow-visible w-1/2 md:w-full"
+            >
+              <div className="walletItemsSectionHeader">
                 <img src={memeInv} />
 
-                <button
-                  className="send"
-                  disabled={!isWalletConnected || balances?.length === 0}
-                  onClick={async () => {
-                    if (!isWalletConnected) {
-                      await connect();
-                    }
-                    setSendActive(!sendActive);
-                  }}
-                  onMouseEnter={() => overSound.play()}
-                  id="send"
-                />
+                {isWalletConnected && (
+                  <button
+                    className="sendButton"
+                    disabled={!isWalletConnected || balances?.length === 0}
+                    onClick={async () => {
+                      if (!isWalletConnected) {
+                        await connect();
+                      }
+                      setSendActive(!sendActive);
+                    }}
+                    onMouseEnter={() => overSound.play()}
+                  >
+                    Send
+                  </button>
+                )}
               </div>
 
               <div className="walletItemsBorder">
@@ -711,16 +732,44 @@ function Trading({ onClose }) {
               </div>
             </div>
             <div className="w-2/3" id="bottomBarMiddle">
+              {isWalletConnected && (
+                <>
+                  <button
+                    className="settingsButton"
+                    onMouseEnter={() => overSound.play()}
+                    onClick={() => setSettingsActive(true)}
+                    aria-label="Settings"
+                  >
+                    Settings
+                  </button>
+                  <button
+                    className="blueGelButton"
+                    onMouseEnter={() => overSound.play()}
+                    onClick={() => setBalanceModalActive(true)}
+                  >
+                    Balances
+                  </button>
+                </>
+              )}
+            </div>
+
+            <div
+              id="exitWrapper"
+              className="mt-auto mb-5 mr-2.5 h-full flex flex-col items-center gap-2"
+            >
               {isWalletConnected ? (
                 <button
                   onMouseEnter={() => overSound.play()}
-                  className="walletButtonConnected"
+                  className="walletButton"
                   id="wallet"
                   onClick={() => {
                     setBalances(null);
+                    setLpBalances(null);
                     disconnect();
                   }}
-                />
+                >
+                  Exit
+                </button>
               ) : (
                 <button
                   onMouseEnter={() => overSound.play()}
@@ -729,18 +778,19 @@ function Trading({ onClose }) {
                   onClick={async () => {
                     await connect();
                   }}
-                />
+                >
+                  Connect
+                </button>
               )}
             </div>
-
-            <div className="exitWrapper mt-auto mb-5 mr-2.5 h-full">
-              <button
-                onMouseEnter={() => overSound.play()}
-                className="settingsButton"
-                onClick={() => setSettingsActive(true)}
-                aria-label="Settings"
-              ></button>
-            </div>
+            <BalanceModal
+              isActive={balanceModalActive}
+              onClose={() => setBalanceModalActive(false)}
+              balances={balances}
+              lpBalances={lpBalances}
+              onAddLiquidity={(poolId) => {}}
+              onRemoveLiquidity={(poolId) => {}}
+            />
             <div className="mt-auto">
               <img
                 className="mascot"
@@ -770,18 +820,15 @@ function Trading({ onClose }) {
       {/* Settings Modal */}
       {settingsActive && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div
-            className="rounded-lg shadow-lg p-6 min-w-[300px] relative"
-            style={{ background: "#e0ddd7" }}
-          >
+          <div className="modal-window">
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+              className="modal-close"
               onClick={() => setSettingsActive(false)}
               aria-label="Close"
             >
               ✖️
             </button>
-            <h2 className="text-lg font-bold mb-4">Settings</h2>
+            <h2 className="modal-title">Settings</h2>
             <div className="mb-4">
               <label
                 htmlFor="slippage"

@@ -1,5 +1,5 @@
-@import url("https://fonts.cdnfonts.com/css/vcr-osd-mono");
 @import url("https://fonts.cdnfonts.com/css/nintendo-ds-bios");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -236,8 +236,10 @@ input[type="number"] {
   bottom: 14px;
 }
 
-.exitWrapper {
-  width: 78px;
+#exitWrapper {
+  height: 90%;
+  padding: 0 0 0 10px;
+  width: 50px;
   background: 
   /* left border*/ linear-gradient(
       to bottom,
@@ -253,37 +255,84 @@ input[type="number"] {
   justify-content: center;
 }
 
-.settingsButton {
-  background: url(assets/img/green-gel-button.png);
+#bottomBarMiddle button,
+#exitWrapper button,
+#walletItemsSection button {
+  width: 60px;
+  height: 25px;
+  line-height: 27px;
+  margin: 0;
+  color: beige;
+  text-shadow: 1px 1px 2px #000;
+  font-weight: bolder;
+  font-family: "Press Start 2P", "VT323", monospace, sans-serif;
+  font-size: 5.6px;
   background-size: cover;
   background-repeat: no-repeat;
   border: none;
-  width: 60px;
-  height: 24px;
+}
+.walletButton {
+  background: url(assets/img/connectwallet.png);
+  margin: auto;
+  display: block;
+}
+
+.walletButton:hover {
+  background: url(assets/img/connectwallet-over.png);
+}
+.walletButton:active {
+  background: url(assets/img/connectwallet-active.png);
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+.settingsButton {
+  background: url(assets/img/green-gel-button.png);
   margin: auto;
   display: block;
 }
 .settingsButton:hover {
   background: url(assets/img/green-gel-button-over.png);
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 .settingsButton:active {
   background: url(assets/img/green-gel-button-active.png);
-  background-size: cover;
-  background-repeat: no-repeat;
   position: relative;
-  top: 3px;
-  left: 3px;
+  top: 2px;
+  left: 2px;
+}
+.blueGelButton {
+  background: url(/src/assets/img/blue-pill.png);
+  transition: background 0.2s;
+}
+.blueGelButton:hover {
+  background: url(/src/assets/img/blue-pill-over.png);
+}
+.blueGelButton:active {
+  background: url(/src/assets/img/blue-pill-active.png);
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+.sendButton {
+  margin: 0 0 4px 17px;
+  background: url(assets/img/send.png);
 }
 
-.exit {
-  width: 62px;
-  min-width: 62px;
-  height: 22px;
-  padding-left: 1rem;
-  margin-top: 42%;
+.sendButton:hover {
+  background: url(assets/img/send-over.png);
 }
+
+.sendButton:active {
+  background: url(assets/img/send-active.png);
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+
+.sendButton:disabled {
+  background: url(assets/img/send-disabled.png);
+}
+
 .leftSection {
   display: flex;
   flex-direction: column;
@@ -298,7 +347,7 @@ input[type="number"] {
   border-radius: 10px;
 }
 
-.walletItemsSection {
+#walletItemsSection {
   background: url(assets/img/brushedsteel.png);
   background-position: bottom right;
   border-radius: 10px 10px 0 10px;
@@ -307,33 +356,12 @@ input[type="number"] {
   padding: 5px 18px 0 18px;
   flex-grow: 1;
 }
-
-.walletItemsSection .send {
-  margin: 0 0 4px 17px;
-  background: url(assets/img/send.png);
-  width: 57px;
-  height: 24px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: none;
-}
-
-.walletItemsSection .send:hover {
-  background: url(assets/img/send-over.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.walletItemsSection .send:active {
-  background: url(assets/img/send-active.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.walletItemsSection .send:disabled {
-  background: url(assets/img/send-disabled.png);
-  background-size: cover;
-  background-repeat: no-repeat;
+.walletItemsSectionHeader {
+  height: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .walletItemsBorder {
@@ -358,13 +386,13 @@ input[type="number"] {
   display: block;
   height: auto;
   position: relative;
-  top: -14px;
-  left: -1px;
+  top: -7px;
+  left: -2px;
+  font-family: "Press Start 2P", "VT323", monospace, sans-serif;
   color: beige;
   text-shadow: 1px 1px 2px #000;
   font-weight: bolder;
-  font-smoothing: none;
-  -webkit-font-smoothing: none;
+  font-size: 7px;
 }
 
 .assetEmoji {
@@ -434,52 +462,6 @@ input[type="number"] {
   z-index: 99;
 }
 
-.walletButton {
-  background: url(assets/img/connectwallet.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: none;
-  width: 55px;
-  height: 24px;
-  margin: auto;
-  display: block;
-}
-
-.walletButton:hover {
-  background: url(assets/img/connectwallet-over.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.walletButton:active {
-  background: url(assets/img/connectwallet-active.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  position: relative;
-  top: 3px;
-  left: 3px;
-}
-
-.walletButtonConnected {
-  background: url(assets/img/disconnectwallet.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: none;
-  width: 55px;
-  height: 24px;
-}
-.walletButtonConnected:hover {
-  background: url(assets/img/disconnectwallet-over.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.walletButtonConnected:active {
-  background: url(assets/img/disconnectwallet-active.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  position: relative;
-  top: 3px;
-  left: 3px;
-}
 .assetList {
   margin-top: auto;
   height: 100%;
@@ -643,7 +625,7 @@ input[type="number"] {
 }
 
 .listItems {
-  height: 80%;
+  height: 82%;
 }
 
 .listedItem {
@@ -798,6 +780,10 @@ option:active {
   --ag-borders: none;
 }
 
+.ag-body-horizontal-scroll {
+  display: none;
+}
+
 .ag-header-viewport {
   background-image: url(assets/img/bg-grid-header.png);
 }
@@ -811,12 +797,10 @@ option:active {
   text-shadow: #74a4ec 0 0 3px;
 }
 #assetGrid .ag-cell {
-  color: #fff;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  font-size: 8pt;
-  font-weight: 500;
+  color: bisque;
+  font-size: 6pt;
+  text-shadow: 1px 1px 2px #323232;
+  font-family: "Press Start 2P", "VT323", monospace, sans-serif;
 }
 #assetGrid .ag-cell-focus {
   border-right: 1px solid #003399;
@@ -863,7 +847,8 @@ option:active {
   border-radius: 0 10px 10px 0;
 }
 #bottomBarMiddle {
-  height: 100%;
+  height: 90%;
+  min-width: 70px;
   background: 
   /* left border*/ linear-gradient(
         to bottom,
@@ -885,6 +870,7 @@ option:active {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 #assetGrid .partial-vertical-borders:last-child {
   /* left border*/

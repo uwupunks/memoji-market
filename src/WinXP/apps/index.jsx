@@ -69,7 +69,7 @@ export const appSettings = {
     component: Cracked,
     defaultSize: {
       width: 711,
-      height: 700,
+      height: 715,
     },
     defaultOffset: {
       x: 50,
